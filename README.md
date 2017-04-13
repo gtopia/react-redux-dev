@@ -16,5 +16,6 @@
 `npm run deploy`
 
 
-## Changelog  
+## Change Log  
+* tagv0.02    Update webpack.
 * tagv0.01    First commit.
