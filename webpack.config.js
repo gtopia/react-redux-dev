@@ -46,95 +46,149 @@ var config = {
         publicPath: '/build/'
     },
     module: {
-        preLoaders: [
+        rules: [
             {
                 test: /\.js(x)?$/,
-                loader: 'eslint',
+                enforce: "pre",
+                loader: 'eslint-loader',
                 exclude: nodeModulesPath
-            }
-        ],
-        loaders: [
-            {
-                test: /\.json$/,
-                loader: 'json'
             },
             {
                 test: /\.js(x)?$/,
-                loader: 'babel',
+                loader: 'babel-loader',
                 exclude: nodeModulesPath
             },
             {
                 test: /\.(css|scss)$/,
-                loaders: ['style', 'css', 'postcss', 'sass']
+                use: ExtractTextPlugin.extract({
+                    fallback: [{
+                        loader: 'style-loader',
+                    }],
+                    use: [
+                        {
+                            loader: 'css-loader',
+                            // options: {
+                            //     modules: true,
+                            //     localIdentName: '[name]__[local]--[hash:base64:5]',
+                            // },
+                        }, 
+                        {
+                            loader: 'postcss-loader',
+                        },
+                        {
+                            loader: 'sass-loader',
+                        }
+                    ]
+                })
             },
             {
                 test: /\.(png|jpeg|jpg|gif)$/,
-                loader: 'url?limit=1&name=static/img/' + (mode === 'production' ? '[name]-[hash:6].[ext]' : '[name].[ext]')
+                loader: 'url-loader',
+                options: {
+                    limit: 1,
+                    name: 'static/img/' + (__DEV__ ? '[name].[ext]' : '[name]-[hash:6].[ext]')
+                }
             },
             {
                 test: /\.tpl$/,
-                loader: 'tmodjs'
+                loader: 'tmodjs-loader'
             },
             {
                 test: /\.html$/,
-                loader: 'html?minimize=false&interpolate=true'
+                loader: 'html-loader',
+                options: {
+                    minimize: false,
+                    interpolate: true
+                }
             }
         ]
     },
     plugins: (() => {
         var pluginList = [
-            new Webpack.NoErrorsPlugin(),
+            new Webpack.LoaderOptionsPlugin({
+                debug: false,
+                minimize: true,
+                options: {
+                    postcss: [
+                        autoprefixer({
+                            browsers: ['>1%']
+                        }),
+                        precss
+                    ],
+                    eslint: {
+                        configFile: eslintrcPath
+                    }
+                }
+            }),
+            new Webpack.NoEmitOnErrorsPlugin(),
             new HtmlWebpackPlugin({
                 title: 'Top Topic',
                 template: templatePath,
                 filename: 'index.html',
                 chunks: ['app'],
                 inject: 'body'
+            }),
+            new ExtractTextPlugin({
+                filename: 'bundle.css',
+                allChunks: true,
+                disable: false
             })
         ];
 
         if (__DEV__) {
             pluginList = pluginList.concat([
                 new Webpack.HotModuleReplacementPlugin(),
-                new Webpack.optimize.CommonsChunkPlugin('vendors', 'vendors.bundle.js'),
-                new Webpack.optimize.DedupePlugin()
+                new Webpack.optimize.CommonsChunkPlugin({
+                    name: 'commons',
+                    filename: 'commons.bundle.js'
+                })
             ]);
         }
         else {
             pluginList = pluginList.concat([
-                new Webpack.NoErrorsPlugin(), 
-                new Webpack.optimize.OccurenceOrderPlugin(),
                 new Webpack.optimize.UglifyJsPlugin({
-                    compress: {
-                        warnings: false
-                    },
-                    output: {
-                        comments: false
-                    },
+                    sourceMap: false,
+                    // compress: {
+                    //     warnings: false,
+                    //     drop_console: true
+                    // },
+                    // output: {
+                    //     comments: false
+                    // },
                     mangle: {
                         except: ['$', 'exports', 'require']
+                    },
+
+                    // 最紧凑的输出
+                    beautify: false,
+                    // 删除所有的注释
+                    comments: false,
+                    compress: {
+                      // 在UglifyJs删除没有用到的代码时不输出警告  
+                      warnings: false,
+                      // 删除所有的 `console` 语句
+                      // 还可以兼容ie浏览器
+                      drop_console: true,
+                      // 内嵌定义了但是只用到一次的变量
+                      collapse_vars: true,
+                      // 提取出出现多次但是没有定义成变量去引用的静态值
+                      reduce_vars: true,
                     }
                 }),
-                new Webpack.optimize.CommonsChunkPlugin('vendors', util.format('js/vendors.%s.js', pkg.version))
+                new Webpack.optimize.CommonsChunkPlugin({
+                    name: 'commons',
+                    filename: util.format('js/commons.%s.js', pkg.version)
+                })
             ]);
         }
 
         return pluginList;
     })(),
     resolve: {
-        extensions: ['', '.js', '.jsx', '.tpl', '.scss', '.css'],
-        modulesDirectories: ['node_modules']
-    },
-    eslint: {
-        configFile: eslintrcPath
-    },
-    postcss: function () {
-        return [
-            autoprefixer({
-                browsers: ['>1%']
-            }),
-            precss
-        ];
+        extensions: ['.js', '.jsx', '.tpl', '.scss', '.css'],
+        modules: [
+            path.resolve(__dirname, 'node_modules')
+        ]
     }
 };
 
