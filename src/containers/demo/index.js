@@ -12,15 +12,12 @@ class DemoPage extends Component {
         super(props);
     }
 
-    _onNodeClick() {
-        console.log('<<< click');
-    }
-
     render() {
         const {demoState, demoActions} = this.props;
 
         return (
           <section>
+            <p>Demo Page</p>
             <button className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
                 disabled={demoState.isLoading} onClick={demoActions.decreaseCounter}>
                 <i className="material-icons">remove</i>

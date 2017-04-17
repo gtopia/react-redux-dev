@@ -4,11 +4,11 @@
   "description": "react-redux-dev",
   "main": "index.js",
   "scripts": {
-    "cleandev": "rimraf test",
-    "clean": "rimraf dist",
     "dev": "cross-env NODE_ENV=development babel-node server.js",
-    "build": "npm run cleandev && cross-env NODE_ENV=development webpack -p --progress --profile --colors --config webpack.config.js",
-    "deploy": "npm run clean && cross-env NODE_ENV=production webpack -p --progress --config webpack.config.js"
+    "dev-clean": "rimraf build",
+    "dev-build": "npm run dev-clean && cross-env NODE_ENV=development webpack -d --progress --profile --colors --config webpack.config.js",
+    "clean": "rimraf dist",
+    "build": "npm run clean && cross-env NODE_ENV=production webpack -p --progress --config webpack.config.js"
   },
   "dependencies": {
     "babel-polyfill": "^6.3.14",

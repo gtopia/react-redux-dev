@@ -1,54 +1,51 @@
 var Webpack = require('webpack');
 var autoprefixer = require('autoprefixer');
 var precss = require('precss');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-
 var path = require('path');
 var eslintrcPath = path.resolve(__dirname, '.eslintrc.json');
 var nodeModulesPath = path.resolve(__dirname, 'node_modules');
 var mainPath = path.resolve(__dirname, 'src', 'index.js');
-var buildPath = path.resolve(__dirname, 'dist');
+var buildPath = path.resolve(__dirname, 'build');
 
-const tempDir = 'build';
-var testPath = path.resolve(__dirname, 'src', tempDir);
-// var testPath = path.resolve(__dirname, 'test');
+var distPath = path.resolve(__dirname, 'dist');
 var templatePath = path.resolve(__dirname, 'src', 'index.html');
-
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var pkg = require('./package.json');
 var util = require('util');
-var cssBundleName = util.format('style.bundle.%s.css', pkg.version);
-var jsBundleName = util.format('js/bundle.%s.js', pkg.version);
 
 var mode = process.env.NODE_ENV.trim();
-var isDev = mode !== 'production';
+var __DEV__ = mode!=='production';
+
+console.log('<<< Is this in DEV mode? --' + __DEV__);
 
 // Raise tread pool size to prevent bundling stuck issue
 process.env.UV_THREADPOOL_SIZE = 100;
 
 var config = {
-    devtool: isDev ? 'eval' : 'source-map',
-    watch: true,
-    entry: isDev ? {
-        app: [
-            'babel-polyfill',
-            'webpack-hot-middleware/client',
-            mainPath
-        ]
-    } : {
-        app: [
-            'babel-polyfill',
-            mainPath
-        ]
-    },
+    devtool: __DEV__ ? 'eval' : 'source-map',
+    watch: __DEV__ ? true : false,
+    entry: (() => {
+        var entryObj = {
+            app: [
+                'babel-polyfill',
+                mainPath
+            ]
+        };
+
+        if (__DEV__) {
+            entryObj.app.push('webpack-hot-middleware/client');
+        }
+
+        return entryObj;
+    })(),
     output: {
-        path: isDev ? testPath : buildPath,
-        filename: isDev ? 'bundle.js' : jsBundleName,
-        // publicPath: isDev ? "http://local.sina.cn/test/" : "http://simg.sinajs.cn/products/news/items/2017/top_topics/"
-        publicPath: '/' + tempDir + '/'
+        path: __DEV__ ? buildPath : distPath,
+        filename: 'bundle.js',
+        // publicPath: __DEV__ ? "http://local.sina.cn/test/" : "http://simg.sinajs.cn/products/news/items/2017/top_topics/"
+        publicPath: '/build/'
     },
     module: {
-        noParse: [/autoit\.js$/],
         preLoaders: [
             {
                 test: /\.js(x)?$/,
@@ -72,7 +69,7 @@ var config = {
             },
             {
                 test: /\.(png|jpeg|jpg|gif)$/,
-                loader: 'url?limit=1&name=img/' + (mode === 'production' ? '[name]-[hash:6].[ext]' : '[name].[ext]')
+                loader: 'url?limit=1&name=static/img/' + (mode === 'production' ? '[name]-[hash:6].[ext]' : '[name].[ext]')
             },
             {
                 test: /\.tpl$/,
@@ -86,18 +83,26 @@ var config = {
     },
     plugins: (() => {
         var pluginList = [
-            new Webpack.NoErrorsPlugin(), 
+            new Webpack.NoErrorsPlugin(),
+            new HtmlWebpackPlugin({
+                title: 'Top Topic',
+                template: templatePath,
+                filename: 'index.html',
+                chunks: ['app'],
+                inject: 'body'
+            })
         ];
 
-        if (isDev) {
-            pluginList.concat([
+        if (__DEV__) {
+            pluginList = pluginList.concat([
                 new Webpack.HotModuleReplacementPlugin(),
                 new Webpack.optimize.CommonsChunkPlugin('vendors', 'vendors.bundle.js'),
                 new Webpack.optimize.DedupePlugin()
             ]);
         }
         else {
-            pluginList.concat([
+            pluginList = pluginList.concat([
+                new Webpack.NoErrorsPlugin(), 
                 new Webpack.optimize.OccurenceOrderPlugin(),
                 new Webpack.optimize.UglifyJsPlugin({
                     compress: {
@@ -114,15 +119,7 @@ var config = {
             ]);
         }
 
-        return pluginList.push(
-            new HtmlWebpackPlugin({
-                title: 'Top Topic',
-                template: templatePath,
-                filename: 'index.html',
-                chunks: ['app'],
-                inject: 'body'
-            })
-        );
+        return pluginList;
     })(),
     resolve: {
         extensions: ['', '.js', '.jsx', '.tpl', '.scss', '.css'],
