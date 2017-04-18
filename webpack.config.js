@@ -1,19 +1,21 @@
 var Webpack = require('webpack');
 var autoprefixer = require('autoprefixer');
 var precss = require('precss');
-var path = require('path');
-var eslintrcPath = path.resolve(__dirname, '.eslintrc.json');
-var nodeModulesPath = path.resolve(__dirname, 'node_modules');
-var mainPath = path.resolve(__dirname, 'src', 'index.js');
-var buildPath = path.resolve(__dirname, 'build');
-
-var distPath = path.resolve(__dirname, 'dist');
-var templatePath = path.resolve(__dirname, 'src', 'index.html');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var BabiliPlugin = require("babili-webpack-plugin");
-var pkg = require('./package.json');
-var util = require('util');
+
+var path = require('path');
+var eslintrcPath = path.resolve(__dirname, '.eslintrc.json');
+var nodeModulesPath = path.resolve(__dirname, 'node_modules');
+var zeptoPath = path.resolve(__dirname, 'src/static/lib/zepto.1.2.0.min.js');
+var mainPath = path.resolve(__dirname, 'src', 'index.js');
+var buildPath = path.resolve(__dirname, 'build');
+var distPath = path.resolve(__dirname, 'dist');
+var templatePath = path.resolve(__dirname, 'src', 'index.html');
+
+// var pkg = require('./package.json');
+// var util = require('util');
 
 var mode = process.env.NODE_ENV.trim();
 var __DEV__ = mode!=='production';
@@ -28,10 +30,8 @@ var config = {
     watch: __DEV__ ? true : false,
     entry: (() => {
         var entryObj = {
-            app: [
-                'babel-polyfill',
-                mainPath
-            ]
+            'app': ['babel-polyfill', mainPath],
+            'commons': ['react', 'react-dom', 'react-redux', 'redux', 'immutable', 'zepto']
         };
 
         if (__DEV__) {
@@ -54,7 +54,7 @@ var config = {
                 test: /\.js(x)?$/,
                 enforce: "pre",
                 loader: 'eslint-loader',
-                exclude: nodeModulesPath
+                exclude: [nodeModulesPath, zeptoPath]
             },
             {
                 test: /\.js(x)?$/,
@@ -219,7 +219,7 @@ var config = {
             path.resolve(__dirname, 'node_modules')
         ],
         alias: {
-            'zepto': path.resolve(__dirname, 'src/static/lib/zepto.1.2.0.min.js'),
+            'zepto': zeptoPath,
             // 'swiper': path.join(__dirname, 'node_modules', 'swiper', 'dist', 'js', 'swiper.js'),
             // 'swiper-css': path.join(__dirname, 'node_modules', 'swiper', 'dist', 'css', 'swiper.css'),
             'react': path.join(__dirname, 'node_modules', 'react', 'dist', 'react.min.js'),

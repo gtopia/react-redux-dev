@@ -37,7 +37,6 @@
 
 
 ## TODO  
-* Deploy
 * CSS Sprite
 * Image Compress
 * Hash Files

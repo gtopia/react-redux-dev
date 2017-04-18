@@ -2,6 +2,7 @@
 import './static/style/index.css';
 
 // Libraries
+import 'zepto';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
