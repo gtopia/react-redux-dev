@@ -18,7 +18,7 @@ var util = require('util');
 var mode = process.env.NODE_ENV.trim();
 var __DEV__ = mode!=='production';
 
-console.log('<<< Is this in DEV mode? --' + __DEV__);
+console.log('>>> Is this in DEV mode ?    -- ' + __DEV__);
 
 // Raise tread pool size to prevent bundling stuck issue
 process.env.UV_THREADPOOL_SIZE = 100;
@@ -47,7 +47,8 @@ var config = {
         publicPath: '/build/'
     },
     module: {
-        noParse: /jquery|zepto|react\.min|react-dom\.min|react-redux\.min|redux\.min|immutable\.min/,
+        // noParse: /jquery|zepto|react\.min|react\-dom\.min|react\-redux\.min|redux\.min|immutable\.min/,
+        noParse: /jquery|zepto|immutable\.min/,
         rules: [
             {
                 test: /\.js(x)?$/,
@@ -93,7 +94,28 @@ var config = {
             },
             {
                 test: /\.tpl$/,
-                loader: 'tmodjs-loader'
+                loader: "art-template-loader",
+                // options: {
+                //   // art-template options (if necessary)
+                //   imports: require.resolve('./template-imports'),
+                //   compressor: source => {
+                //       return source
+                //           // remove newline / carriage return
+                //           .replace(/\n/g, "")
+
+                //           // remove whitespace (space and tabs) before tags
+                //           .replace(/[\t ]+\</g, "<")
+
+                //           // remove whitespace between tags
+                //           .replace(/\>[\t ]+\</g, "><")
+
+                //           // remove whitespace after tags
+                //           .replace(/\>[\t ]+$/g, ">")
+                          
+                //           // remove comments
+                //           .replace(/<!--[\w\W]*?-->/g, "");
+                //   }
+                // }
             },
             {
                 test: /\.html$/,

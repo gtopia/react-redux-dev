@@ -1,6 +1,6 @@
 {
   "name": "react-redux-dev",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "react-redux-dev",
   "main": "index.js",
   "scripts": {
@@ -22,6 +22,7 @@
     "redux-thunk": "^1.0.0"
   },
   "devDependencies": {
+    "art-template-loader": "^0.3.0",
     "autoprefixer": "^6.0.3",
     "babel-cli": "^6.7.5",
     "babel-core": "^6.3.17",
@@ -58,7 +59,6 @@
     "rimraf": "^2.4.3",
     "sass-loader": "^6.0.3",
     "style-loader": "^0.12.4",
-    "tmodjs-loader": "^1.0.1",
     "url-loader": "^0.5.6",
     "webpack": "^2.4.1",
     "webpack-dev-middleware": "^1.2.0",
