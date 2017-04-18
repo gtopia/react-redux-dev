@@ -9,7 +9,7 @@
 * Check bundling with detail info under watch mode  
     `npm run build-dev`  
     _This CMD will generate 'build' folder under root dir_  
-* Bundle for pubulish  
+* Bundle for publish  
     `npm run build`  
     _This CMD will generate 'dist' folder under root dir_  
 
@@ -45,6 +45,7 @@
 
 
 ## Change Log  
+* tagv0.07 : Remove base tag from index HTML, update publicPath.
 * tagv0.06 : Replace tmodjs with art-template for performance issue.
 * tagv0.05 : Optimize bundling, add utils and external libs.
 * tagv0.04 : Use BabiliPlugin instead of UglifyJsPlugin to minify ES6 code.

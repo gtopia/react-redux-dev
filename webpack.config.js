@@ -44,7 +44,7 @@ var config = {
         path: __DEV__ ? buildPath : distPath,
         filename: 'js/bundle.js',
         // publicPath: __DEV__ ? "http://local.sina.cn/test/" : "http://simg.sinajs.cn/products/news/items/2017/top_topics/"
-        publicPath: '/build/'
+        publicPath: __DEV__ ? '/tmpdir/' : "http://simg.sinajs.cn/products/news/items/2017/top_topics/dist/"
     },
     module: {
         // noParse: /jquery|zepto|react\.min|react\-dom\.min|react\-redux\.min|redux\.min|immutable\.min/,
