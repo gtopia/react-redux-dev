@@ -47,7 +47,7 @@ var config = {
         publicPath: '/build/'
     },
     module: {
-        noParse: /node_modules\/(jquery|zepto\.js)/,
+        noParse: /jquery|zepto|react\.min|react-dom\.min|react-redux\.min|redux\.min|immutable\.min/,
         rules: [
             {
                 test: /\.js(x)?$/,
@@ -128,7 +128,8 @@ var config = {
                 template: templatePath,
                 filename: 'index.html',
                 chunks: ['app', 'commons'],
-                inject: 'body'
+                inject: 'body',
+                hash: false
             }),
             new ExtractTextPlugin({
                 filename: 'css/bundle.css',
@@ -194,7 +195,17 @@ var config = {
         extensions: ['.js', '.jsx', '.tpl', '.scss', '.css'],
         modules: [
             path.resolve(__dirname, 'node_modules')
-        ]
+        ],
+        alias: {
+            'zepto': path.resolve(__dirname, 'src/static/lib/zepto.1.2.0.min.js'),
+            // 'swiper': path.join(__dirname, 'node_modules', 'swiper', 'dist', 'js', 'swiper.js'),
+            // 'swiper-css': path.join(__dirname, 'node_modules', 'swiper', 'dist', 'css', 'swiper.css'),
+            'react': path.join(__dirname, 'node_modules', 'react', 'dist', 'react.min.js'),
+            'react-dom': path.join(__dirname, 'node_modules', 'react-dom', 'dist', 'react-dom.min.js'),
+            'react-redux': path.join(__dirname, 'node_modules', 'react-redux', 'dist', 'react-redux.min.js'),
+            'redux': path.join(__dirname, 'node_modules', 'redux', 'dist', 'redux.min.js'),
+            'immutable': path.join(__dirname, 'node_modules', 'immutable', 'dist', 'immutable.min.js')
+        }
     }
 };
 
