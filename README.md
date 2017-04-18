@@ -25,13 +25,13 @@
 ## Features  
 * HMR
 * ES6
+* Sass
 * Eslint
 * Commons Chunk
 * Extract CSS
-* Sass
 * CSS Autoprefixer
-* HTML Loader
-* HTML Template
+* Modularized HTML
+* Art Template
 * Uglify code with Babili
 * Display errors with Redbox
 
