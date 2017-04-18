@@ -33,7 +33,8 @@
                             }
                         ]
                     }
-                ]
+                ],
+                ["minify-dead-code-elimination", { "optimizeRawSize": true }]
             ]
         }
     }

@@ -11,6 +11,7 @@ var distPath = path.resolve(__dirname, 'dist');
 var templatePath = path.resolve(__dirname, 'src', 'index.html');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var BabiliPlugin = require("babili-webpack-plugin");
 var pkg = require('./package.json');
 var util = require('util');
 
@@ -41,11 +42,12 @@ var config = {
     })(),
     output: {
         path: __DEV__ ? buildPath : distPath,
-        filename: 'bundle.js',
+        filename: 'js/bundle.js',
         // publicPath: __DEV__ ? "http://local.sina.cn/test/" : "http://simg.sinajs.cn/products/news/items/2017/top_topics/"
         publicPath: '/build/'
     },
     module: {
+        noParse: /node_modules\/(jquery|zepto\.js)/,
         rules: [
             {
                 test: /\.js(x)?$/,
@@ -122,14 +124,14 @@ var config = {
             }),
             new Webpack.NoEmitOnErrorsPlugin(),
             new HtmlWebpackPlugin({
-                title: 'Top Topic',
+                title: 'TEMP_TITLE',
                 template: templatePath,
                 filename: 'index.html',
-                chunks: ['app'],
+                chunks: ['app', 'commons'],
                 inject: 'body'
             }),
             new ExtractTextPlugin({
-                filename: 'bundle.css',
+                filename: 'css/bundle.css',
                 allChunks: true,
                 disable: false
             })
@@ -140,45 +142,49 @@ var config = {
                 new Webpack.HotModuleReplacementPlugin(),
                 new Webpack.optimize.CommonsChunkPlugin({
                     name: 'commons',
-                    filename: 'commons.bundle.js'
+                    filename: 'js/commons.bundle.js'
                 })
             ]);
         }
         else {
             pluginList = pluginList.concat([
-                new Webpack.optimize.UglifyJsPlugin({
-                    sourceMap: false,
-                    // compress: {
-                    //     warnings: false,
-                    //     drop_console: true
-                    // },
-                    // output: {
-                    //     comments: false
-                    // },
-                    mangle: {
-                        except: ['$', 'exports', 'require']
-                    },
-
-                    // 最紧凑的输出
-                    beautify: false,
-                    // 删除所有的注释
-                    comments: false,
-                    compress: {
-                      // 在UglifyJs删除没有用到的代码时不输出警告  
-                      warnings: false,
-                      // 删除所有的 `console` 语句
-                      // 还可以兼容ie浏览器
-                      drop_console: true,
-                      // 内嵌定义了但是只用到一次的变量
-                      collapse_vars: true,
-                      // 提取出出现多次但是没有定义成变量去引用的静态值
-                      reduce_vars: true,
-                    }
-                }),
                 new Webpack.optimize.CommonsChunkPlugin({
                     name: 'commons',
-                    filename: util.format('js/commons.%s.js', pkg.version)
+                    filename: 'js/commons.bundle.js'
+                    // filename: util.format('js/commons.%s.js', pkg.version)
+                }),
+                new BabiliPlugin({}, {
+                    comments: false
                 })
+                // new Webpack.optimize.UglifyJsPlugin({
+                //     sourceMap: false,
+                //     // compress: {
+                //     //     warnings: false,
+                //     //     drop_console: true
+                //     // },
+                //     // output: {
+                //     //     comments: false
+                //     // },
+                //     mangle: {
+                //         except: ['$', 'exports', 'require']
+                //     },
+
+                //     // 最紧凑的输出
+                //     beautify: false,
+                //     // 删除所有的注释
+                //     comments: false,
+                //     compress: {
+                //       // 在UglifyJs删除没有用到的代码时不输出警告  
+                //       warnings: false,
+                //       // 删除所有的 `console` 语句
+                //       // 还可以兼容ie浏览器
+                //       drop_console: true,
+                //       // 内嵌定义了但是只用到一次的变量
+                //       collapse_vars: true,
+                //       // 提取出出现多次但是没有定义成变量去引用的静态值
+                //       reduce_vars: true,
+                //     }
+                // })
             ]);
         }
 
