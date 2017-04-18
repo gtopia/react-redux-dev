@@ -1,17 +1,17 @@
 # React Redux Dev
 
 ## Start  
-* Prerequisite
-    `npm install`
-* Develop locally with HMR
-    `npm run dev`
-    _This CMD won't generate any folder under root dir_
-* Check bundling with detail info under watch mode
-    `npm run build-dev`
-    _This CMD will generate 'build' folder under root dir_
-* Bundle for pubulish
-    `npm run build`
-    _This CMD will generate 'dist' folder under root dir_
+* Prerequisite  
+    `npm install`  
+* Develop locally with HMR  
+    `npm run dev`  
+    _This CMD won't generate any folder under root dir_  
+* Check bundling with detail info under watch mode  
+    `npm run build-dev`  
+    _This CMD will generate 'build' folder under root dir_  
+* Bundle for pubulish  
+    `npm run build`  
+    _This CMD will generate 'dist' folder under root dir_  
 
 
 ## Tech stack  
