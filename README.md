@@ -39,8 +39,7 @@
 ## TODO  
 * CSS Sprite
 * Image Compress
-* Hash Files
-* External Libs
+* File Hash
 
 
 ## Change Log  
