@@ -17,17 +17,19 @@ app.use(require('webpack-dev-middleware')(compiler, {
 app.use(require('webpack-hot-middleware')(compiler));
 
 
-// app.get('/aaa/css/bundle.css', function(req, res) {
+// Test routes for dist bundle
+// app.get('/test/css/bundle.css', function(req, res) {
 //     res.sendFile(path.join(__dirname, 'dist/css/bundle.css'));
 // });
 
-// app.get('/aaa/js/bundle.js', function(req, res) {
+// app.get('/test/js/bundle.js', function(req, res) {
 //     res.sendFile(path.join(__dirname, 'dist/js/bundle.js'));
 // });
 
-// app.get('/aaa/js/commons.bundle.js', function(req, res) {
+// app.get('/test/js/commons.bundle.js', function(req, res) {
 //     res.sendFile(path.join(__dirname, 'dist/js/commons.bundle.js'));
 // });
+
 
 app.get('*', function(req, res) {
     res.sendFile(path.join(__dirname, 'index.html'));

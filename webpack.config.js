@@ -30,8 +30,8 @@ var config = {
     watch: __DEV__ ? true : false,
     entry: (() => {
         var entryObj = {
-            'app': ['babel-polyfill', mainPath],
-            'commons': ['react', 'react-dom', 'react-redux', 'redux', 'immutable', 'zepto']
+            'app': [mainPath],
+            'commons': ['babel-polyfill', 'react', 'redux', 'immutable', 'zepto']
         };
 
         if (__DEV__) {
