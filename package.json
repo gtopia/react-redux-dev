@@ -1,7 +1,7 @@
 {
   "name": "react-redux-dev",
-  "version": "0.0.9",
-  "description": "react-redux-dev",
+  "version": "0.4.0",
+  "description": "Webpack2 + React + Redux development framework.",
   "main": "index.js",
   "scripts": {
     "clean": "rimraf dist",
@@ -63,6 +63,7 @@
     "url-loader": "^0.5.6",
     "webpack": "^2.4.1",
     "webpack-dev-middleware": "^1.2.0",
-    "webpack-hot-middleware": "^2.4.1"
+    "webpack-hot-middleware": "^2.4.1",
+    "webpack-spritesmith": "^0.3.3"
   }
 }

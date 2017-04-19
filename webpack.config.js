@@ -4,15 +4,16 @@ var precss = require('precss');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var BabiliPlugin = require("babili-webpack-plugin");
+var SpritesmithPlugin = require('webpack-spritesmith');
 
 var path = require('path');
-var eslintrcPath = path.resolve(__dirname, '.eslintrc.json');
 var nodeModulesPath = path.resolve(__dirname, 'node_modules');
+var eslintrcPath = path.resolve(__dirname, '.eslintrc.json');
 var zeptoPath = path.resolve(__dirname, 'src/static/lib/zepto.1.2.0.min.js');
 var mainPath = path.resolve(__dirname, 'src', 'index.js');
+var templatePath = path.resolve(__dirname, 'src', 'index.html');
 var buildPath = path.resolve(__dirname, 'build');
 var distPath = path.resolve(__dirname, 'dist');
-var templatePath = path.resolve(__dirname, 'src', 'index.html');
 
 var mode = process.env.NODE_ENV.trim();
 var __DEV__ = mode!=='production';
@@ -186,6 +187,25 @@ var config = {
             new Webpack.optimize.CommonsChunkPlugin({
                 name: 'libs',
                 filename: __DEV__ ? 'js/commons.bundle.js' : 'js/commons.bundle-[chunkhash:8].js'
+            }),
+            new SpritesmithPlugin({
+                src: {
+                    cwd: path.resolve(__dirname, 'src/static/sprite/'),
+                    glob: '*.*'
+                },
+                target: {
+                    image: path.resolve(__dirname, 'src/static/img/auto-spritesmith.png'),
+                    css: path.resolve(__dirname, 'src/static/style/auto-spritesmith.scss')
+                },
+                apiOptions: {
+                    // Path by which generated image will be referenced in API.
+                    // cssImageRef: '../static/img/auto-spritesmith.png'
+                    cssImageRef: "~auto-spritesmith.png"
+                },
+                spritesmithOptions: {
+                    algorithm: 'binary-tree',
+                    padding: 2
+                }
             })
         ];
 

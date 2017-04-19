@@ -28,6 +28,7 @@
 ## Features  
 * Art Template
 * CSS Autoprefixer
+* CSS Sprite
 * Commons Chunk
 * Display errors with Redbox
 * ES6
@@ -41,17 +42,14 @@
 * Uglify code with Babili
 
 
-## TODO  
-* CSS Sprite
-
-
 ## Change Log  
-* tagv0.09 : Add image-webpack-loader to compress images.
-* tagv0.08 : Add file hash when bundling for production.
-* tagv0.07 : Remove base tag from index HTML, update publicPath.
-* tagv0.06 : Replace tmodjs with art-template for performance issue.
-* tagv0.05 : Optimize bundling, add utils and external libs.
-* tagv0.04 : Use BabiliPlugin instead of UglifyJsPlugin to minify ES6 code.
-* tagv0.03 : Upgrade webpack to v2.
-* tagv0.02 : Update webpack config.
-* tagv0.01 : First commit.
+* v0.4.0 : Use webpack-spritesmith to make CSS sprite.
+* v0.3.0 : Add image-webpack-loader to compress images.
+* v0.2.0 : Add file hash when bundling for production.
+* v0.1.4 : Remove base tag from index HTML, update publicPath.
+* v0.1.3 : Replace tmodjs with art-template for performance issue.
+* v0.1.2 : Optimize bundling, add utils and external libs.
+* v0.1.1 : Use BabiliPlugin instead of UglifyJsPlugin to minify ES6 code.
+* v0.1.0 : Upgrade webpack to v2.
+* v0.0.2 : Update webpack config.
+* v0.0.1 : First commit.

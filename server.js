@@ -17,7 +17,14 @@ app.use(require('webpack-dev-middleware')(compiler, {
 app.use(require('webpack-hot-middleware')(compiler));
 
 
-// Test routes for dist bundle
+// Set access control if necessary.
+// app.all('*', function(req, res, next) {
+//     res.header('Access-Control-Allow-Origin', '*');
+//     next();
+// });
+
+
+// Test routes for dist bundle.
 // app.get('/test/css/bundle.css', function(req, res) {
 //     res.sendFile(path.join(__dirname, 'dist/css/bundle.css'));
 // });

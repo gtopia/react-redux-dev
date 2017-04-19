@@ -1,5 +1,5 @@
 // Styles
-import './static/style/index.css';
+import './static/style/base.css';
 
 // Libraries
 import 'zepto';
