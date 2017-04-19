@@ -11,7 +11,7 @@
 * Check bundling with detail info under watch mode  
     `npm run build-dev`  
     _This command will generate 'build' folder under root directory._  
-    
+
 * Bundle for publish  
     `npm run build`  
     _This command will generate 'dist' folder under root directory._  
@@ -26,26 +26,27 @@
 
 
 ## Features  
-* HMR
-* ES6
-* Sass
-* Eslint
-* Commons Chunk
-* Extract CSS
-* CSS Autoprefixer
-* Modularized HTML
 * Art Template
-* Uglify code with Babili
+* CSS Autoprefixer
+* Commons Chunk
 * Display errors with Redbox
+* ES6
+* Eslint
+* Extract CSS
+* File Hash
+* HMR
+* Modularized HTML
+* Sass
+* Uglify code with Babili
 
 
 ## TODO  
 * CSS Sprite
 * Image Compress
-* File Hash
 
 
 ## Change Log  
+* tagv0.08 : Add file hash when bundling for production.
 * tagv0.07 : Remove base tag from index HTML, update publicPath.
 * tagv0.06 : Replace tmodjs with art-template for performance issue.
 * tagv0.05 : Optimize bundling, add utils and external libs.

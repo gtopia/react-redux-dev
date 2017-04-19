@@ -14,9 +14,6 @@ var buildPath = path.resolve(__dirname, 'build');
 var distPath = path.resolve(__dirname, 'dist');
 var templatePath = path.resolve(__dirname, 'src', 'index.html');
 
-// var pkg = require('./package.json');
-// var util = require('util');
-
 var mode = process.env.NODE_ENV.trim();
 var __DEV__ = mode!=='production';
 
@@ -45,8 +42,7 @@ var config = {
     })(),
     output: {
         path: __DEV__ ? buildPath : distPath,
-        filename: 'js/bundle.js',
-        // publicPath: __DEV__ ? "http://local.sina.cn/test/" : "http://simg.sinajs.cn/products/news/items/2017/top_topics/"
+        filename: __DEV__ ? 'js/bundle.js' : 'js/bundle-[chunkhash:8].js',
         publicPath: __DEV__ ? '/tmpdir/' : "http://simg.sinajs.cn/products/news/items/2017/top_topics/dist/"
     },
     module: {
@@ -92,7 +88,7 @@ var config = {
                 loader: 'url-loader',
                 options: {
                     limit: 1,
-                    name: 'static/img/' + (__DEV__ ? '[name].[ext]' : '[name]-[hash:6].[ext]')
+                    name: 'static/img/' + (__DEV__ ? '[name].[ext]' : '[name]-[hash:8].[ext]')
                 }
             },
             {
@@ -157,28 +153,23 @@ var config = {
                 hash: false
             }),
             new ExtractTextPlugin({
-                filename: 'css/bundle.css',
+                filename: __DEV__ ? 'css/bundle.css' : 'css/bundle-[chunkhash:8].css',
                 allChunks: true,
                 disable: false
+            }),
+            new Webpack.optimize.CommonsChunkPlugin({
+                name: 'libs',
+                filename: __DEV__ ? 'js/commons.bundle.js' : 'js/commons.bundle-[chunkhash:8].js'
             })
         ];
 
         if (__DEV__) {
             pluginList = pluginList.concat([
-                new Webpack.HotModuleReplacementPlugin(),
-                new Webpack.optimize.CommonsChunkPlugin({
-                    name: 'libs',
-                    filename: 'js/commons.bundle.js'
-                })
+                new Webpack.HotModuleReplacementPlugin()
             ]);
         }
         else {
             pluginList = pluginList.concat([
-                new Webpack.optimize.CommonsChunkPlugin({
-                    name: 'libs',
-                    filename: 'js/commons.bundle.js'
-                    // filename: util.format('js/commons.%s.js', pkg.version)
-                }),
                 new BabiliPlugin({}, {
                     comments: false
                 })
