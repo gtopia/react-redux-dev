@@ -18,10 +18,10 @@
 
 
 ## Tech stack  
+* Express
+* ImmutableJS
 * React
 * Redux
-* ImmutableJS
-* Express
 * Webpack2
 
 
@@ -35,6 +35,7 @@
 * Extract CSS
 * File Hash
 * HMR
+* Image Compress
 * Modularized HTML
 * Sass
 * Uglify code with Babili
@@ -42,10 +43,10 @@
 
 ## TODO  
 * CSS Sprite
-* Image Compress
 
 
 ## Change Log  
+* tagv0.09 : Add image-webpack-loader to compress images.
 * tagv0.08 : Add file hash when bundling for production.
 * tagv0.07 : Remove base tag from index HTML, update publicPath.
 * tagv0.06 : Replace tmodjs with art-template for performance issue.

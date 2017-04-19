@@ -85,11 +85,37 @@ var config = {
             },
             {
                 test: /\.(png|jpeg|jpg|gif)$/,
-                loader: 'url-loader',
-                options: {
-                    limit: 1,
-                    name: 'static/img/' + (__DEV__ ? '[name].[ext]' : '[name]-[hash:8].[ext]')
-                }
+                use: __DEV__ ? [
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 1,
+                            name: 'img/[name].[ext]'
+                        }
+                    }
+                ] : [
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 1,
+                            name: 'img/[name]-[hash:8].[ext]'
+                        }
+                    }, 
+                    {
+                        loader: 'image-webpack-loader',
+                        options: {
+                            progressive: true,
+                            optimizationLevel: 4,
+                            mozjpeg: {
+                                quality: 65
+                            },
+                            pngquant: {
+                                quality: '65-90',
+                                speed: 4
+                            }
+                        }
+                    }
+                ]
             },
             {
                 test: /\.tpl$/,

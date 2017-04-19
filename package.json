@@ -1,6 +1,6 @@
 {
   "name": "react-redux-dev",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "react-redux-dev",
   "main": "index.js",
   "scripts": {
@@ -46,6 +46,7 @@
     "history": "^1.17.0",
     "html-loader": "^0.4.5",
     "html-webpack-plugin": "^2.15.0",
+    "image-webpack-loader": "^3.3.0",
     "install": "^0.8.8",
     "node-sass": "^3.4.1",
     "npm": "^4.5.0",
