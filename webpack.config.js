@@ -31,7 +31,11 @@ var config = {
     entry: (() => {
         var entryObj = {
             'app': [mainPath],
-            'commons': ['babel-polyfill', 'react', 'redux', 'immutable', 'zepto']
+            // 'commons': ['babel-polyfill', 'react', 'redux', 'immutable', 'zepto']
+            'commons': [
+                'babel-polyfill', 'react', 'react-dom', 'react-router', 
+                'redux', 'react-redux', 'redux-thunk', 'immutable', 'zepto'
+            ]
         };
 
         if (__DEV__) {

@@ -3,15 +3,18 @@
 ## Start  
 * Prerequisite  
     `npm install`  
+
 * Develop locally with HMR  
     `npm run dev`  
-    _This CMD won't generate any folder under root dir_  
+    _This command won't generate any folder under root directory._  
+
 * Check bundling with detail info under watch mode  
     `npm run build-dev`  
-    _This CMD will generate 'build' folder under root dir_  
+    _This command will generate 'build' folder under root directory._  
+    
 * Bundle for publish  
     `npm run build`  
-    _This CMD will generate 'dist' folder under root dir_  
+    _This command will generate 'dist' folder under root directory._  
 
 
 ## Tech stack  
