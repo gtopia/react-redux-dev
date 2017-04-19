@@ -31,8 +31,7 @@ var config = {
     entry: (() => {
         var entryObj = {
             'app': [mainPath],
-            // 'commons': ['babel-polyfill', 'react', 'redux', 'immutable', 'zepto']
-            'commons': [
+            'libs': [
                 'babel-polyfill', 'react', 'react-dom', 'react-router', 
                 'redux', 'react-redux', 'redux-thunk', 'immutable', 'zepto'
             ]
@@ -153,7 +152,7 @@ var config = {
                 title: 'TEMP_TITLE',
                 template: templatePath,
                 filename: 'index.html',
-                chunks: ['app', 'commons'],
+                chunks: ['app', 'libs'],
                 inject: 'body',
                 hash: false
             }),
@@ -168,7 +167,7 @@ var config = {
             pluginList = pluginList.concat([
                 new Webpack.HotModuleReplacementPlugin(),
                 new Webpack.optimize.CommonsChunkPlugin({
-                    name: 'commons',
+                    name: 'libs',
                     filename: 'js/commons.bundle.js'
                 })
             ]);
@@ -176,7 +175,7 @@ var config = {
         else {
             pluginList = pluginList.concat([
                 new Webpack.optimize.CommonsChunkPlugin({
-                    name: 'commons',
+                    name: 'libs',
                     filename: 'js/commons.bundle.js'
                     // filename: util.format('js/commons.%s.js', pkg.version)
                 }),
