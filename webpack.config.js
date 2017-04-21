@@ -256,12 +256,13 @@ var config = {
     resolve: {
         extensions: ['.js', '.jsx', '.tpl', '.scss', '.css'],
         modules: [
-            path.resolve(__dirname, 'node_modules')
+            path.resolve(__dirname, 'node_modules'),
+            path.resolve(__dirname, 'src', 'static')
         ],
         alias: {
             'zepto': zeptoPath,
-            // 'swiper': path.join(__dirname, 'node_modules', 'swiper', 'dist', 'js', 'swiper.js'),
-            // 'swiper-css': path.join(__dirname, 'node_modules', 'swiper', 'dist', 'css', 'swiper.css'),
+            // 'swiper': path.join(__dirname, 'node_modules', 'swiper', 'dist', 'js', 'swiper.min.js'),
+            // 'swiper-css': path.join(__dirname, 'node_modules', 'swiper', 'dist', 'css', 'swiper.min.css'),
             'react': path.join(__dirname, 'node_modules', 'react', 'dist', 'react.min.js'),
             'react-dom': path.join(__dirname, 'node_modules', 'react-dom', 'dist', 'react-dom.min.js'),
             'react-redux': path.join(__dirname, 'node_modules', 'react-redux', 'dist', 'react-redux.min.js'),
