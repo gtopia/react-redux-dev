@@ -256,8 +256,8 @@ var config = {
     resolve: {
         extensions: ['.js', '.jsx', '.tpl', '.scss', '.css'],
         modules: [
-            path.resolve(__dirname, 'node_modules'),
-            path.resolve(__dirname, 'src', 'static')
+            path.resolve(__dirname, 'src', 'static'),
+            path.resolve(__dirname, 'node_modules')
         ],
         alias: {
             'zepto': zeptoPath,
