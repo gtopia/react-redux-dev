@@ -42,7 +42,7 @@
 * Uglify code with Babili
 
 
-## Change Log  
+## Change log  
 * v0.4.0 : Use webpack-spritesmith to make CSS sprite.
 * v0.3.0 : Add image-webpack-loader to compress images.
 * v0.2.0 : Add file hash when bundling for production.
