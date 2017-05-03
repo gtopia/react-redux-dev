@@ -8,7 +8,7 @@ class NotFoundPage extends Component {
 		return (
 			<div className="Not-Found-Page">
 				<h1 className="Not-Found-Page__header">404</h1>
-				<div className="Not-Found-Page__content">The page you are looking for is not here :(</div>
+				<div>The page you are looking for is not here :(</div>
 			</div>
 		);
 	}

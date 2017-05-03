@@ -3,7 +3,7 @@
     (function() {
         function setFont() {
             var clientWidth = (document.documentElement || document.body.parentNode).clientWidth;
-            // 750尺寸的比例，换算成设计稿后 0.1rem = 1px;
+            // 750尺寸的比例，换算成@2x设计稿后1px=0.01rem
             __rootrem = Math.floor(clientWidth * 100 / 750);
             (document.documentElement || document.body.parentNode).style.fontSize = __rootrem + "px";
         }
