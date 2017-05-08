@@ -7,8 +7,6 @@ import { bindActionCreators } from 'redux';
 // Components
 import Navigation from '../../components/navigation';
 
-import * as DemoActions from '../../actions/demo';
-
 class Main extends Component {
     constructor(props) {
         super(props);
@@ -22,11 +20,9 @@ class Main extends Component {
         } = this.props.mainState;
 
         return ( 
-            <section className = "mdl-layout mdl-js-layout" >
-                <Navigation headerTitle = { navHeaderTitle }
-                    navItems = { navItems }
-                    hasLogo = { hasLogo }/> 
-                <main className = "mdl-layout__content" >
+            <section>
+                <Navigation headerTitle = { navHeaderTitle } navItems = { navItems } hasLogo = { hasLogo }/> 
+                <main>
                     <div className = "page-content" > { this.props.children } </div> 
                 </main>
             </section>

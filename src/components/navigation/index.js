@@ -1,5 +1,5 @@
 // Styles
-import './index.css';
+import './index.scss';
 // Libraries
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
@@ -9,8 +9,9 @@ import { MAIN_URL } from '../../constants/app';
 // Stateless functional components
 let HeaderLogo = () => {
     return ( 
-        <Link to = { MAIN_URL } > <span className = "navigation__header-logo"
-        title = "test" > </span></Link >
+        <Link to = { MAIN_URL } >
+            <span className = "navigation__header-logo"> </span>
+        </Link>
     );
 };
 
@@ -30,26 +31,27 @@ class Navigation extends Component {
     }
 
     render() {
-        const { navItems, hasLogo } = this.props;
-        let headerLogoHtml = hasLogo ? <HeaderLogo / > : null,
-            navItemsHtml = navItems.map((item, index) => {
-                return ( 
-                    <Link className = "mdl-navigation__link"
-                    to = { item.link }
-                    onlyActiveOnIndex = { item.link === '/main' }
-                    activeClassName = "navigation__link--active"
-                    key = { `navItem${index}` }
-                    name = { `${item.displayText}-${index}` }
-                    onClick = { this._onNavItemsClick.bind(this) } > { item.displayText } </Link>
-                );
-            });
+        const { hasLogo } = this.props;
+        let headerLogoHtml = hasLogo ? <HeaderLogo / > : null;
+        // let navItemsHtml = navItems.map((item, index) => {
+        //     return (
+        //         <Link to = { item.link }
+        //         onlyActiveOnIndex = { item.link === '/main' }
+        //         activeClassName = "navigation__link--active"
+        //         key = { `navItem${index}` }
+        //         name = { `${item.displayText}-${index}` }
+        //         onClick = { this._onNavItemsClick.bind(this) } > { item.displayText } </Link>
+        //     );
+        // });
 
-        return ( 
-            <header className = "mdl-layout__header is-casting-shadow mdl-layout__header--level1" >
-            <div className = "mdl-layout__header-row" >
-            <span className = "mdl-layout-title" > { headerLogoHtml } </span> 
-            <nav className = "mdl-navigation" > { navItemsHtml } </nav> 
-            </div>
+        return (
+            <header className = "layout__header" >
+                <div className = "layout__header-row">
+                    <span> { headerLogoHtml } </span>
+                    {
+                    // <nav> { navItemsHtml } </nav> 
+                    }
+                </div>
             </header>
         );
     }

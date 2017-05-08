@@ -194,13 +194,13 @@ var config = {
                     glob: '*.*'
                 },
                 target: {
-                    image: path.resolve(__dirname, 'src/static/img/auto-spritesmith.png'),
-                    css: path.resolve(__dirname, 'src/static/style/auto-spritesmith.scss')
+                    image: path.resolve(__dirname, 'src/static/img/auto-sprite.png'),
+                    css: path.resolve(__dirname, 'src/static/style/auto-sprite.scss')
                 },
                 apiOptions: {
                     // Path by which generated image will be referenced in API.
-                    // cssImageRef: '../static/img/auto-spritesmith.png'
-                    cssImageRef: "~auto-spritesmith.png"
+                    // 相对于使用sprite的scss文件的路径
+                    cssImageRef: "../../static/img/auto-sprite.png"
                 },
                 spritesmithOptions: {
                     algorithm: 'binary-tree',
