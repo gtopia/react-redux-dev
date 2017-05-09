@@ -7,10 +7,10 @@ import { Link } from 'react-router';
 import { MAIN_URL } from '../../constants/app';
 
 // Stateless functional components
-let HeaderLogo = () => {
+let MoreTopic = () => {
     return ( 
-        <Link to = { MAIN_URL } >
-            <span className = "navigation__header-logo"> </span>
+        <Link to={MAIN_URL}>
+            <div className="nav__more-topic"></div>
         </Link>
     );
 };
@@ -31,27 +31,15 @@ class Navigation extends Component {
     }
 
     render() {
-        const { hasLogo } = this.props;
-        let headerLogoHtml = hasLogo ? <HeaderLogo / > : null;
-        // let navItemsHtml = navItems.map((item, index) => {
-        //     return (
-        //         <Link to = { item.link }
-        //         onlyActiveOnIndex = { item.link === '/main' }
-        //         activeClassName = "navigation__link--active"
-        //         key = { `navItem${index}` }
-        //         name = { `${item.displayText}-${index}` }
-        //         onClick = { this._onNavItemsClick.bind(this) } > { item.displayText } </Link>
-        //     );
-        // });
+        const { hasMoreTopic } = this.props;
+        let moreTopicHtml = hasMoreTopic ? <MoreTopic/> : null;
 
         return (
-            <header className = "layout__header" >
-                <div className = "layout__header-row">
-                    <span> { headerLogoHtml } </span>
-                    {
-                    // <nav> { navItemsHtml } </nav> 
-                    }
-                </div>
+            <header className="layout__header">
+                <div className="nav__portrait-bg"></div>
+                <div className="nav__portrait"></div>
+                <div className="nav__logo"></div>
+                { moreTopicHtml }
             </header>
         );
     }
@@ -59,15 +47,13 @@ class Navigation extends Component {
 
 Navigation.propTypes = {
     navItems: PropTypes.array.isRequired,
-    headerTitle: PropTypes.string,
-    hasLogo: PropTypes.bool,
+    hasMoreTopic: PropTypes.bool,
     onNavItemsClick: PropTypes.func,
     onLogoutHandler: PropTypes.func
 };
 
 Navigation.defaultProps = {
-    headerTitle: '',
-    hasLogo: false,
+    hasMoreTopic: false,
     onNavItemsClick: () => {},
     onLogoutHandler: () => {}
 };

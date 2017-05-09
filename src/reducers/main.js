@@ -15,7 +15,7 @@ const initialState = Map({
         }),
     ),
     currentSelectedPageSubMenu: List.of(),
-    hasLogo: true
+    hasMoreTopic: false
 });
 
 const updateNavigationItem = (state) => {
