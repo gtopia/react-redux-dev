@@ -34,9 +34,19 @@
 	            (document.documentElement || document.body.parentNode).style.fontSize = __rootrem + "px";
 	        }
 	        setFont();
-	        window.onresize = setFont;
+	        window.addEventListener("resize", function() {
+	            setFont();
+	        });
 	    })();
 	</script>
+
+	<!-- SUDA -->
+	<script type="text/javascript" src="http://mjs.sinaimg.cn/wap/public/suda/201705021130/suda_log.min.js"></script>
+	<script type="text/javascript" src="http://mjs.sinaimg.cn/wap/public/suda/201705021130/suda_map.min.js"></script>
+
+	<!-- Login -->
+	<script type="text/javascript" src="http://mjs.sinaimg.cn/wap/module/share/201507071535/js/waplogin.min.js"></script>
+	<!-- <script type="text/javascript" src="http://mjs.sinaimg.cn/wap/module/login/js/outlogin_layer_mobile.min.js"></script> -->
 </head>
 
 <body>

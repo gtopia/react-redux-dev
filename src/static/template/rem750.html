@@ -8,6 +8,8 @@
             (document.documentElement || document.body.parentNode).style.fontSize = __rootrem + "px";
         }
         setFont();
-        window.onresize = setFont;
+        window.addEventListener("resize", function() {
+            setFont();
+        });
     })();
 </script>
