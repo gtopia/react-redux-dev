@@ -13,4 +13,7 @@ export default keyMirror({
     SET_CURRENT_SELECTED_USER_ID: null,
     SET_CURRENT_SELECTED_PAGE_NAME: null,
     SET_ALL_USER: null,
+    LOGIN_SUCCESS: null,
+    LOGIN_FAILURE: null,
+    LOGOUT: null,
 });
