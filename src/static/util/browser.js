@@ -1,35 +1,3 @@
-/**
- * @fileoverview 测试浏览器
- * browser test
- * @author Robin Young | yonglin@staff.sina.com.cn
- * @update Liangdong | liangdong2@staff.sina.com.cn
-    {
-        'OS':{String},          //操作系统
-        'CORE':{String},        //浏览器内核
-        'Version':{String},     //浏览器版本
-        'EXTRA':{String},       //第三方浏览器
-        'IE':{Boolean},         //是否是IE
-        'OPERA':{Boolean},      //是否是opera
-        'MOZ':{Boolean},        //是否是mozilla系
-        'IE6':{Boolean},        //是否是IE6
-        'IE7':{Boolean},        //是否是IE7
-        'IE8':{Boolean},        //是否是IE8
-        'IE9':{Boolean},        //是否是IE9
-        'IE10':{Boolean},       //是否是IE10
-        'SAFARI':{Boolean},     //是否是safari
-        'CHROME':{Boolean},     //是否是chrome
-        'IPAD':{Boolean},       //是否是ipad
-        'IPHONE':{Boolean},     //是否是iphone
-        'ITOUCH':{Boolean},     //是否是itouch
-        'MOBILE':{Boolean}      //是否是mobile
-    };
- * @example
- * var $browser = require('more/browser');
- * assertEqual($browser.IE, true);
- * assertEqual($browser.MOZ, true);
- */
-
-
 var ua = navigator.userAgent.toLowerCase();
 var external = window.external || '';
 var core, m, extra, version, os;

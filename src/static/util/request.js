@@ -1,36 +1,34 @@
 module.exports = {
-	requset:function(opt){
-		var that = this;
+	requset: function(opt) {
+		var _this = this;
+
 		$.ajax({
-		        url: opt.url,
-		        data: opt.data,
-		        type: opt.type,
-		        dataType: opt.dataType || 'jsonp',
-				xhrFields: {
-				    withCredentials: true
-				},
-		        complete: function() {
-		        	that.complete()
-		        },
-		        error: function() {
-		            that.error();
-		        },
-		        timeout: opt.timeout,
-		        success: function(rs) {
+	        url: opt.url,
+	        data: opt.data,
+	        type: opt.type,
+	        dataType: opt.dataType || 'jsonp',
+			xhrFields: {
+			    withCredentials: true
+			},
+	        complete: function() {
+	        	_this.complete()
+	        },
+	        error: function() {
+	            _this.error();
+	        },
+	        timeout: opt.timeout,
+	        success: function(rs) {
 
-		        	that.success(rs);
-		        }
-		    });
+	        	_this.success(rs);
+	        }
+	    });
 
-		return that;
+		return _this;
 	},
-	success:function(){
-
+	success: function() {
 	},
-	error:function(){
-
+	error: function() {
 	},
-	complete:function(){
-
+	complete: function() {
 	}
 }

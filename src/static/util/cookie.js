@@ -1,6 +1,3 @@
-/**
- * Created by sina on 2016/5/20.
- */
 var reg = /[^\n\s*\r;]+=[^;]*/g;
 var cookieUtil = {
     setCookie: function (opt) {
