@@ -113,7 +113,8 @@ var Browser = {
     'MOBILE': /mobile/i.test(ua),
     'WX': /MicroMessenger/i.test(ua),
     'UC': /UCBrowser/i.test(ua),
-    'QQ': /QQBrowser/i.test(ua)
+    'QQ': /QQBrowser/i.test(ua),
+    'WB':/Weibo/i.test(ua),
 };
 
 Browser.SAFARI = !Browser.UC && !Browser.CHROME && (/([\w.]*) safari/).test(ua);

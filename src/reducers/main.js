@@ -1,37 +1,56 @@
-// Immutable
-import { Map, List } from 'immutable';
-// Constants
+import { Map } from 'immutable';
 import actionTypes from '../constants/actions';
 
 const initialState = Map({
-    navItems: List.of(
-        Map({
-            displayText: 'Main',
-            link: '/'
-        }),
-        Map({
-            displayText: 'Demo',
-            link: '/demo'
-        }),
-    ),
-    currentSelectedPageSubMenu: List.of(),
-    hasMoreTopic: false
+    userInfo: Map({
+        islogin: 0,
+        nick: '',
+        portrait_url: '',
+        return_url: '',
+        uid: '',
+        uname: '',
+        userface: ''
+    }),
+    hasMoreTopic: true,
+    isShowMe: false,
+    isWant2Logout: false,
+    isShowFav: true,
 });
-
-const updateNavigationItem = (state) => {
-    return state;
-};
 
 export default function mainReducer(state = initialState, action) {
     switch (action.type) {
-        case actionTypes.GET_CURRENT_USER_SUCCESS:
-            return updateNavigationItem(state, action);
-        case actionTypes.LOGIN_SUCCESS:
-            return updateNavigationItem(state, action);
-        case actionTypes.SET_CURRENT_SELECTED_PAGE_NAME:
-            let newSubMenu = state.get('subMenu').get(action.name);
-            return state.set('currentSelectedPageSubMenu', newSubMenu ? newSubMenu : List.of());
-        default:
+        case actionTypes.LOGIN_SUCCESS: {
+            return state.set('userInfo', Map(action.userInfo));
+        }
+        case actionTypes.SHOW_ME: {
+            return state.set('isShowMe', true);
+        }
+        case actionTypes.HIDE_ME: {
+            return state.set('isShowMe', false);
+        }
+        case actionTypes.WANT_TO_LOGOUT: {
+            return state.set('isShowMe', false).set('isWant2Logout', true);
+        }
+        case actionTypes.CANCEL_LOGOUT: {
+            return state.set('isWant2Logout', false);
+        }
+        case actionTypes.LOGOUT_SUCCESS: {
+            state = state.set('userInfo', Map({
+                islogin: 0,
+                nick: '',
+                portrait_url: '',
+                return_url: '',
+                uid: '',
+                uname: '',
+                userface: ''
+            }));
+            return state.set('isWant2Logout', false);
+        }
+        case actionTypes.CLOSE_FAV: {
+            return state.set('isShowFav', false);
+        }
+        default: {
             return state;
+        }
     }
 };

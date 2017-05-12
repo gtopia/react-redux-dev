@@ -11,3 +11,4 @@ html{font-size:20px; -webkit-tap-highlight-color: rgba(0,0,0,0);}
 body{font-size:16px; background:#fff; position:relative;}
 video::-webkit-media-controls-start-playback-button {display: none;}
 .hide{display: none;}
+#root{height: 100%;}

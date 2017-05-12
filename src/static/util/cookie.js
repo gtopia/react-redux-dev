@@ -66,7 +66,7 @@ module.exports = {
      * }
      */
     setCookie: function (opt) {
-        cookieUtil.setCookie(opt)
+        cookieUtil.setCookie(opt);
     },
     /**
      * 根据key值获取cookie对应的值，没有返回''空字符串
