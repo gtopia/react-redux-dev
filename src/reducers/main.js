@@ -14,7 +14,8 @@ const initialState = Map({
     hasMoreTopic: true,
     isShowMe: false,
     isWant2Logout: false,
-    isShowFav: true,
+    isShowAddFav: false,
+    isShowGuideFav: true,
 });
 
 export default function mainReducer(state = initialState, action) {

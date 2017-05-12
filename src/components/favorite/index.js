@@ -110,27 +110,25 @@ class Favorite extends Component {
                 }
             };
             console.log(method);
-            // require.ensure([], function(require) {
-            //     var tpl;
-            //     require('./scss/pop.scss');
-            //     if((isQQBrowser || isUCBrowser) && !isWX && os.android){
-            //         tpl = require('./tpl/android-qq-uc-pop.tpl');
-            //         $('body').append(tpl());
-            //         method.init($(".android-pop-bookmark"),true);
-            //     }else if((isQQBrowser || isUCBrowser) && !isWX && os.ios){
-            //         tpl = require('./tpl/ios-qq-uc-pop.tpl');
-            //         $('body').append(tpl());
-            //         method.init($(".ios-qq-uc-pop"),true);
-            //     }else if(os.ios && brower.SAFARI){
-            //         tpl = require('./tpl/pop.tpl');
-            //         $('body').append(tpl());
-            //         method.init($(".ios-pop-disktop"),false);
-            //     }
-            // });
         };
     }
 
     componentWillMount() {
+        if ((browserUtil.QQ || browserUtil.UC) && !browserUtil.WX && osUtil.android) {
+            // tpl = require('./tpl/android-qq-uc-pop.tpl');
+            // $('body').append(tpl());
+            // method.init($(".android-pop-bookmark"),true);
+        }
+        else if ((browserUtil.QQ || browserUtil.UC) && !browserUtil.WX && osUtil.ios) {
+            // tpl = require('./tpl/ios-qq-uc-pop.tpl');
+            // $('body').append(tpl());
+            // method.init($(".ios-qq-uc-pop"),true);
+        }
+        else if (osUtil.ios && browserUtil.SAFARI) {
+            // tpl = require('./tpl/pop.tpl');
+            // $('body').append(tpl());
+            // method.init($(".ios-pop-disktop"),false);
+        }
     }
 
     _closeFav() {
@@ -144,31 +142,58 @@ class Favorite extends Component {
     }
 
     render() {
-        const { isShowFav } = this.props;
-        let favoriteClass = classNames({
-            'layout__fav': true,
-            'hide': !isShowFav
+        const { isShowAddFav, isShowGuideFav } = this.props;
+        let favClass = classNames({
+            'layout__addfav': isShowAddFav,
+            'layout__guidefav': isShowGuideFav,
+            'hide': !(isShowAddFav || isShowGuideFav)
         });
 
+        let Fav = () => {
+            let renderHTML = <div></div>;
+
+            if (isShowAddFav) {
+                renderHTML = (
+                    <div>
+                        <div className="fav__img"></div>
+                        <p className="fav__title">添加收藏</p>
+                        <p className="fav__intro">更方便的了解热门话题</p>
+                        <div className="fav__add" onClick={this._addFav}><p>收 藏</p></div>
+                        <i className="fav__close" onClick={this._closeFav}></i>
+                    </div>
+                );
+            }
+            else if (isShowGuideFav) {
+                renderHTML = (
+                    <div>
+                        <div className="fav__img"></div>
+                        <p className="fav__title">添加收藏</p>
+                        <p className="fav__intro">更方便的了解热门话题</p>
+                        <i className="fav__guide-icon"></i>
+                        <p className="fav__guide-text">点击下方的按钮</p>
+                        <i className="fav__close" onClick={this._closeFav}></i>
+                    </div>
+                );
+            }
+
+            return renderHTML;
+        };
+
         return (
-            <div className={favoriteClass}>
-                <div className="fav__img"></div>
-                <p className="fav__title">添加收藏</p>
-                <p className="fav__intro">更方便的了解热门话题</p>
-                <div className="fav__add" onClick={this._addFav}><p>收 藏</p></div>
-                <div className="fav__close" onClick={this._closeFav}></div>
-            </div>
+            <div className={favClass}><Fav/></div>
         );
     }
 }
 
 Favorite.propTypes = {
-    isShowFav: PropTypes.bool,
+    isShowAddFav: PropTypes.bool,
+    isShowGuideFav: PropTypes.bool,
     closeFav: PropTypes.func,
 };
 
 Favorite.defaultProps = {
-    isShowFav: false,
+    isShowAddFav: false,
+    isShowGuideFav: false,
     closeFav: () => {},
 };
 

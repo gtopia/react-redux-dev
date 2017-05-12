@@ -33,20 +33,20 @@
 		color: #FFFFFF;
 		letter-spacing: 0;
 	}
-}
 
-.nav__login-btn:after {
-    position: absolute;
-    display: inline-block;
-    content: "";
-    box-sizing: border-box;
-    left: 0;
-    top:0;
-    height: 200%;
-    width: 200%;
-    transform-origin: 0 0;
-    border: 1px solid #979797;
-    transform: scale(.5);
+	&::after {
+	    position: absolute;
+	    display: inline-block;
+	    content: "";
+	    box-sizing: border-box;
+	    left: 0;
+	    top:0;
+	    height: 200%;
+	    width: 200%;
+	    transform-origin: 0 0;
+	    border: 1px solid #979797;
+	    transform: scale(.5);
+	}
 }
 
 .nav__portrait-bg {
@@ -110,20 +110,20 @@
 			color: #666666;
 			letter-spacing: 0;
 		}
-	}
 
-	.showme__logout:after {
-	    position: absolute;
-	    display: inline-block;
-	    content: "";
-	    box-sizing: border-box;
-	    left: 0;
-	    top:0;
-	    height: 200%;
-	    width: 200%;
-	    transform-origin: 0 0;
-	    border: 1px solid #C8C8C8;
-	    transform: scale(.5);
+		&::after {
+		    position: absolute;
+		    display: inline-block;
+		    content: "";
+		    box-sizing: border-box;
+		    left: 0;
+		    top:0;
+		    height: 200%;
+		    width: 200%;
+		    transform-origin: 0 0;
+		    border: 1px solid #C8C8C8;
+		    transform: scale(.5);
+		}
 	}
 }
 
@@ -171,20 +171,20 @@
 			color: #666666;
 			letter-spacing: 0;
 		}
-	}
 
-	.confirm__cancel:after {
-	    position: absolute;
-	    display: inline-block;
-	    content: "";
-	    box-sizing: border-box;
-	    left: 0;
-	    top:0;
-	    height: 200%;
-	    width: 200%;
-	    transform-origin: 0 0;
-	    border: 1px solid #C8C8C8;
-	    transform: scale(.5);
+		&::after {
+		    position: absolute;
+		    display: inline-block;
+		    content: "";
+		    box-sizing: border-box;
+		    left: 0;
+		    top:0;
+		    height: 200%;
+		    width: 200%;
+		    transform-origin: 0 0;
+		    border: 1px solid #C8C8C8;
+		    transform: scale(.5);
+		}
 	}
 
 	.confirm__exit {
@@ -203,20 +203,20 @@
 			color: #FF834B;
 			letter-spacing: 0;
 		}
-	}
 
-	.confirm__exit:after {
-	    position: absolute;
-	    display: inline-block;
-	    content: "";
-	    box-sizing: border-box;
-	    left: 0;
-	    top:0;
-	    height: 200%;
-	    width: 200%;
-	    transform-origin: 0 0;
-	    border: 1px solid #FF834B;
-	    transform: scale(.5);
+		&::after {
+		    position: absolute;
+		    display: inline-block;
+		    content: "";
+		    box-sizing: border-box;
+		    left: 0;
+		    top:0;
+		    height: 200%;
+		    width: 200%;
+		    transform-origin: 0 0;
+		    border: 1px solid #FF834B;
+		    transform: scale(.5);
+		}
 	}
 }
 

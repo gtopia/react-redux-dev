@@ -25,7 +25,8 @@ class Main extends Component {
             userInfo, 
             isWant2Logout, 
             isShowMe,
-            isShowFav,
+            isShowAddFav,
+            isShowGuideFav,
         } = this.props.mainState;
         const { 
             handleLogin,
@@ -52,9 +53,13 @@ class Main extends Component {
                     handleLogout={handleLogout}
                 /> 
                 <main>
-                    <div>{this.props.children}</div> 
+                    <div style={{width:'100%',height:'200px'}}>Card1</div> 
+                    <div style={{width:'100%',height:'200px'}}>Card2</div> 
+                    <div style={{width:'100%',height:'200px'}}>Card3</div> 
+                    <div style={{width:'100%',height:'200px'}}>Card4</div> 
+                    <div style={{width:'100%',height:'200px'}}>Card5</div> 
                 </main>
-                <Favorite isShowFav={isShowFav} closeFav={closeFav} />
+                <Favorite isShowAddFav={isShowAddFav} isShowGuideFav={isShowGuideFav} closeFav={closeFav} />
             </section>
         );
     }
