@@ -1,3 +1,8 @@
+/**
+ * Author: zhiyou
+ * Date: 2017/05/08
+ * Description: Ê×Ò³reducer¡£
+ */
 import { Map } from 'immutable';
 import actionTypes from '../constants/actions';
 

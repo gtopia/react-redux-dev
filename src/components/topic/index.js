@@ -14,6 +14,36 @@ class Topic extends Component {
         super(props);
         this.topicData = [];
         this.requesting = false;
+
+        this.lazyloadPic = ($scope, containerClass) => {
+            var picLoading = true;
+
+            if (!picLoading) {
+                return;
+            }
+
+            picLoading = false;
+            setTimeout(() => {
+                picLoading = true;
+            }, 100);
+
+            var scrollTopPos = $(window).scrollTop() + $(window).height();
+            var picElements = $scope.find(containerClass);
+
+            picElements.forEach((item) => {
+                if (!item.imgOnload && ($(item).offset().top < scrollTopPos)) {
+                    var oImage = new Image();
+                    oImage.src = $(item).data('imgurl');
+                    oImage.onload = () => {
+                        item.imgOnload = true;
+                        $(item).css({
+                            'background-image': 'url(' + $(item).data('imgurl') + ')',
+                            'background-size': '100% 100%'
+                        });
+                    };
+                }
+            });
+        };
     }
 
     componentWillMount() {
@@ -34,7 +64,6 @@ class Topic extends Component {
         };
 
         reqCb.success = function(res) {
-            // console.log(res);
             if (res && res.data.length) {
                 _this.topicData = [
                     {
@@ -56,14 +85,21 @@ class Topic extends Component {
                     {
                         "id": "113",
                         "tname": "topic1",
-                        "digest": "老太摆摊打气球判三年",
-                        "url": "http://k.sinaimg.cn/n/blog/0ef13950/20170512/11.jpg/w710h340z1l1t1db0.jpg",
+                        "digest": "一带一路",
+                        "url": "http://k.sinaimg.cn/n/blog/transform/20170515/Y2oU-fyfeutp9876674.jpg/w710h340z1l1t1258.jpg",
                         "attend": "10001",
                         "utime": "1493976709"
                     },
                 ].concat(res.data);
             }
         };
+    }
+
+    componentDidUpdate() {
+        let _this = this;
+
+        _this.lazyloadPic($('.layout__topic'), '.topic__container');
+        $(window).on('scroll', _this.lazyloadPic.bind(_this, $('.layout__topic'), '.topic__container'));
     }
 
     render() {
@@ -81,12 +117,15 @@ class Topic extends Component {
             return (
                 <Link to={`${item.id}`} key={item.id}>
                     <div className="topic__container"
-                         style={{'backgroundImage': 'url(' + item.url + ')'}}>
+                         data-imgurl={item.url}
+                         >
                         <div className="topic__people">
-                            <p className="people__num">{item.attend}</p>
-                            <p className="people__desc">人参与</p>
+                            <p className="num">{item.attend}</p>
+                            <p className="desc">人参与</p>
                         </div>
-                        <p className="topic__title"># {item.digest} #</p>
+                        <div className="topic__title">
+                            <p className="text"># {item.digest} #</p>
+                        </div>
                     </div>
                 </Link>
             );

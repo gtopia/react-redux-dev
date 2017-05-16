@@ -10,10 +10,13 @@
 	position: relative;
 	width: 100%;
 	height: 1.6rem;
-	// background-image: url(http://k.sinaimg.cn/n/blog/transform/20170515/Y2oU-fyfeutp9876674.jpg/w710h340z1l1t1258.jpg);
-	background-size: 100% 100%;
-	background-repeat: no-repeat;
 	text-align: center;
+	background-repeat: no-repeat;
+	background-color: #EBEBEB;
+
+	background-image: url(../../static/img/img_system.png);
+	background-size: 1.36rem .39rem;
+	background-position: center;
 }
 
 .topic__people {
@@ -26,7 +29,7 @@
 	@include sprite2rem($bg-topic-join);
 	text-align: center;
 
-	.people__num {
+	.num {
 		margin-top: 2px;
 		font-family: PingFangSC-Semibold;
 		font-size: .12rem;
@@ -36,7 +39,7 @@
 		letter-spacing: 0;
 	}
 
-	.people__desc {
+	.desc {
 		font-family: PingFangSC-Regular;
 		font-size: .1rem;
 		line-height: .14rem;
@@ -47,20 +50,28 @@
 
 .topic__title {
 	position: absolute;
-	left: 0;
-	right: 0;
-	margin: auto;
-	bottom: .1rem;
-	font-family: PingFangSC-Semibold;
-	font-size: .17rem;
-	font-weight: bold;
-	line-height: .24rem;
-	color: #FFFFFF;
-	letter-spacing: 0;
+	bottom: 0;
+	width: 100%;
+	height: .8rem;
+    background-image: linear-gradient(-180deg, rgba(0,0,0,0.00) 0%, rgba(0,0,0,0.70) 100%);
 
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
+	.text {
+		position: absolute;
+		left: 0;
+		right: 0;
+		margin: auto;
+		bottom: .1rem;
+		font-family: PingFangSC-Semibold;
+		font-size: .17rem;
+		font-weight: bold;
+		line-height: .24rem;
+		color: #FFFFFF;
+		letter-spacing: 0;
+
+	    overflow: hidden;
+	    text-overflow: ellipsis;
+	    display: -webkit-box;
+	    -webkit-line-clamp: 2;
+	    -webkit-box-orient: vertical;
+	}
 }
