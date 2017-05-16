@@ -15,5 +15,8 @@ export default keyMirror({
     CANCEL_LOGOUT: null,
     LOGOUT_SUCCESS: null,
     CHECK_STYLE: null,
+    SHOW_FAV: null,
     CLOSE_FAV: null,
+    SHOW_FAV_GUIDE: null,
+    CLOSE_FAV_GUIDE: null,
 });

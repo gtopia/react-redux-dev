@@ -1,3 +1,8 @@
+/**
+ * Author: zhiyou
+ * Date: 2017/05/09
+ * Description: 导航组件。包含登录登出功能。
+ */
 import './index.scss';
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
@@ -6,8 +11,9 @@ import classNames from 'classnames';
 
 let MoreTopic = () => {
     return ( 
-        <Link to={MAIN_URL} className="nav__more-topic">
-            <p>更多话题</p><span></span>
+        <Link to={MAIN_URL} className="nav__moretopic">
+            <p className="moretopic__text">更多话题</p>
+            <span className="moretopic__icon"></span>
         </Link>
     );
 };
@@ -56,7 +62,7 @@ class Navigation extends Component {
         let moreTopicHtml = hasMoreTopic ? <MoreTopic/> : null;
         let defaultface = 'http://i3.sinaimg.cn/dy/deco/2012/1018/sina_comment_defaultface.png';
         let loginClass = classNames({
-            'nav__login-btn': true,
+            'nav__loginbtn': true,
             'hide': userInfo.islogin
         });
         let portraitClass = classNames({
@@ -72,14 +78,14 @@ class Navigation extends Component {
             'hide': !isShowMe
         });
         let confirmLogoutClass = classNames({
-            'nav__confirm-logout': true,
+            'nav__confirm': true,
             'hide': !isWant2Logout
         });
 
         return (
             <header className="layout__header">
                 <div className="header__nav">
-                    <div className={loginClass} onClick={this._handleLogin}><p>登录</p></div>
+                    <div className={loginClass} onClick={this._handleLogin}><p className="login__text">登录</p></div>
                     <div className={portraitClass} 
                          style={{'backgroundImage': 'url(' + (userInfo.userface || defaultface) + ')'}}
                          onClick={this._showMe}></div>
@@ -89,17 +95,17 @@ class Navigation extends Component {
                 </div>
                 <div className={showMeClass} data-name="showme-prompts">
                     <div className="showme__bgimg"></div>
-                    <div className="showme__text">
-                        <p>更多功能建设中</p>
-                        <p>敬请期待</p>
+                    <div className="showme__textctner">
+                        <p className="showme__text">更多功能建设中</p>
+                        <p className="showme__text">敬请期待</p>
                     </div>
-                    <div className="showme__logout" onClick={this._want2Logout}><p>退出登录</p></div>
+                    <div className="showme__logout" onClick={this._want2Logout}><p className="logout__text">退出登录</p></div>
                 </div>
                 <div className={confirmLogoutClass}>
                     <p className="confirm__question">确定要退出登录吗？</p>
                     <p className="confirm__alert">退出后将不能评论和回复</p>
-                    <div className="confirm__cancel" onClick={this._cancelLogout}><p>取消</p></div>
-                    <div className="confirm__exit" onClick={this._handleLogout}><p>退出</p></div>
+                    <div className="confirm__cancel" onClick={this._cancelLogout}><p className="cancel__text">取消</p></div>
+                    <div className="confirm__exit" onClick={this._handleLogout}><p className="exit__text">退出</p></div>
                 </div>
             </header>
         );

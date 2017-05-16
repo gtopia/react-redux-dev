@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Navigation from '../../components/navigation';
+import Topic from '../../components/topic';
 import Favorite from '../../components/favorite';
 import * as MainActions from '../../actions/main';
 
@@ -25,8 +26,8 @@ class Main extends Component {
             userInfo, 
             isWant2Logout, 
             isShowMe,
-            isShowAddFav,
-            isShowGuideFav,
+            isShowFav,
+            isShowFavGuide,
         } = this.props.mainState;
         const { 
             handleLogin,
@@ -35,7 +36,10 @@ class Main extends Component {
             cancelLogout, 
             handleLogout, 
             checkLoginStatus,
+            showFav,
             closeFav,
+            showFavGuide,
+            closeFavGuide,
         } = this.props.mainActions;
 
         return ( 
@@ -52,14 +56,16 @@ class Main extends Component {
                     cancelLogout={cancelLogout}
                     handleLogout={handleLogout}
                 /> 
-                <main>
-                    <div style={{width:'100%',height:'200px'}}>Card1</div> 
-                    <div style={{width:'100%',height:'200px'}}>Card2</div> 
-                    <div style={{width:'100%',height:'200px'}}>Card3</div> 
-                    <div style={{width:'100%',height:'200px'}}>Card4</div> 
-                    <div style={{width:'100%',height:'200px'}}>Card5</div> 
-                </main>
-                <Favorite isShowAddFav={isShowAddFav} isShowGuideFav={isShowGuideFav} closeFav={closeFav} />
+                <Topic
+                />
+                <Favorite 
+                    isShowFav={isShowFav} 
+                    isShowFavGuide={isShowFavGuide} 
+                    showFav={showFav} 
+                    closeFav={closeFav} 
+                    showFavGuide={showFavGuide} 
+                    closeFavGuide={closeFavGuide} 
+                />
             </section>
         );
     }

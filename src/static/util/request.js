@@ -1,17 +1,17 @@
 module.exports = {
-	requset: function(opt) {
+	request: function(opt) {
 		var _this = this;
 
 		$.ajax({
 	        url: opt.url,
-	        data: opt.data,
+	        data: opt.data || {},
 	        type: opt.type,
 	        dataType: opt.dataType || 'jsonp',
 			xhrFields: {
 			    withCredentials: true
 			},
 	        complete: function() {
-	        	_this.complete()
+	        	_this.complete();
 	        },
 	        error: function() {
 	            _this.error();
@@ -31,4 +31,4 @@ module.exports = {
 	},
 	complete: function() {
 	}
-}
+};

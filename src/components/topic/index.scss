@@ -1,0 +1,61 @@
+@import "../../static/style/auto-sprite.scss";
+@import "../../static/style/px2rem-sprite.scss";
+
+.topic__container {
+	position: relative;
+	width: 100%;
+	height: 1.6rem;
+	// background-image: url(http://k.sinaimg.cn/n/blog/transform/20170515/Y2oU-fyfeutp9876674.jpg/w710h340z1l1t1258.jpg);
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	text-align: center;
+}
+
+.topic__people {
+	position: absolute;
+	top: 0;
+	right: .1rem;
+	// width: .5rem;
+	// height: .43rem;
+	// background: rgba(0,0,0,0.80);
+	@include sprite2rem($bg-topic-join);
+	text-align: center;
+
+	.people__num {
+		margin-top: 2px;
+		font-family: PingFangSC-Semibold;
+		font-size: .12rem;
+		font-weight: bold;
+		line-height: .17rem;
+		color: #FF9E4D;
+		letter-spacing: 0;
+	}
+
+	.people__desc {
+		font-family: PingFangSC-Regular;
+		font-size: .1rem;
+		line-height: .14rem;
+		color: #FFFFFF;
+		letter-spacing: 0;
+	}
+}
+
+.topic__title {
+	position: absolute;
+	left: 0;
+	right: 0;
+	margin: auto;
+	bottom: .1rem;
+	font-family: PingFangSC-Semibold;
+	font-size: .17rem;
+	font-weight: bold;
+	line-height: .24rem;
+	color: #FFFFFF;
+	letter-spacing: 0;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}

@@ -14,8 +14,8 @@ const initialState = Map({
     hasMoreTopic: true,
     isShowMe: false,
     isWant2Logout: false,
-    isShowAddFav: false,
-    isShowGuideFav: true,
+    isShowFav: false,
+    isShowFavGuide: false,
 });
 
 export default function mainReducer(state = initialState, action) {
@@ -47,8 +47,17 @@ export default function mainReducer(state = initialState, action) {
             }));
             return state.set('isWant2Logout', false);
         }
+        case actionTypes.SHOW_FAV: {
+            return state.set('isShowFav', true);
+        }
         case actionTypes.CLOSE_FAV: {
             return state.set('isShowFav', false);
+        }
+        case actionTypes.SHOW_FAV_GUIDE: {
+            return state.set('isShowFavGuide', true);
+        }
+        case actionTypes.CLOSE_FAV_GUIDE: {
+            return state.set('isShowFavGuide', false);
         }
         default: {
             return state;

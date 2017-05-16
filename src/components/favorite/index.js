@@ -1,3 +1,8 @@
+/**
+ * Author: zhiyou
+ * Date: 2017/05/12
+ * Description: 收藏提示组件。对于QQ和UC浏览器，Android收藏到主屏幕，IOS添加到书签。对于IOS的Safari浏览器显示收藏提醒。
+ */
 import './index.scss';
 import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
@@ -9,169 +14,139 @@ import osUtil from '../../static/util/os.js';
 class Favorite extends Component {
     constructor(props) {
         super(props);
-        let _this = this;
         this._closeFav = ::this._closeFav;
+        this._closeFavGuide = ::this._closeFavGuide;
         this._addFav = ::this._addFav;
-
         this._cookieHandler = {
-            key: 'ADDFAV_POPUP',
-            closeDay: 3 * 24 * 60 * 60 * 1000,
-            disappearDay: 1 * 24 * 60 * 60 * 1000,
-            isOutDate: function() {
-                if (cookieUtil.getCookie(this.key) === '') {
-                    return true;
-                }
-                else {
-                    return false;
-                }
+            key: 'FAV_PROMPT',
+            longInterval: 3 * 24 * 60 * 60 * 1000,
+            shortInterval: 1 * 24 * 60 * 60 * 1000,
+            isExpired: function() {
+                return (cookieUtil.getCookie(this.key) === '');
             },
-            getNow: function() {
+            getCurTime: function() {
                 var date = new Date();
                 var hour = date.getHours();
                 var min = date.getMinutes();
 
                 return hour * 60 * 60 * 1000 + min * 60 * 1000;
             },
-            setOutDateCookie: function(time) {
+            setExpires: function(time) {
                 cookieUtil.setCookie({
                     key: this.key,
                     value: 1,
-                    expires: time - this.getNow()
+                    expires: time - this.getCurTime()
                 });
             }
         };
+        this._favHandler = {
+            favTimer: null,
+            favGuideTimer: null,
+            setIframe: function(url) {
+                var div = document.createElement('div');
+                div.style.display = 'none';
+                document.body.appendChild(div);
+                div.innerHTML = '<iframe src="' + url + '" style="" />';
+            },
+            addFav: function() {
+                // Android收藏到主屏幕，IOS添加到书签。
+                if (browserUtil.QQ && !browserUtil.WX) {
+                    this.setIframe("http://so.sina.cn/browser/js.d.api?from=qq&act=bookmark_add");
+                }
 
-        this._otherRequst = (url) => {
-            var div = document.createElement('div');
-            div.style.display = 'none';
-            document.body.appendChild(div);
-            div.innerHTML = '<iframe src="' + url + '" style="" />';
-        };
-
-        this._addFavPopup = () => {
-            if (!_this._cookieHandler.isOutDate() || browserUtil.WX || browserUtil.WB) {
-                return;
-            }
-
-            var method = {
-                isShow: false,
-                timeoutIde: '',
-                init: function($pop,isAddBookMark) {
-                    this.$pop = $pop;
-                    this.initBtn(isAddBookMark);
-                    this.show();
-                },
-                initBtn: function(isAddBookMark) {
-                    var _self = this;
-                    function closeHandler(){
-                        clearTimeout(_self.timeoutIde);
-                        _this._cookieHandlercookieHandler.setOutDateCookie(_this._cookieHandlercookieHandler.closeDay);
-                        _self.$pop.fadeOut(300);
+                if (browserUtil.UC && !browserUtil.WX) {
+                    if (osUtil.android) {
+                        this.setIframe("ext:add_favorite");
                     }
-                    this.$pop.find('.close').on('click', function() {
-                        closeHandler();
-                    });
-                    if (isAddBookMark){
-                        this.$pop.find('.sure-btn').on('click',function(){
-                            closeHandler();
-                            //调用浏览器书签
-                            _self.addAction();
-                        });
-                    }
-                },
-                show: function() {
-                    var _self = this;
-                    window.SUDA.uaTrack("newsmob_aiyowoqu", "body_cxcx_1_1");
-                    _self.$pop.css({
-                        'display': 'block'
-                    });
-                    _self.timeoutIde = setTimeout(function() {
-                        _this._cookieHandlercookieHandler.setOutDateCookie(_this._cookieHandlercookieHandler.disappearDay);
-                        _self.$pop.fadeOut(300);
-                    }, 10 * 1000);
-                },
-                /**
-                 * 点击添加到收藏夹
-                 */
-                addAction: function() {
-                    //判断浏览器
-                    if (browserUtil.QQ && !browserUtil.WX) {
-                        _this._otherRequst("http://so.sina.cn/browser/js.d.api?from=qq&act=bookmark_add");
-                    }
-                    if (browserUtil.UC && !browserUtil.WX) {
-                        //没有判断版本
-                        if (osUtil.android) {
-                            _this._otherRequst("ext:add_favorite");
-                        }
-                        else if (osUtil.ios) {
-                            window.location.href = "ext:add_favorite";
-                        }
+                    else if (osUtil.ios) {
+                        window.location.href = "ext:add_favorite";
                     }
                 }
-            };
-            console.log(method);
+            }
         };
     }
 
     componentWillMount() {
-        if ((browserUtil.QQ || browserUtil.UC) && !browserUtil.WX && osUtil.android) {
-            // tpl = require('./tpl/android-qq-uc-pop.tpl');
-            // $('body').append(tpl());
-            // method.init($(".android-pop-bookmark"),true);
-        }
-        else if ((browserUtil.QQ || browserUtil.UC) && !browserUtil.WX && osUtil.ios) {
-            // tpl = require('./tpl/ios-qq-uc-pop.tpl');
-            // $('body').append(tpl());
-            // method.init($(".ios-qq-uc-pop"),true);
-        }
-        else if (osUtil.ios && browserUtil.SAFARI) {
-            // tpl = require('./tpl/pop.tpl');
-            // $('body').append(tpl());
-            // method.init($(".ios-pop-disktop"),false);
+        let _this = this;
+        const { showFav, closeFav, showFavGuide, closeFavGuide } = this.props;
+
+        if (this._cookieHandler.isExpired() && !browserUtil.WX && !browserUtil.WB) {
+            if ((browserUtil.QQ || browserUtil.UC) && (osUtil.android || osUtil.ios)) {
+                // 显示添加收藏
+                showFav();
+                closeFavGuide();
+                this._favHandler.favTimer = setTimeout(function() {
+                    _this._cookieHandler.setExpires(_this._cookieHandler.shortInterval);
+                    closeFav();
+                }, 10 * 1000);
+            }
+            else if (osUtil.ios && browserUtil.SAFARI) {
+                // 显示收藏指引
+                closeFav();
+                showFavGuide();
+                this._favHandler.favGuideTimer = setTimeout(function() {
+                    _this._cookieHandler.setExpires(_this._cookieHandler.shortInterval);
+                    closeFavGuide();
+                }, 10 * 1000);
+            }
         }
     }
 
     _closeFav() {
         const { closeFav } = this.props;
 
+        clearTimeout(this._favHandler.favTimer);
         closeFav();
     }
 
+    _closeFavGuide() {
+        const { closeFavGuide } = this.props;
+
+        clearTimeout(this._favHandler.favGuideTimer);
+        closeFavGuide();
+    }
+
     _addFav() {
-        console.log('>>> add fav');
+        const { closeFav } = this.props;
+
+        clearTimeout(this._favHandler.favTimer);
+        this._favHandler.addFav();
+        closeFav();
     }
 
     render() {
-        const { isShowAddFav, isShowGuideFav } = this.props;
+        const { isShowFav, isShowFavGuide } = this.props;
         let favClass = classNames({
-            'layout__addfav': isShowAddFav,
-            'layout__guidefav': isShowGuideFav,
-            'hide': !(isShowAddFav || isShowGuideFav)
+            'layout__fav': isShowFav,
+            'layout__favguide': isShowFavGuide,
+            'hide': !(isShowFav || isShowFavGuide)
         });
 
         let Fav = () => {
             let renderHTML = <div></div>;
 
-            if (isShowAddFav) {
+            if (isShowFav) {
                 renderHTML = (
-                    <div>
+                    <div className="fav__container">
                         <div className="fav__img"></div>
                         <p className="fav__title">添加收藏</p>
                         <p className="fav__intro">更方便的了解热门话题</p>
-                        <div className="fav__add" onClick={this._addFav}><p>收 藏</p></div>
+                        <div className="fav__add" onClick={this._addFav}>
+                            <p className="add__text">收 藏</p>
+                        </div>
                         <i className="fav__close" onClick={this._closeFav}></i>
                     </div>
                 );
             }
-            else if (isShowGuideFav) {
+            else if (isShowFavGuide) {
                 renderHTML = (
-                    <div>
+                    <div className="fav__container">
                         <div className="fav__img"></div>
-                        <p className="fav__title">添加收藏</p>
+                        <p className="fav__title">添加到主屏幕</p>
                         <p className="fav__intro">更方便的了解热门话题</p>
                         <i className="fav__guide-icon"></i>
                         <p className="fav__guide-text">点击下方的按钮</p>
-                        <i className="fav__close" onClick={this._closeFav}></i>
+                        <i className="fav__close" onClick={this._closeFavGuide}></i>
                     </div>
                 );
             }
@@ -186,15 +161,21 @@ class Favorite extends Component {
 }
 
 Favorite.propTypes = {
-    isShowAddFav: PropTypes.bool,
-    isShowGuideFav: PropTypes.bool,
+    isShowFav: PropTypes.bool,
+    isShowFavGuide: PropTypes.bool,
+    showFav: PropTypes.func,
     closeFav: PropTypes.func,
+    showFavGuide: PropTypes.func,
+    closeFavGuide: PropTypes.func,
 };
 
 Favorite.defaultProps = {
-    isShowAddFav: false,
-    isShowGuideFav: false,
+    isShowFav: false,
+    isShowFavGuide: false,
+    showFav: () => {},
     closeFav: () => {},
+    showFavGuide: () => {},
+    closeFavGuide: () => {},
 };
 
 export default Favorite;
