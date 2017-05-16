@@ -1,3 +1,8 @@
+/**
+ * Author: zhiyou
+ * Date: 2017/05/08
+ * Description: Action type集合。
+ */
 var keyMirror = require('keymirror');
 
 export default keyMirror({

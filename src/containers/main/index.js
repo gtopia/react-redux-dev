@@ -1,3 +1,8 @@
+/**
+ * Author: zhiyou
+ * Date: 2017/05/08
+ * Description: 首页容器。
+ */
 import './index.css';
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';

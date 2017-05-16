@@ -21,12 +21,13 @@
 * Express
 * ImmutableJS
 * React
+* React-router
 * Redux
 * Webpack2
 
 
 ## Features  
-* Art Template
+* Babel
 * CSS Autoprefixer
 * CSS Sprite
 * Commons Chunk
@@ -43,6 +44,7 @@
 
 
 ## Change log  
+* v0.4.2 : Remove art-template-loader.
 * v0.4.1 : Import classnames for conditionally joining classNames together.
 * v0.4.0 : Use webpack-spritesmith to make CSS sprite.
 * v0.3.0 : Add image-webpack-loader to compress images.

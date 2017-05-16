@@ -1,6 +1,11 @@
 @import "../../static/style/auto-sprite.scss";
 @import "../../static/style/px2rem-sprite.scss";
 
+.layout__topic {
+	position: relative;
+	top: .4rem;
+}
+
 .topic__container {
 	position: relative;
 	width: 100%;

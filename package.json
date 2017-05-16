@@ -23,7 +23,6 @@
     "redux-thunk": "^1.0.0"
   },
   "devDependencies": {
-    "art-template-loader": "^0.3.0",
     "autoprefixer": "^6.0.3",
     "babel-cli": "^6.7.5",
     "babel-core": "^6.3.17",

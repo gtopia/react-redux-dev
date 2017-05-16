@@ -1,3 +1,8 @@
+/**
+ * Author: zhiyou
+ * Date: 2017/05/08
+ * Description: Webpack配置。
+ */
 var Webpack = require('webpack');
 var autoprefixer = require('autoprefixer');
 var precss = require('precss');
@@ -123,31 +128,31 @@ var config = {
                     }
                 ]
             },
-            {
-                test: /\.tpl$/,
-                loader: "art-template-loader",
-                // options: {
-                //   // art-template options (if necessary)
-                //   imports: require.resolve('./template-imports'),
-                //   compressor: source => {
-                //       return source
-                //           // remove newline / carriage return
-                //           .replace(/\n/g, "")
+            // {
+            //     test: /\.tpl$/,
+            //     loader: "art-template-loader",
+            //     // options: {
+            //     //   // art-template options (if necessary)
+            //     //   imports: require.resolve('./template-imports'),
+            //     //   compressor: source => {
+            //     //       return source
+            //     //           // remove newline / carriage return
+            //     //           .replace(/\n/g, "")
 
-                //           // remove whitespace (space and tabs) before tags
-                //           .replace(/[\t ]+\</g, "<")
+            //     //           // remove whitespace (space and tabs) before tags
+            //     //           .replace(/[\t ]+\</g, "<")
 
-                //           // remove whitespace between tags
-                //           .replace(/\>[\t ]+\</g, "><")
+            //     //           // remove whitespace between tags
+            //     //           .replace(/\>[\t ]+\</g, "><")
 
-                //           // remove whitespace after tags
-                //           .replace(/\>[\t ]+$/g, ">")
+            //     //           // remove whitespace after tags
+            //     //           .replace(/\>[\t ]+$/g, ">")
                           
-                //           // remove comments
-                //           .replace(/<!--[\w\W]*?-->/g, "");
-                //   }
-                // }
-            },
+            //     //           // remove comments
+            //     //           .replace(/<!--[\w\W]*?-->/g, "");
+            //     //   }
+            //     // }
+            // },
             {
                 test: /\.html$/,
                 loader: 'html-loader',
@@ -259,7 +264,7 @@ var config = {
         return pluginList;
     })(),
     resolve: {
-        extensions: ['.js', '.jsx', '.tpl', '.scss', '.css'],
+        extensions: ['.js', '.jsx', '.scss', '.css'],
         modules: [
             path.resolve(__dirname, 'src', 'static'),
             path.resolve(__dirname, 'node_modules')

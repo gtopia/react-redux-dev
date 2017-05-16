@@ -1,3 +1,8 @@
+/**
+ * Author: zhiyou
+ * Date: 2017/05/08
+ * Description: Server配置。
+ */
 var path = require('path');
 var express = require('express');
 var webpack = require('webpack');
@@ -47,6 +52,6 @@ app.listen(PORT, '0.0.0.0', function(err) {
         console.log(err);
         return;
     }
-    console.log('Listening at http://localhost:' + PORT);
-    opn('http://localhost:' + PORT);
+    console.log('Listening at http://topic.sina.cn:' + PORT);
+    opn('http://topic.sina.cn:' + PORT);
 });
