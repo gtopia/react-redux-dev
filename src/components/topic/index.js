@@ -4,102 +4,77 @@
  * Description: 话题卡片组件。
  */
 import './index.scss';
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router';
 import classNames from 'classnames';
 import reqObj from '../../static/util/request.js';
+import lazyloadPic from '../../static/util/lazyloadPic.js';
 
 class Topic extends Component {
     constructor(props) {
         super(props);
-        this.topicData = [];
-        this.requesting = false;
-
-        this.lazyloadPic = ($scope, containerClass) => {
-            var picLoading = true;
-
-            if (!picLoading) {
-                return;
-            }
-
-            picLoading = false;
-            setTimeout(() => {
-                picLoading = true;
-            }, 100);
-
-            var scrollTopPos = $(window).scrollTop() + $(window).height();
-            var picElements = $scope.find(containerClass);
-
-            picElements.forEach((item) => {
-                if (!item.imgOnload && ($(item).offset().top < scrollTopPos)) {
-                    var oImage = new Image();
-                    oImage.src = $(item).data('imgurl');
-                    oImage.onload = () => {
-                        item.imgOnload = true;
-                        $(item).css({
-                            'background-image': 'url(' + $(item).data('imgurl') + ')',
-                            'background-size': '100% 100%'
-                        });
-                    };
-                }
-            });
+        this.apiurl = 'http://xiaoyang7.topic.sina.cn/api/news/topic_list';
+        this.state =  {
+            topicData: [
+            ],
+            requesting: false
         };
     }
 
     componentWillMount() {
+        this._getData({
+            url: this.apiurl,
+        });
+
+        $(window).on('scroll', this._loadMore.bind(this, this.apiurl));
+    }
+
+    componentDidUpdate() {
+        lazyloadPic.init($('.layout__topic'), '.topic__container');
+    }
+
+    _getData(opt) {
         let _this = this;
-        
-        _this.requesting = true;
+
+        _this.state.requesting = true;
 
         let reqCb = reqObj.request({
-            url: 'http://xiaoyang7.topic.sina.cn/api/news/topic_list',
-            data: {},
+            url: opt.url,
+            data: opt.data || {},
             type: 'GET',
             dataType: 'jsonp',
             timeout: 3000
         });
 
         reqCb.complete = function() {
-            _this.requesting = false;
+            _this.state.requesting = false;
         };
 
         reqCb.success = function(res) {
             if (res && res.data.length) {
-                _this.topicData = [
-                    {
-                        "id": "111",
-                        "tname": "topic1",
-                        "digest": "老太摆摊打气球判三年",
-                        "url": "http://k.sinaimg.cn/n/blog/0ef13950/20170512/11.jpg/w710h340z1l1t1db0.jpg",
-                        "attend": "10001",
-                        "utime": "1493976709"
-                    },
-                    {
-                        "id": "112",
-                        "tname": "topic2",
-                        "digest": "如果需要换行就换标题太长就换行但是也不能超过两行",
-                        "url": "http://k.sinaimg.cn/n/blog/transform/20170515/J3lT-fyfeutp9876975.jpg/w710h340z1l1t1c76.jpg",
-                        "attend": "19000",
-                        "utime": "1493976701"
-                    },
-                    {
-                        "id": "113",
-                        "tname": "topic1",
-                        "digest": "一带一路",
-                        "url": "http://k.sinaimg.cn/n/blog/transform/20170515/Y2oU-fyfeutp9876674.jpg/w710h340z1l1t1258.jpg",
-                        "attend": "10001",
-                        "utime": "1493976709"
-                    },
-                ].concat(res.data);
+                _this.setState({'topicData': _this.state.topicData.concat(res.data)});
             }
         };
     }
 
-    componentDidUpdate() {
+    _loadMore(apiurl) {
         let _this = this;
+        let bottomPos = $(window).scrollTop() + window.innerHeight;
+        let pageHeight = $('main').offset().top + $('main').height();
 
-        _this.lazyloadPic($('.layout__topic'), '.topic__container');
-        $(window).on('scroll', _this.lazyloadPic.bind(_this, $('.layout__topic'), '.topic__container'));
+        if (!_this.state.requesting && (pageHeight-bottomPos < 10)) {
+            let latestTopic = _this.state.topicData[_this.state.topicData.length-1];
+
+            _this._getData({
+                url: apiurl,
+                data: {
+                    id: latestTopic.id,
+                    utime: latestTopic.utime,
+                    number: 10,
+                    offset: _this.state.topicData.length
+                }
+            });
+        }
     }
 
     render() {
@@ -109,7 +84,7 @@ class Topic extends Component {
             'hide': !(true)
         });
 
-        let topicItems = this.topicData.map((item) => {
+        let topicItems = this.state.topicData.map((item) => {
             if (parseInt(item.attend) >= 10000) {
                 item.attend = (parseInt(item.attend)/10000).toFixed(1) + '万';
             }
@@ -136,19 +111,5 @@ class Topic extends Component {
         );
     }
 }
-
-Topic.propTypes = {
-    isShowFav: PropTypes.bool,
-    isShowFavGuide: PropTypes.bool,
-    showFav: PropTypes.func,
-    closeFav: PropTypes.func,
-};
-
-Topic.defaultProps = {
-    isShowFav: false,
-    isShowFavGuide: false,
-    showFav: () => {},
-    closeFav: () => {},
-};
 
 export default Topic;

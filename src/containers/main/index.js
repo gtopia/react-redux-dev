@@ -61,8 +61,7 @@ class Main extends Component {
                     cancelLogout={cancelLogout}
                     handleLogout={handleLogout}
                 /> 
-                <Topic
-                />
+                <Topic/>
                 <Favorite 
                     isShowFav={isShowFav} 
                     isShowFavGuide={isShowFavGuide} 

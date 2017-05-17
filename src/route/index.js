@@ -1,9 +1,11 @@
-// Libraries
+/**
+ * Author: zhiyou
+ * Date: 2017/05/08
+ * Description: ¬∑”…≈‰÷√°£
+ */
 import React from 'react';
 import Router, { Route, IndexRoute } from 'react-router';
 import createBrowserHistory from 'history/lib/createBrowserHistory';
-
-// Components
 import MainPage from '../containers/main';
 import DemoPage from '../containers/demo';
 import NotFoundPage from '../containers/notFound';
