@@ -1,7 +1,7 @@
 /**
  * Author: zhiyou
  * Date: 2017/05/08
- * Description: Ê×Ò³reducer¡£
+ * Description: é¦–é¡µreducerã€‚
  */
 import { Map } from 'immutable';
 import actionTypes from '../constants/actions';
@@ -16,7 +16,7 @@ const initialState = Map({
         uname: '',
         userface: ''
     }),
-    hasMoreTopic: true,
+    hasMoreTopic: false,
     isShowMe: false,
     isWant2Logout: false,
     isShowFav: false,

@@ -1,20 +1,25 @@
 /**
  * Author: zhiyou
  * Date: 2017/05/08
- * Description: Â·ÓÉÅäÖÃ¡£
+ * Description: è·¯ç”±é…ç½®ã€‚
  */
 import React from 'react';
-import Router, { Route, IndexRoute } from 'react-router';
-import createBrowserHistory from 'history/lib/createBrowserHistory';
+import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import MainPage from '../containers/main';
-import DemoPage from '../containers/demo';
 import NotFoundPage from '../containers/notFound';
+import TopicPage from '../containers/topicPage';
+
+let handleParams = ({params}, replace) => {
+    if (isNaN(params.topicId)) {
+        replace({ pathname: '/not/found' });
+    }
+};
 
 const appRoutes = () => (
-  <Router history={createBrowserHistory()}>
+  <Router history={browserHistory}>
     <Route path="/">
       <IndexRoute component={MainPage}/>
-      <Route path="demo" component={DemoPage}/>
+      <Route path=":topicId(/comments)" component={TopicPage} onEnter={handleParams} />
       <Route path="*" component={NotFoundPage} />
     </Route>
   </Router>

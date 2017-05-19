@@ -6,7 +6,6 @@
 import './index.scss';
 import React, { Component } from 'react';
 import { Link } from 'react-router';
-import classNames from 'classnames';
 import reqObj from '../../static/util/request.js';
 import lazyloadPic from '../../static/util/lazyloadPic.js';
 
@@ -51,8 +50,9 @@ class Topic extends Component {
         };
 
         reqCb.success = function(res) {
-            if (res && res.data.length) {
-                _this.setState({'topicData': _this.state.topicData.concat(res.data)});
+            // debugger;
+            if (res && res.result && !res.result.status.code && res.result.data.length) {
+                _this.setState({'topicData': _this.state.topicData.concat(res.result.data)});
             }
         };
     }
@@ -78,12 +78,6 @@ class Topic extends Component {
     }
 
     render() {
-        const {  } = this.props;
-        let topicClass = classNames({
-            'layout__topic': true,
-            'hide': !(true)
-        });
-
         let topicItems = this.state.topicData.map((item) => {
             if (parseInt(item.attend) >= 10000) {
                 item.attend = (parseInt(item.attend)/10000).toFixed(1) + '万';
@@ -91,9 +85,7 @@ class Topic extends Component {
 
             return (
                 <Link to={`${item.id}`} key={item.id}>
-                    <div className="topic__container"
-                         data-imgurl={item.url}
-                         >
+                    <div className="topic__container" data-imgurl={item.url}>
                         <div className="topic__people">
                             <p className="num">{item.attend}</p>
                             <p className="desc">人参与</p>
@@ -107,7 +99,7 @@ class Topic extends Component {
         });
 
         return (
-            <main className={topicClass}>{topicItems}</main>
+            <main className="layout__topic">{topicItems}</main>
         );
     }
 }
