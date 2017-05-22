@@ -84,7 +84,7 @@ class Topic extends Component {
             }
 
             return (
-                <Link to={`${item.id}`} key={item.id}>
+                <Link to={'ht'+`${item.id}`} key={item.id}>
                     <div className="topic__container" data-imgurl={item.url}>
                         <div className="topic__people">
                             <p className="num">{item.attend}</p>

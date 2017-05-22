@@ -19,7 +19,7 @@ const appRoutes = () => (
   <Router history={browserHistory}>
     <Route path="/">
       <IndexRoute component={MainPage}/>
-      <Route path=":topicId(/comments)" component={TopicPage} onEnter={handleParams} />
+      <Route path="ht:topicId(/comments)" component={TopicPage} onEnter={handleParams} />
       <Route path="*" component={NotFoundPage} />
     </Route>
   </Router>
