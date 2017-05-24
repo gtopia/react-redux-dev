@@ -10,17 +10,16 @@ module.exports = {
 			xhrFields: {
 			    withCredentials: true
 			},
-	        complete: function() {
-	        	_this.complete();
-	        },
+            timeout: opt.timeout,
+            success: function(res) {
+                _this.success(res);
+            },
 	        error: function() {
 	            _this.error();
 	        },
-	        timeout: opt.timeout,
-	        success: function(rs) {
-
-	        	_this.success(rs);
-	        }
+            complete: function() {
+                _this.complete();
+            }
 	    });
 
 		return _this;
