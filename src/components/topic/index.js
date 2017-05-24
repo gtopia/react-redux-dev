@@ -69,8 +69,7 @@ class Topic extends Component {
                 url: apiurl,
                 data: {
                     id: latestTopic.id,
-                    utime: latestTopic.utime,
-                    number: 10,
+                    num: 10,
                     offset: _this.state.topicData.length
                 }
             });
