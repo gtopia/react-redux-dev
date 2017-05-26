@@ -37,7 +37,7 @@
     "no-extra-parens": 0,
     "no-irregular-whitespace": 2,
     "no-iterator": 2,
-    "no-loop-func": 2,
+    "no-loop-func": 0,  // off
     "no-multi-spaces": 0,
     "no-multi-str": 0,
     "no-mixed-spaces-and-tabs": 0,
