@@ -271,8 +271,8 @@ var config = {
         ],
         alias: {
             'zepto': zeptoPath,
-            // 'swiper': path.join(__dirname, 'node_modules', 'swiper', 'dist', 'js', 'swiper.min.js'),
-            // 'swiper-css': path.join(__dirname, 'node_modules', 'swiper', 'dist', 'css', 'swiper.min.css'),
+            'swiper': path.join(__dirname, 'node_modules', 'swiper', 'dist', 'js', 'swiper.min.js'),
+            'swiper-css': path.join(__dirname, 'node_modules', 'swiper', 'dist', 'css', 'swiper.min.css'),
             'react': path.join(__dirname, 'node_modules', 'react', 'dist', 'react.js'),
             'react-dom': path.join(__dirname, 'node_modules', 'react-dom', 'dist', 'react-dom.min.js'),
             'react-redux': path.join(__dirname, 'node_modules', 'react-redux', 'dist', 'react-redux.min.js'),
