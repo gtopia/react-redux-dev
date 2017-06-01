@@ -40,6 +40,7 @@
 * Image Compress
 * Modularized HTML
 * Sass
+* Swiper
 * Uglify code with Babili
 
 
