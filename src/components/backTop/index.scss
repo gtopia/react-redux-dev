@@ -1,0 +1,10 @@
+@import "../../static/style/auto-sprite.scss";
+@import "../../static/style/px2rem-sprite.scss";
+
+.backtop {
+	position: fixed;
+	bottom: 1.16rem;
+    right: .16rem;
+	z-index: 300;
+	@include sprite2rem($btn-backtop);
+}

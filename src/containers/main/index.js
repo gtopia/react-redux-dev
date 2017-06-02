@@ -3,18 +3,23 @@
  * Date: 2017/05/08
  * Description: 首页容器。
  */
-import './index.css';
+import './index.scss';
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Navigation from '../../components/navigation';
 import Topic from '../../components/topic';
 import Favorite from '../../components/favorite';
+import BackTop from '../../components/backTop';
 import * as MainActions from '../../actions/main';
+import classNames from 'classnames';
 
 class Main extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            'loading': true,
+        };
     }
 
     _checkStyle(e) {
@@ -23,6 +28,10 @@ class Main extends Component {
         if (this.props.mainState.isShowMe && !($target.attr('data-name')=='showme-prompts' || $target.parents('[data-name="showme-prompts"]').length)) {
             this.props.mainActions.hideShowMePrompts();
         }
+    }
+
+    _hideLoading() {
+        this.state.loading = false;
     }
 
     render() {
@@ -46,6 +55,10 @@ class Main extends Component {
             showFavGuide,
             closeFavGuide,
         } = this.props.mainActions;
+        let statusLoadingClass = classNames({
+            'loading': true,
+            'hide': !this.state.loading
+        });
 
         return ( 
             <section className="layout__section" onClick={this._checkStyle.bind(this)}>
@@ -61,7 +74,8 @@ class Main extends Component {
                     cancelLogout={cancelLogout}
                     handleLogout={handleLogout}
                 /> 
-                <Topic/>
+                <div className={statusLoadingClass}></div>
+                <Topic hideLoading={this._hideLoading.bind(this)} />
                 <Favorite 
                     isShowFav={isShowFav} 
                     isShowFavGuide={isShowFavGuide} 
@@ -70,6 +84,7 @@ class Main extends Component {
                     showFavGuide={showFavGuide} 
                     closeFavGuide={closeFavGuide} 
                 />
+                <BackTop />
             </section>
         );
     }

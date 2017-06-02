@@ -5,13 +5,6 @@
  */
 import actionTypes from '../constants/actions';
 
-export function _setLoading(state) {
-    return {
-        type: actionTypes.SET_LOADING,
-        state
-    };
-};
-
 export function _loginSuccess(userInfo) {
     return {
         type: actionTypes.LOGIN_SUCCESS,

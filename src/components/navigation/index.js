@@ -32,6 +32,23 @@ class Navigation extends Component {
         this.props.checkLoginStatus();
     }
 
+    componentDidMount() {
+        const { hasMoreTopic } = this.props;
+        let headerNavNode = this.refs['header_nav'];
+
+        // 用户行为统计
+        if (hasMoreTopic) {
+            headerNavNode.dataset['sudaclick'] = "topic_top_nav_1";
+        }
+        else {
+            headerNavNode.dataset['sudaclick'] = "top_nav_1";
+        }
+    }
+
+    componentWillUnmount() {
+        this.refs['header_nav'].dataset['sudaclick'] = "";
+    }
+
     _handleLogin() {
         const { handleLogin } = this.props;
         handleLogin();
@@ -84,11 +101,16 @@ class Navigation extends Component {
 
         return (
             <header className="layout__header">
-                <div className="header__nav">
-                    <div className={loginClass} onClick={this._handleLogin}><p className="login__text">登录</p></div>
+                <div ref="header_nav" className="header__nav">
+                    <div className={loginClass} 
+                         onClick={this._handleLogin}
+                         data-sudaclick="top_nav_login_1" >
+                        <p className="login__text">登录</p>
+                    </div>
                     <div className={portraitClass} 
                          style={{'backgroundImage': 'url(' + (userInfo.userface || defaultface) + ')'}}
-                         onClick={this._showMe}></div>
+                         onClick={this._showMe}
+                         data-sudaclick="top_nav_avatar_1" ></div>
                     <div className={portraitBgClass}></div>
                     <div className="nav__logo"></div>
                     { moreTopicHtml }
@@ -99,13 +121,21 @@ class Navigation extends Component {
                         <p className="showme__text">更多功能建设中</p>
                         <p className="showme__text">敬请期待</p>
                     </div>
-                    <div className="showme__logout" onClick={this._want2Logout}><p className="logout__text">退出登录</p></div>
+                    <div className="showme__logout"
+                         onClick={this._want2Logout}
+                         data-sudaclick="logoout_1" >
+                        <p className="logout__text">退出登录</p>
+                    </div>
                 </div>
                 <div className={confirmLogoutClass}>
                     <p className="confirm__question">确定要退出登录吗？</p>
                     <p className="confirm__alert">退出后将不能评论和回复</p>
                     <div className="confirm__cancel" onClick={this._cancelLogout}><p className="cancel__text">取消</p></div>
-                    <div className="confirm__exit" onClick={this._handleLogout}><p className="exit__text">退出</p></div>
+                    <div className="confirm__exit" 
+                         onClick={this._handleLogout}
+                         data-sudaclick="logoout_confirm_1" >
+                        <p className="exit__text">退出</p>
+                    </div>
                 </div>
             </header>
         );

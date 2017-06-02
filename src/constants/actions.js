@@ -6,13 +6,7 @@
 var keyMirror = require('keymirror');
 
 export default keyMirror({
-    // Demo page actions
-    INCREASE_COUNTER: null,
-    DECREASE_COUNTER: null,
-    INCREASE_COUNTER_LATER: null,
-
-    // Main actions
-    SET_LOADING: null,
+    // Main page
     LOGIN_SUCCESS: null,
     SHOW_ME: null,
     HIDE_ME: null,
