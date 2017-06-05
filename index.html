@@ -29,6 +29,9 @@
 	    (function() {
 	        function setFont() {
 	            var clientWidth = (document.documentElement || document.body.parentNode).clientWidth;
+	            if ( clientWidth > 769) {
+	            	clientWidth = 750;
+	            }
 	            // 375尺寸的比例，换算成@1x设计稿后1px=0.01rem
 	            __rootrem = Math.floor(clientWidth * 100 / 375);
 	            (document.documentElement || document.body.parentNode).style.fontSize = __rootrem + "px";
@@ -43,8 +46,6 @@
 
 <body>
     <div id='root'></div>
-
-
 	<script type="text/javascript" src="http://mjs.sinaimg.cn/wap/public/suda/201705021130/suda_log.min.js"></script>
 	<script type="text/javascript" src="http://mjs.sinaimg.cn/wap/public/suda/201705021130/suda_map.min.js"></script>
 	<script type="text/javascript" src="http://mjs.sinaimg.cn/wap/module/share/201507071535/js/waplogin.min.js"></script>

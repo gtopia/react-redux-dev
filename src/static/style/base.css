@@ -14,3 +14,7 @@ video::-webkit-media-controls-start-playback-button {display: none;}
 #root{position: relative; height: 100%;}
 @media screen and (min-width: 769px) {#root {position: relative; width: 750px; margin: 0 auto;}}
 input[type="button"],button{ -webkit-appearance: none; }
+body {
+  -webkit-overflow-scrolling: touch;
+  overflow-scrolling: touch;
+}

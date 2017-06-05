@@ -14,11 +14,12 @@ class NotFound extends Component {
     }
 
     _handleBack() {
-        if (window.document.referrer == "") {
+        if (!window.history.length || window.document.referrer == "") {
             window.location = MAIN_URL;
         }
         else {
-            window.location.href = window.document.referrer;
+            // window.location.href = window.document.referrer;
+            window.history.back();
         }
     }
 

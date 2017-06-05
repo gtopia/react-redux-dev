@@ -35,8 +35,8 @@ var config = {
         var entryObj = {
             'app': [mainPath],
             'libs': [
-                'babel-polyfill', 'react', 'react-dom', 'react-router', 
-                'redux', 'react-redux', 'redux-thunk', 'immutable', 'zepto'
+                'babel-polyfill', 'react', 'react-dom', 'react-router', 'redux', 'react-redux', 'redux-thunk', 
+                'immutable', 'zepto', 'swiper'
             ]
         };
 
@@ -49,11 +49,11 @@ var config = {
     output: {
         path: __DEV__ ? buildPath : distPath,
         filename: __DEV__ ? 'js/bundle.js' : 'js/bundle-[chunkhash:8].js',
-        publicPath: __DEV__ ? '/tmpdir/' : "http://simg.sinajs.cn/products/news/items/2017/top_topics/dist/"
+        publicPath: __DEV__ ? '/tmpdir/' : "http://simg.sinajs.cn/products/news/items/2017/top_topics/"
     },
     module: {
         // noParse: /jquery|zepto|react\.min|react\-dom\.min|react\-redux\.min|redux\.min|immutable\.min/,
-        noParse: /jquery|zepto|immutable\.min/,
+        noParse: /jquery|zepto/,
         rules: [
             {
                 test: /\.js(x)?$/,
@@ -190,7 +190,7 @@ var config = {
                 hash: false
             }),
             new ExtractTextPlugin({
-                filename: __DEV__ ? 'css/bundle.css' : 'css/bundle-[chunkhash:8].css',
+                filename: __DEV__ ? 'css/bundle.css' : 'css/bundle-[contenthash:8].css',
                 allChunks: true,
                 disable: false
             }),
@@ -277,7 +277,7 @@ var config = {
             'react-dom': path.join(__dirname, 'node_modules', 'react-dom', 'dist', 'react-dom.min.js'),
             'react-redux': path.join(__dirname, 'node_modules', 'react-redux', 'dist', 'react-redux.min.js'),
             'redux': path.join(__dirname, 'node_modules', 'redux', 'dist', 'redux.min.js'),
-            'immutable': path.join(__dirname, 'node_modules', 'immutable', 'dist', 'immutable.js')
+            'immutable': path.join(__dirname, 'node_modules', 'immutable', 'dist', 'immutable.min.js')
         }
     }
 };
