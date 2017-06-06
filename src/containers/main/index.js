@@ -4,7 +4,8 @@
  * Description: 首页容器。
  */
 import './index.scss';
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Navigation from '../../components/navigation';

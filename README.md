@@ -45,6 +45,7 @@
 
 
 ## Change log  
+* v0.4.4 : Fixed React.PropTypes deprecated issue of React.
 * v0.4.3 : Upgrade react-router to v2.x. Update react-router config.
 * v0.4.2 : Remove art-template-loader.
 * v0.4.1 : Import classnames for conditionally joining classNames together.

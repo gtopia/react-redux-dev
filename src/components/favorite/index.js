@@ -4,9 +4,9 @@
  * Description: 收藏提示组件。对于QQ和UC浏览器，Android收藏到主屏幕，IOS添加到书签。对于IOS的Safari浏览器显示收藏提醒。
  */
 import './index.scss';
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
-
 import cookieUtil from '../../static/util/cookie.js';
 import browserUtil from '../../static/util/browser.js';
 import osUtil from '../../static/util/os.js';

@@ -36,7 +36,7 @@ var config = {
             'app': [mainPath],
             'libs': [
                 'babel-polyfill', 'react', 'react-dom', 'react-router', 'redux', 'react-redux', 'redux-thunk', 
-                'immutable', 'zepto', 'swiper'
+                'prop-types', 'immutable', 'zepto', 'swiper'
             ]
         };
 

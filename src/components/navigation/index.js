@@ -4,7 +4,8 @@
  * Description: 导航组件。包含登录登出功能。
  */
 import './index.scss';
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import { MAIN_URL } from '../../constants/app';
 import classNames from 'classnames';

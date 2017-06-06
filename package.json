@@ -1,6 +1,6 @@
 {
   "name": "react-redux-dev",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "Webpack2 + React + Redux development framework.",
   "main": "index.js",
   "scripts": {
@@ -10,11 +10,18 @@
     "build-dev": "npm run clean-dev && cross-env NODE_ENV=development webpack -d --progress --profile --colors --config webpack.config.js",
     "build": "npm run clean && cross-env NODE_ENV=production webpack -p --progress --config webpack.config.js"
   },
+  "author": "Alan Gao",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gtopia/react-redux-dev.git"
+  },
   "dependencies": {
     "babel-polyfill": "^6.3.14",
     "classnames": "^2.2.5",
     "immutable": "^3.7.5",
     "keymirror": "^0.1.1",
+    "prop-types": "^15.5.10",
     "react": "^0.14.9",
     "react-dom": "^0.14.9",
     "react-redux": "^4.0.0",
