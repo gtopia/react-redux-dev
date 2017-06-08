@@ -5,7 +5,7 @@
  */
 import './index.scss';
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+import { browserHistory } from 'react-router';
 import { MAIN_URL } from '../../constants/app';
 import wxShare from '../../static/util/wxShareCustom.js';
 
@@ -23,14 +23,19 @@ class NotFound extends Component {
         });
     }
 
-    _handleBack() {
+    _gotoPrev() {
         if (!window.history.length || window.document.referrer == "") {
-            window.location = MAIN_URL;
+            // window.location = MAIN_URL;
+            browserHistory.push(MAIN_URL);
         }
         else {
             // window.location.href = window.document.referrer;
             window.history.back();
         }
+    }
+
+    _gotoHome() {
+        browserHistory.push(MAIN_URL);
     }
 
 	render() {
@@ -39,14 +44,14 @@ class NotFound extends Component {
 				<div className="notfound__bg"></div>
                 <p className="notfound__prompt">抱歉，该页面不存在</p>
 				<p className="notfound__suggest">请检查页面地址输入是否正确</p>
-                <div className="notfound__back" onClick={this._handleBack.bind(this)}>
+                <div className="notfound__back" onClick={this._gotoPrev.bind(this)}>
                     <p className="txt">
                         <span className="back__bg"></span>返回上页
                     </p>
                 </div>
-                <Link to={MAIN_URL} className="notfound__gohome">
+                <div className="notfound__gohome" onClick={this._gotoHome.bind(this)}>
                     <p className="txt">回首页</p>
-                </Link>
+                </div>
 			</div>
 		);
 	}
