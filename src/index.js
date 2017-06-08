@@ -13,7 +13,7 @@ import appRoute from './route';
 
 const store = configureStore();
 
-ReactDOM.render(
+ReactDOM.render (
 	<Provider store={store}>
 	    {appRoute(store)}
 	</Provider>,

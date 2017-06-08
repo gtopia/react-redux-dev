@@ -6,16 +6,20 @@
 import './index.scss';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router';
+import { browserHistory } from 'react-router';
 import { MAIN_URL } from '../../constants/app';
 import classNames from 'classnames';
 
 let MoreTopic = () => {
-    return ( 
-        <Link to={MAIN_URL} className="nav__moretopic">
+    let gotoMainPage = () => {
+        browserHistory.push(MAIN_URL);
+    };
+
+    return (
+        <div className="nav__moretopic" onClick={gotoMainPage}>
             <p className="moretopic__text">更多话题</p>
             <span className="moretopic__icon"></span>
-        </Link>
+        </div>
     );
 };
 

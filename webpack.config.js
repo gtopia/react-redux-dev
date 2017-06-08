@@ -35,8 +35,9 @@ var config = {
         var entryObj = {
             'app': [mainPath],
             'libs': [
-                'babel-polyfill', 'react', 'react-dom', 'react-router', 'redux', 'react-redux', 'redux-thunk', 
-                'prop-types', 'immutable', 'zepto', 'swiper'
+                'react', 'react-dom', 'prop-types', 'immutable',
+                'redux', 'react-redux', 'redux-thunk', 'react-router',
+                'babel-polyfill', 'zepto', 'swiper', 'classnames', 'keymirror'
             ]
         };
 
@@ -48,7 +49,7 @@ var config = {
     })(),
     output: {
         path: __DEV__ ? buildPath : distPath,
-        filename: __DEV__ ? 'js/bundle.js' : 'js/bundle-[chunkhash:8].js',
+        filename: __DEV__ ? 'js/[name].bundle.js' : 'js/[name].bundle-[chunkhash:8].js',
         publicPath: __DEV__ ? '/tmpdir/' : "http://simg.sinajs.cn/products/news/items/2017/top_topics/"
     },
     module: {
@@ -185,9 +186,15 @@ var config = {
                 title: 'TEMP_TITLE',
                 template: templatePath,
                 filename: 'index.html',
-                chunks: ['app', 'libs'],
+                chunks: ['app', 'libs', 'commons'],
                 inject: 'body',
-                hash: false
+                hash: false,
+                chunksSortMode: function (chunk1, chunk2) {
+                    var order = ['commons', 'libs', 'app'];
+                    var order1 = order.indexOf(chunk1.names[0]);
+                    var order2 = order.indexOf(chunk2.names[0]);
+                    return order1 - order2;  
+                }
             }),
             new ExtractTextPlugin({
                 filename: __DEV__ ? 'css/bundle.css' : 'css/bundle-[contenthash:8].css',
@@ -195,8 +202,10 @@ var config = {
                 disable: false
             }),
             new Webpack.optimize.CommonsChunkPlugin({
-                name: 'libs',
-                filename: __DEV__ ? 'js/commons.bundle.js' : 'js/commons.bundle-[chunkhash:8].js'
+                name: 'commons',
+                minChunks: 2,
+                chunks: ['app', 'libs'],
+                filename: __DEV__ ? 'js/[name].bundle.js' : 'js/[name].bundle-[chunkhash:8].js'
             }),
             new SpritesmithPlugin({
                 src: {

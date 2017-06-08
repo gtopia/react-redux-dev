@@ -5,8 +5,8 @@
  */
 import './index.scss';
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router';
+// import PropTypes from 'prop-types';
+import { browserHistory } from 'react-router';
 import reqObj from '../../static/util/request.js';
 import lazyloadPic from '../../static/util/lazyloadPic.js';
 import classNames from 'classnames';
@@ -14,10 +14,12 @@ import classNames from 'classnames';
 class Topic extends Component {
     constructor(props) {
         super(props);
+        this.PAGESIZE = 10;     // 每次上拉加载条数
         this.apiurl = 'http://topic.sina.cn/api/news/topic_list';
         this.state =  {
             topicData: [],
             requesting: false,
+            isGetAll: false
         };
     }
 
@@ -29,9 +31,9 @@ class Topic extends Component {
         $(window).on('scroll', this._loadMore.bind(this, this.apiurl));
     }
 
-    componentDidMount() {
-        this.props.hideLoading();
-    }
+    // componentDidMount() {
+    //     this.props.hideLoading();
+    // }
 
     componentDidUpdate() {
         lazyloadPic.init($('.layout__topic'), '.topic__container');
@@ -53,13 +55,21 @@ class Topic extends Component {
         });
 
         reqCb.complete = function() {
-            _this.setState({
-                'requesting': false,
-            });
+            setTimeout(function() {
+                _this.setState({
+                    'requesting': false,
+                });
+            }, 60);
         };
 
         reqCb.success = function(res) {
             if (res && res.result && !res.result.status.code && res.result.data && res.result.data.length) {
+                if (res.result.data.length < _this.PAGESIZE) {
+                    _this.setState({
+                        'isGetAll': true
+                    });
+                }
+
                 _this.setState({
                     'topicData': _this.state.topicData.concat(res.result.data)
                 });
@@ -69,7 +79,7 @@ class Topic extends Component {
 
     _loadMore(apiurl) {
         let $container = $('main');
-        if (!$container.length) {
+        if (!$container.length || this.state.requesting || this.state.isGetAll) {
             return;
         }
 
@@ -77,23 +87,28 @@ class Topic extends Component {
         let bottomPos = $(window).scrollTop() + window.innerHeight;
         let pageHeight = $container.offset().top + $container.height();
 
-        if (!_this.state.requesting && (pageHeight-bottomPos < 10)) {
+        if (pageHeight-bottomPos < 10) {
             // SUDA PV 统计
             window.SUDA.log(window.sudaLogExt1, window.sudaLogExt2, window.location.href + '?loadmore=1');
 
             let latestTopic = _this.state.topicData[_this.state.topicData.length-1];
             let reqPara = {
                 id: parseInt(latestTopic.id),
-                num: 10,
+                num: _this.PAGESIZE,
                 utime: latestTopic.utime,
                 offset: _this.state.topicData.length
             };
 
+            // debugger;
             _this._getData({
                 url: apiurl,
                 data: reqPara
             });
         }
+    }
+
+    _gotoPage(path) {
+        browserHistory.push(path);
     }
 
     render() {
@@ -107,7 +122,7 @@ class Topic extends Component {
             }
 
             return (
-                <Link to={'ht'+`${item.id}`} key={item.id} data-sudaclick="card_list_1">
+                <div onClick={this._gotoPage.bind(this, 'ht'+`${item.id}`)} key={item.id} data-sudaclick="card_list_1">
                     <div className="topic__container" data-imgurl={item.url}>
                         <div className="topic__people">
                             <p className="num">{item.attend}</p>
@@ -117,7 +132,7 @@ class Topic extends Component {
                             <p className="text"># {item.digest} #</p>
                         </div>
                     </div>
-                </Link>
+                </div>
             );
         });
 
@@ -131,11 +146,11 @@ class Topic extends Component {
 }
 
 Topic.propTypes = {
-    hideLoading: PropTypes.func,
+    // hideLoading: PropTypes.func,
 };
 
 Topic.defaultProps = {
-    hideLoading: () => {},
+    // hideLoading: () => {},
 };
 
 export default Topic;

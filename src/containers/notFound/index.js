@@ -7,10 +7,20 @@ import './index.scss';
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { MAIN_URL } from '../../constants/app';
+import wxShare from '../../static/util/wxShareCustom.js';
 
 class NotFound extends Component {
     constructor(props) {
         super(props);
+    }
+
+    componentWillMount() {
+        wxShare.init({
+            url: 'http://topic.sina.cn/',  //分享链接
+            title: '全民话题 - 用不同视角发现新闻', //分享标题
+            content: '', //分享描述（分享朋友时会显示）
+            pic: 'http://simg.sinajs.cn/products/news/items/2017/top_topics/img/logo-share.png' //分享图片路径
+        });
     }
 
     _handleBack() {

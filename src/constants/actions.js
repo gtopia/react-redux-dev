@@ -13,9 +13,14 @@ export default keyMirror({
     WANT_TO_LOGOUT: null,
     CANCEL_LOGOUT: null,
     LOGOUT_SUCCESS: null,
-    CHECK_STYLE: null,
+    SHOW_MORE_TOPICS: null,
+    HIDE_MORE_TOPICS: null,
     SHOW_FAV: null,
     CLOSE_FAV: null,
     SHOW_FAV_GUIDE: null,
     CLOSE_FAV_GUIDE: null,
+
+    // Topic page
+    SHOW_CMNTS_POPUP: null,
+    HIDE_CMNTS_POPUP: null,
 });

@@ -5,6 +5,7 @@
  */
 import React from 'react';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
+import AppPage from '../containers/app';
 import MainPage from '../containers/main';
 import NotFoundPage from '../containers/notFound';
 import TopicPage from '../containers/topicPage';
@@ -17,11 +18,11 @@ let handleParams = ({params}, replace) => {
 
 const appRoutes = () => (
   <Router history={browserHistory}>
-    <Route path="/">
-      <IndexRoute component={MainPage}/>
-      <Route path="ht:topicId(/comments)" component={TopicPage} onEnter={handleParams} />
-      <Route path="*" component={NotFoundPage} />
+    <Route path="/" component={AppPage}>
+        <IndexRoute component={MainPage}/>
+        <Route path="ht:topicId(/comments)" component={TopicPage} onEnter={handleParams} />
     </Route>
+    <Route path="*" component={NotFoundPage} />
   </Router>
 );
 
