@@ -3,19 +3,19 @@
 
 .backtop {
 	position: fixed;
-	bottom: 1.16rem;
+	bottom: .8rem;
     right: .16rem;
-	z-index: 300;
+	z-index: 250;
 	@include sprite2rem($btn-backtop);
 }
 
 @media screen and (min-width: 769px) {
     .backtop {
         position: fixed;
-        bottom: 1.16rem;
+        bottom: .8rem;
         right: auto;
         margin-left: 640px;
-        z-index: 300;
+        z-index: 250;
         @include sprite2rem($btn-backtop);
     }
 }

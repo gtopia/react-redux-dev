@@ -116,20 +116,20 @@ class Topic extends Component {
             'topic__loading': true,
             'hide': !this.state.requesting
         });
-        let topicItems = this.state.topicData.map((item) => {
+        let topicItems = this.state.topicData.map((item, index) => {
             if (parseInt(item.attend) >= 10000) {
                 item.attend = (parseInt(item.attend)/10000).toFixed(1) + '万';
             }
 
             return (
-                <div onClick={this._gotoPage.bind(this, 'ht'+`${item.id}`)} key={item.id} data-sudaclick="card_list_1">
+                <div onClick={this._gotoPage.bind(this, 'ht'+`${item.id}`)} key={index} data-sudaclick="card_list_1">
                     <div className="topic__container" data-imgurl={item.url}>
                         <div className="topic__people">
                             <p className="num">{item.attend}</p>
                             <p className="desc">人参与</p>
                         </div>
                         <div className="topic__title">
-                            <p className="text"># {item.digest} #</p>
+                            <p className="text"># {item.tname} #</p>
                         </div>
                     </div>
                 </div>
