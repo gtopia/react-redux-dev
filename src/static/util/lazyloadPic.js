@@ -7,7 +7,7 @@ module.exports = {
     lazyloadPic: function ($scope, containerClass) {
         var picLoading = true;
 
-        if (!picLoading) {
+        if (!picLoading || $scope.is(':hidden')) {
             return;
         }
 
