@@ -1,7 +1,7 @@
 {
   "name": "react-redux-dev",
-  "version": "0.4.4",
-  "description": "Webpack2 + React + Redux development framework.",
+  "version": "0.4.6",
+  "description": "Webpack3 + React + Redux development framework.",
   "main": "index.js",
   "scripts": {
     "clean": "rimraf dist",
@@ -38,6 +38,7 @@
     "babel-loader": "^6.2.0",
     "babel-plugin-minify-dead-code-elimination": "^0.1.4",
     "babel-plugin-react-transform": "^2.0.0-beta1",
+    "babel-plugin-transform-remove-console": "^6.8.4",
     "babel-preset-babili": "0.0.12",
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-react": "^6.3.13",
@@ -68,7 +69,7 @@
     "sass-loader": "^6.0.3",
     "style-loader": "^0.12.4",
     "url-loader": "^0.5.6",
-    "webpack": "^2.4.1",
+    "webpack": "^3.0.0",
     "webpack-dev-middleware": "^1.2.0",
     "webpack-hot-middleware": "^2.4.1",
     "webpack-spritesmith": "^0.3.3"

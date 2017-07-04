@@ -225,7 +225,8 @@ var config = {
                     algorithm: 'binary-tree',
                     padding: 2
                 }
-            })
+            }),
+            new Webpack.optimize.ModuleConcatenationPlugin()
         ];
 
         if (__DEV__) {

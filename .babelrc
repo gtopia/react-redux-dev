@@ -1,7 +1,7 @@
 {
     "presets": [ ["es2015", { "modules": false }], "react", "stage-0" ],
     "env": {
-         "development": {
+        "development": {
             "plugins": [
                 [
                     "react-transform",
@@ -34,7 +34,8 @@
                         ]
                     }
                 ],
-                ["minify-dead-code-elimination", { "optimizeRawSize": true }]
+                ["minify-dead-code-elimination", { "optimizeRawSize": true }],
+                ["transform-remove-console"]
             ]
         }
     }

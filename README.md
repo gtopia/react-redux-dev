@@ -23,7 +23,7 @@
 * React
 * React-router
 * Redux
-* Webpack2
+* Webpack3
 
 
 ## Features  
@@ -45,6 +45,8 @@
 
 
 ## Change log  
+* v0.4.6 : Upgrade webpack to v3.
+* v0.4.5 : Add babel-plugin-transform-remove-console.
 * v0.4.4 : Fixed React.PropTypes deprecated issue of React.
 * v0.4.3 : Upgrade react-router to v2.x. Update react-router config.
 * v0.4.2 : Remove art-template-loader.
