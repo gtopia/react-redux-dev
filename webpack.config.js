@@ -22,8 +22,7 @@ var distPath = path.resolve(__dirname, 'dist');
 
 var mode = process.env.NODE_ENV.trim();
 var __DEV__ = mode!=='production';
-
-console.log('>>> Is this in DEV mode ?    -- ' + __DEV__);
+console.log(`> You're in ${__DEV__ ? "DEVELOPMENT" : "PRODUCTION"} mode.`);
 
 // Raise tread pool size to prevent bundling stuck issue
 process.env.UV_THREADPOOL_SIZE = 100;
@@ -226,7 +225,6 @@ var config = {
                     padding: 2
                 }
             }),
-            new Webpack.optimize.ModuleConcatenationPlugin()
         ];
 
         if (__DEV__) {
@@ -236,6 +234,7 @@ var config = {
         }
         else {
             pluginList = pluginList.concat([
+                new Webpack.optimize.ModuleConcatenationPlugin(),
                 new BabiliPlugin({}, {
                     comments: false
                 })

@@ -13,14 +13,12 @@ var app = express();
 var compiler = webpack(config);
 var PORT = process.argv[2] ? parseInt(process.argv[2]) : 80;
 
-
 app.use(require('webpack-dev-middleware')(compiler, {
     noInfo: true,
     publicPath: config.output.publicPath
 }));
 
 app.use(require('webpack-hot-middleware')(compiler));
-
 
 // Set access control if necessary.
 // app.all('*', function(req, res, next) {
