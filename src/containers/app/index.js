@@ -11,6 +11,7 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 import Navigation from '../../components/navigation';
 import * as AppActions from '../../actions/app';
+import Browser from '../../static/util/browser';
 
 class App extends Component {
     constructor(props) {
@@ -49,12 +50,13 @@ class App extends Component {
             handleLogout, 
             checkLoginStatus,
         } = this.props.appActions;
-//by qibin 对新浪新闻客户端进行ua判断。
-        if (navigator.userAgent.indexOf("sinanews")>-1) {
-            return ( <section className="layout__app" onClick={this._checkStyle.bind(this)}>
-                      { this.props.children }
-            </section>);
 
+        if (Browser.SINANEWS) {
+            return ( 
+                <section className="layout__app" onClick={this._checkStyle.bind(this)}>
+                    { this.props.children }
+                </section>
+            );
         }
         else {
             return (
@@ -74,10 +76,7 @@ class App extends Component {
                     { this.props.children }
                 </section>
             );
-
         }
-
-
     }
 }
 
