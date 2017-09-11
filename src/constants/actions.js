@@ -8,7 +8,7 @@ var keyMirror = require('keymirror');
 export default keyMirror({
     // Main page
     LOGIN_SUCCESS: null,
-    SHOW_ME: null,
+    TOGGLE_ME: null,
     HIDE_ME: null,
     WANT_TO_LOGOUT: null,
     CANCEL_LOGOUT: null,

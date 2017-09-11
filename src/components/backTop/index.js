@@ -20,13 +20,11 @@ class BackTop extends Component {
         let $win = $(window);
 
         $win.on('scroll', function() {
-            if ($win.scrollTop() > window.innerHeight) {
-                if (_this.refs['comp_backtop']) {
+            if (_this.refs['comp_backtop']) {
+                if ($win.scrollTop() > window.innerHeight) {
                     _this.setState({'isShow': true});
                 }
-            }
-            else {
-                if (_this.refs['comp_backtop']) {
+                else {
                     _this.setState({'isShow': false});
                 }
             }
@@ -48,7 +46,7 @@ class BackTop extends Component {
         });
 
         return (
-            <div ref="comp_backtop" className={backTopClass} onClick={this._handleBackTop.bind(this)}></div>
+            <div ref="comp_backtop" className={backTopClass} onClick={this._handleBackTop.bind(this)} data-sudaclick="backtop_1"></div>
         );
     }
 }

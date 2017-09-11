@@ -5,9 +5,10 @@
  */
 import './index.scss';
 import React, { Component } from 'react';
-import { browserHistory } from 'react-router';
+import { withRouter } from 'react-router-dom';
 import { MAIN_URL } from '../../constants/app';
 import wxShare from '../../static/util/wxShareCustom.js';
+import PropTypes from 'prop-types';
 
 class NotFound extends Component {
     constructor(props) {
@@ -17,25 +18,31 @@ class NotFound extends Component {
     componentWillMount() {
         wxShare.init({
             url: 'http://topic.sina.cn/',  //分享链接
-            title: '全民话题 - 用不同视角发现新闻', //分享标题
-            content: '', //分享描述（分享朋友时会显示）
+            title: '全民话题，用不同视角发现新闻', //分享标题
+            content: 'http://topic.sina.cn', //分享描述（分享朋友时会显示）
             pic: 'http://simg.sinajs.cn/products/news/items/2017/top_topics/img/logo-share.png' //分享图片路径
         });
     }
 
     _gotoPrev() {
         if (!window.history.length || window.document.referrer == "") {
-            // window.location = MAIN_URL;
-            browserHistory.push(MAIN_URL);
+            this.props.history.push(MAIN_URL + window.location.search);
+
+            // SUDA PV统计
+            window.SUDA.log(window.sudaLogExt1, window.sudaLogExt2, window.location.host);
         }
         else {
             // window.location.href = window.document.referrer;
-            window.history.back();
+            // window.history.back();
+            this.props.history.goBack();
         }
     }
 
     _gotoHome() {
-        browserHistory.push(MAIN_URL);
+        this.props.history.push(MAIN_URL + window.location.search);
+
+        // SUDA PV统计
+        window.SUDA.log(window.sudaLogExt1, window.sudaLogExt2, window.location.host);
     }
 
 	render() {
@@ -57,4 +64,8 @@ class NotFound extends Component {
 	}
 }
 
-export default NotFound;
+NotFound.propTypes = {
+    history: PropTypes.object,
+};
+
+export default withRouter(NotFound);

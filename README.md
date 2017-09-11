@@ -23,7 +23,7 @@
 * React
 * React-router
 * Redux
-* Webpack3
+* Webpack
 
 
 ## Features  
@@ -45,6 +45,7 @@
 
 
 ## Change log  
+* v0.5.0 : Upgrade react-router to v4. Upgrade react to v15.6.
 * v0.4.6 : Upgrade webpack to v3.
 * v0.4.5 : Add babel-plugin-transform-remove-console.
 * v0.4.4 : Fixed React.PropTypes deprecated issue of React.

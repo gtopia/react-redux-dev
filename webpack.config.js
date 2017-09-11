@@ -110,12 +110,12 @@ var config = {
                     {
                         loader: 'image-webpack-loader',
                         options: {
-                            progressive: true,
                             optipng: {
                                 optimizationLevel: 7,
                             },
                             mozjpeg: {
-                                quality: 65
+                                quality: 65,
+                                progressive: true
                             },
                             gifsicle: {
                                 interlaced: true,

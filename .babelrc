@@ -23,17 +23,6 @@
         },
         "production": {
             "plugins": [
-                [
-                    "react-transform",
-                    {
-                        "transforms": [
-                            {
-                                "transform": "react-transform-catch-errors",
-                                "imports": ["react", "redbox-react"]
-                            }
-                        ]
-                    }
-                ],
                 ["minify-dead-code-elimination", { "optimizeRawSize": true }],
                 ["transform-remove-console"]
             ]

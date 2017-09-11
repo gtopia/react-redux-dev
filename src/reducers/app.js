@@ -32,8 +32,15 @@ export default function mainReducer(state = initialState, action) {
         case actionTypes.HIDE_MORE_TOPICS: {
             return state.set('hasMoreTopic', false);
         }
-        case actionTypes.SHOW_ME: {
-            return state.set('isShowMe', true);
+        case actionTypes.TOGGLE_ME: {
+            if (state.get('isShowMe') == true || state.get('isWant2Logout') == true) {
+                state = state.set('isWant2Logout', false).set('isShowMe', false);
+            }
+            else {
+                state = state.set('isShowMe', true);
+            }
+
+            return state;
         }
         case actionTypes.HIDE_ME: {
             return state.set('isShowMe', false);

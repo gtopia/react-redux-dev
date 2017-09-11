@@ -19,8 +19,7 @@ class Favorite extends Component {
         this._addFav = ::this._addFav;
         this._cookieHandler = {
             key: 'FAV_PROMPT',
-            longInterval: 3 * 24 * 60 * 60 * 1000,
-            shortInterval: 1 * 24 * 60 * 60 * 1000,
+            timeInterval: 1 * 24 * 60 * 60 * 1000,
             isExpired: function() {
                 return (cookieUtil.getCookie(this.key) === '');
             },
@@ -76,8 +75,7 @@ class Favorite extends Component {
                 showFav();
                 closeFavGuide();
                 this._favHandler.favTimer = setTimeout(function() {
-                    _this._cookieHandler.setExpires(_this._cookieHandler.shortInterval);
-                    closeFav();
+                    _this._closeFav();
                 }, 10 * 1000);
             }
             else if (osUtil.ios && browserUtil.SAFARI) {
@@ -85,8 +83,7 @@ class Favorite extends Component {
                 closeFav();
                 showFavGuide();
                 this._favHandler.favGuideTimer = setTimeout(function() {
-                    _this._cookieHandler.setExpires(_this._cookieHandler.shortInterval);
-                    closeFavGuide();
+                    _this._closeFavGuide();
                 }, 10 * 1000);
             }
         }
@@ -96,6 +93,7 @@ class Favorite extends Component {
         const { closeFav } = this.props;
 
         clearTimeout(this._favHandler.favTimer);
+        this._cookieHandler.setExpires(this._cookieHandler.timeInterval);
         closeFav();
     }
 
@@ -103,6 +101,7 @@ class Favorite extends Component {
         const { closeFavGuide } = this.props;
 
         clearTimeout(this._favHandler.favGuideTimer);
+        this._cookieHandler.setExpires(this._cookieHandler.timeInterval);
         closeFavGuide();
     }
 

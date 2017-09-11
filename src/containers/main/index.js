@@ -8,6 +8,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { withRouter } from 'react-router-dom';
 import Topic from '../../components/topic';
 import Favorite from '../../components/favorite';
 import BackTop from '../../components/backTop';
@@ -25,11 +26,16 @@ class Main extends Component {
     }
 
     componentWillMount() {
+        window.document.title = "全民话题 - 用不同视角发现新闻";
+        
+        // 刷新或跳转页面时，a.gif包含url信息
+        // window.SUDA.log(window.sudaLogExt1, window.sudaLogExt2, window.location.href);
+
         this.props.appActions.hideMoreTopics();
         wxShare.init({
             url: 'http://topic.sina.cn/',  //分享链接
-            title: '全民话题 - 用不同视角发现新闻', //分享标题
-            content: '', //分享描述（分享朋友时会显示）
+            title: '全民话题，用不同视角发现新闻', //分享标题
+            content: 'http://topic.sina.cn', //分享描述（分享朋友时会显示）
             pic: 'http://simg.sinajs.cn/products/news/items/2017/top_topics/img/logo-share.png' //分享图片路径
         });
     }
@@ -90,7 +96,7 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-export default connect(
+export default withRouter(connect(
     mapStateToProps,
     mapDispatchToProps
-)(Main);
+)(Main));

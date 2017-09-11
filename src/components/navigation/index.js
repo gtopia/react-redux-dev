@@ -6,17 +6,20 @@
 import './index.scss';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { browserHistory } from 'react-router';
+import { withRouter } from 'react-router-dom';
 import { MAIN_URL } from '../../constants/app';
 import classNames from 'classnames';
 
-let MoreTopic = () => {
+let MoreTopic = ({history}) => {
     let gotoMainPage = () => {
-        browserHistory.push(MAIN_URL);
+        history.push(MAIN_URL + window.location.search);
+
+        // SUDA PV统计
+        window.SUDA.log(window.sudaLogExt1, window.sudaLogExt2, window.location.host + window.location.search);
     };
 
     return (
-        <div className="nav__moretopic" onClick={gotoMainPage}>
+        <div className="nav__moretopic" onClick={gotoMainPage} data-sudaclick="top_nav_more_1">
             <p className="moretopic__text">更多话题</p>
             <span className="moretopic__icon"></span>
         </div>
@@ -27,7 +30,7 @@ class Navigation extends Component {
     constructor(props) {
         super(props);
         this._handleLogin = ::this._handleLogin;
-        this._showMe = ::this._showMe;
+        this._toggleMe = ::this._toggleMe;
         this._want2Logout = ::this._want2Logout;
         this._cancelLogout = ::this._cancelLogout;
         this._handleLogout = ::this._handleLogout;
@@ -64,9 +67,9 @@ class Navigation extends Component {
         want2Logout();
     }
 
-    _showMe() {
-        const { showMe } = this.props;
-        showMe();
+    _toggleMe() {
+        const { toggleMe } = this.props;
+        toggleMe();
     }
 
     _cancelLogout() {
@@ -77,11 +80,16 @@ class Navigation extends Component {
     _handleLogout() {
         const { handleLogout } = this.props;
         handleLogout();
+
+        // 清除localStorage中的所有话题的评论内容缓存
+        if (window.localStorage) {
+            window.localStorage.clear();
+        }
     }
 
     render() {
         const { hasMoreTopic, userInfo, isWant2Logout, isShowMe } = this.props;
-        let moreTopicHtml = hasMoreTopic ? <MoreTopic/> : null;
+        let moreTopicHtml = hasMoreTopic ? <MoreTopic history={this.props.history}/> : null;
         let defaultface = 'http://i3.sinaimg.cn/dy/deco/2012/1018/sina_comment_defaultface.png';
         let loginClass = classNames({
             'nav__loginbtn': true,
@@ -107,16 +115,13 @@ class Navigation extends Component {
         return (
             <header className="layout__header">
                 <div ref="header_nav" className="header__nav">
-                    <div className={loginClass} 
-                         onClick={this._handleLogin}
-                         data-sudaclick="top_nav_login_1" >
-                        <p className="login__text">登录</p>
-                    </div>
+                    <div className={loginClass} onClick={this._handleLogin} data-sudaclick="top_nav_login_1" >登录</div>
                     <div className={portraitClass} 
                          style={{'backgroundImage': 'url(' + (userInfo.userface || defaultface) + ')'}}
-                         onClick={this._showMe}
+                         onClick={this._toggleMe}
+                         data-name="showme-toggle"
                          data-sudaclick="top_nav_avatar_1" ></div>
-                    <div className={portraitBgClass}></div>
+                    <div className={portraitBgClass} data-name="showme-toggle"></div>
                     <div className="nav__logo"></div>
                     { moreTopicHtml }
                 </div>
@@ -148,13 +153,14 @@ class Navigation extends Component {
 }
 
 Navigation.propTypes = {
+    history: PropTypes.object,
     hasMoreTopic: PropTypes.bool,
     isShowMe: PropTypes.bool,
     isWant2Logout: PropTypes.bool,
     userInfo: PropTypes.object,
     checkLoginStatus: PropTypes.func,
     handleLogin: PropTypes.func,
-    showMe: PropTypes.func,
+    toggleMe: PropTypes.func,
     want2Logout: PropTypes.func,
     cancelLogout: PropTypes.func,
     handleLogout: PropTypes.func,
@@ -175,10 +181,10 @@ Navigation.defaultProps = {
     },
     checkLoginStatus: () => {},
     handleLogin: () => {},
-    showMe: () => {},
+    toggleMe: () => {},
     want2Logout: () => {},
     cancelLogout: () => {},
     handleLogout: () => {},
 };
 
-export default Navigation;
+export default withRouter(Navigation);

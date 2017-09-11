@@ -24,16 +24,11 @@
 	height: .28rem;
 	top: 6px;
 	left: .15rem;
+	line-height: 28px;
+	font-size: .13rem;
+	color: #FFFFFF;
+	letter-spacing: 0;
 	text-align: center;
-
-	.login__text {
-		display: inline-block;
-		line-height: .28rem;
-		font-family: PingFangSC-Regular;
-		font-size: .13rem;
-		color: #FFFFFF;
-		letter-spacing: 0;
-	}
 
 	&::after {
 	    position: absolute;
@@ -41,7 +36,7 @@
 	    content: "";
 	    box-sizing: border-box;
 	    left: 0;
-	    top:0;
+	    top: 0;
 	    height: 200%;
 	    width: 200%;
 	    transform-origin: 0 0;
@@ -100,7 +95,6 @@
 		transform: translateY(-50%);
 		right: .19rem;
 		display: inline-block;
-		border-radius: 2px;
 		width: .94rem;
 		height: .4rem;
 		text-align: center;
@@ -119,6 +113,7 @@
 		    display: inline-block;
 		    content: "";
 		    box-sizing: border-box;
+			border-radius: 4px;
 		    left: 0;
 		    top:0;
 		    height: 200%;
@@ -165,7 +160,6 @@
 		margin-right: .2rem;
 		width: .8rem;
 		height: .3rem;
-		border-radius: 2px;
 
 		.cancel__text {
 			display: inline-block;
@@ -181,6 +175,7 @@
 		    display: inline-block;
 		    content: "";
 		    box-sizing: border-box;
+			border-radius: 4px;
 		    left: 0;
 		    top:0;
 		    height: 200%;
@@ -197,7 +192,6 @@
 		margin-top: .15rem;
 		width: .8rem;
 		height: .3rem;
-		border-radius: 2px;
 
 		.exit__text {
 			display: inline-block;
@@ -213,6 +207,7 @@
 		    display: inline-block;
 		    content: "";
 		    box-sizing: border-box;
+			border-radius: 4px;
 		    left: 0;
 		    top:0;
 		    height: 200%;
@@ -271,10 +266,19 @@
 
 	.moretopic__icon {
 		position: absolute;
-		width: 6px;
-		height: .1rem;
 		top: 50%; 
 		transform: translateY(-50%);
 		@include sprite2rem($btn-more-orange);
+		width: 7px;
+		height: .1rem;
+	}
+}
+
+
+@media screen and (min-width: 769px) {
+	.nav__moretopic{
+		.moretopic__icon {
+			width: 12px;
+		}
 	}
 }

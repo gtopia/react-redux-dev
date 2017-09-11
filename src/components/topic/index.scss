@@ -3,6 +3,7 @@
 
 .layout__topic {
 	position: relative;
+	background: #e7eaf1;
 }
 
 .topic__container {
@@ -20,13 +21,14 @@
 
 .topic__people {
 	position: absolute;
-	top: 0;
+	top: -1px;
 	right: .1rem;
 	// width: .5rem;
 	// height: .43rem;
 	// background: rgba(0,0,0,0.80);
 	@include sprite2rem($bg-topic-join);
 	text-align: center;
+
 
 	.num {
 		margin-top: 2px;

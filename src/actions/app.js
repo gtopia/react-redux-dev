@@ -18,9 +18,9 @@ export function _want2Logout() {
     };
 }
 
-export function showMe() {
+export function toggleMe() {
     return {
-        type: actionTypes.SHOW_ME,
+        type: actionTypes.TOGGLE_ME,
     };
 }
 
@@ -42,7 +42,7 @@ export function checkLoginStatus() {
 export function handleLogin() {
     return (dispatch) => {
         if (!window.checkLogin()) {
-            window.location.href = 'http://passport.sina.cn/signin/signin?entry=wapsso&vt=4&backTitle=全民话题&r=' + encodeURIComponent(window.location.href) + '&revalid=2';
+            window.location.href = 'http://passport.sina.cn/signin/signin?entry=wapsso&vt=4&backTitle=全民话题&r=' + encodeURIComponent(window.location.href) + '&revalid=1';
         }
         else {
             window.getUserInfo(function(res) {
