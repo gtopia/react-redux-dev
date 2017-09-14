@@ -2,7 +2,8 @@
  * Author: zhiyou
  * Date: 2017/05/16
  * Description: 话题卡片组件。
- * Modify: jinping3 fixed bug: 参与人数限制 及 样式处理
+ * Modify: jinping3 参与人数限制及样式处理。
+ *         zhiyou@2017/09/14 修改加载更多时loading显示逻辑。
  */
 import './index.scss';
 import React, { Component } from 'react';
@@ -91,8 +92,9 @@ class Topic extends Component {
         let _this = this;
         let bottomPos = $(window).scrollTop() + window.innerHeight;
         let pageHeight = $container.offset().top + $container.height();
+        let loadingHeight = $('.topic__loading').height();
 
-        if (pageHeight-bottomPos < 10) {
+        if (pageHeight-bottomPos-loadingHeight < 10) {
             // SUDA PV 统计
             window.SUDA.log(window.sudaLogExt1, window.sudaLogExt2, window.location.href + '?loadmore=1');
 
@@ -122,7 +124,7 @@ class Topic extends Component {
     render() {
         let statusLoadingClass = classNames({
             'topic__loading': true,
-            'hide': this.state.isGetAll || !this.state.topicData.length
+            'hide': this.state.isGetAll || (!this.state.requesting && !this.state.topicData.length)
         });
         let topicItems = this.state.topicData.map((item, index) => {
             if (parseInt(item.attend) >= 100000000) {
