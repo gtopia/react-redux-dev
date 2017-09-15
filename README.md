@@ -45,6 +45,7 @@
 
 
 ## Change log  
+* v1.0.0 : Update webpack entry libs.
 * v0.5.0 : Upgrade react-router to v4. Upgrade react to v15.6.
 * v0.4.6 : Upgrade webpack to v3.
 * v0.4.5 : Add babel-plugin-transform-remove-console.

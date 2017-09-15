@@ -35,7 +35,7 @@ var config = {
             'app': [mainPath],
             'libs': [
                 'react', 'react-dom', 'prop-types', 'immutable',
-                'redux', 'react-redux', 'redux-thunk', 'react-router',
+                'redux', 'react-redux', 'redux-thunk', 'react-router-dom',
                 'babel-polyfill', 'zepto', 'swiper', 'classnames', 'keymirror'
             ]
         };

@@ -1,7 +1,7 @@
 {
   "name": "react-redux-dev",
-  "version": "0.5.0",
-  "description": "Webpack + React + Redux + React-router development framework.",
+  "version": "1.0.0",
+  "description": "React and redux development framework.",
   "main": "index.js",
   "scripts": {
     "clean": "rimraf dist",
