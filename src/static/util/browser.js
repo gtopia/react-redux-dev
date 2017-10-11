@@ -83,7 +83,7 @@ var Browser = {
     'UC': /UCBrowser/i.test(ua),
     'QQ': /QQBrowser/i.test(ua),
     'WB':/Weibo/i.test(ua),
-    'SINANEWS':/sinanews/i.test(ua),    // ÐÂÀËÐÂÎÅ¿Í»§¶Ë
+    'SINANEWS':/sinanews/i.test(ua),    // æ–°æµªæ–°é—»å®¢æˆ·ç«¯
 };
 
 Browser.SAFARI = !Browser.UC && !Browser.CHROME && (/([\w.]*) safari/).test(ua);

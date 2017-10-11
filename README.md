@@ -2,7 +2,10 @@
 
 ## Start  
 * Prerequisite  
-    `npm install`  
+    1. Install Node 8+ from [here](https://nodejs.org/en/)
+    2. `git clone https://github.com/gtopia/react-redux-dev.git`
+    3. `cd react-redux-dev`
+    4. `npm install`
 
 * Develop locally with HMR  
     `npm run dev`  
@@ -45,6 +48,7 @@
 
 
 ## Change log  
+* v1.1.0 : Upgrade react, react-dom, immutable and prop-types to latest version for MIT license. Upgrade node-sass to v4.5.3 in order to compatible with Node 8.x.
 * v1.0.0 : Update webpack entry libs.
 * v0.5.0 : Upgrade react-router to v4. Upgrade react to v15.6.
 * v0.4.6 : Upgrade webpack to v3.
