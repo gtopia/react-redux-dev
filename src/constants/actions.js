@@ -6,6 +6,9 @@
 var keyMirror = require('keymirror');
 
 export default keyMirror({
+    // App page
+    ACTIVATE_MENU: null,
+    
     // Main page
     LOGIN_SUCCESS: null,
     TOGGLE_ME: null,

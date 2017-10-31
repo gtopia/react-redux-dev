@@ -14,11 +14,13 @@ import lazyloadPic from '../../static/util/lazyloadPic.js';
 import throttle from '../../static/util/throttle.js';
 import classNames from 'classnames';
 
-class Topic extends Component {
+class TopicList extends Component {
     constructor(props) {
         super(props);
         this.PAGESIZE = 10;     // 每次上拉加载条数
-        this.apiurl = 'http://topic.sina.cn/api/news/topic_list';
+
+        this.apiurl = 'http://xiaoyang7.topic.sina.cn/api/news/topic_list';  // TODO: Fake API
+
         this.state =  {
             topicData: [],
             requesting: false,
@@ -54,33 +56,35 @@ class Topic extends Component {
             'requesting': true,
         });
 
-        let reqCb = reqObj.request({
-            url: opt.url,
-            data: opt.data || {},
-            type: 'GET',
-            dataType: 'jsonp',
-            timeout: 5000
-        });
+        let getTopics = {
+            'option': {
+                url: opt.url,
+                data: opt.data || {},
+                type: 'GET',
+                dataType: 'jsonp',
+                timeout: 5000
+            },
+            'successCb': function(res) {
+                if (res && res.result && !res.result.status.code && res.result.data && res.result.data.length) {
+                    if (res.result.data.length < _this.PAGESIZE) {
+                        _this.setState({
+                            'isGetAll': true
+                        });
+                    }
 
-        reqCb.complete = function() {
-            _this.setState({
-                'requesting': false,
-            });
-        };
-
-        reqCb.success = function(res) {
-            if (res && res.result && !res.result.status.code && res.result.data && res.result.data.length) {
-                if (res.result.data.length < _this.PAGESIZE) {
                     _this.setState({
-                        'isGetAll': true
+                        'topicData': _this.state.topicData.concat(res.result.data)
                     });
                 }
-
+            },
+            'completeCb': function() {
                 _this.setState({
-                    'topicData': _this.state.topicData.concat(res.result.data)
+                    'requesting': false,
                 });
             }
         };
+
+        reqObj.request(getTopics.option, getTopics.successCb, null, getTopics.completeCb);
     }
 
     _loadMore(apiurl) {
@@ -146,7 +150,7 @@ class Topic extends Component {
                             <p className="desc">人参与</p>
                         </div>
                         <div className="topic__title">
-                            <p className="text"># {item.tname} #</p>
+                            <h2 className="text"># {item.tname} #</h2>
                         </div>
                     </div>
                 </div>
@@ -162,13 +166,13 @@ class Topic extends Component {
     }
 }
 
-Topic.propTypes = {
+TopicList.propTypes = {
     // hideLoading: PropTypes.func,
     history: PropTypes.object,
 };
 
-Topic.defaultProps = {
+TopicList.defaultProps = {
     // hideLoading: () => {},
 };
 
-export default withRouter(Topic);
+export default withRouter(TopicList);

@@ -3,7 +3,7 @@
 
 .backtop {
 	position: fixed;
-	bottom: .3rem;
+	bottom: .5rem;
     right: .15rem;
 	z-index: 250;
 	@include sprite2rem($btn-backtop);
@@ -12,7 +12,7 @@
 @media screen and (min-width: 769px) {
     .backtop {
         position: fixed;
-        bottom: .3rem;
+        bottom: .5rem;
         right: auto;
         margin-left: 640px;
         z-index: 250;

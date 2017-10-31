@@ -5,6 +5,13 @@
  */
 import actionTypes from '../constants/actions';
 
+export function activateMenu(menuName) {
+    return {
+        type: actionTypes.ACTIVATE_MENU,
+        menuName
+    };
+}
+
 export function _loginSuccess(userInfo) {
     return {
         type: actionTypes.LOGIN_SUCCESS,
@@ -24,7 +31,7 @@ export function toggleMe() {
     };
 }
 
-export function checkLoginStatus() {
+export function checkLoginStatus(callback) {
     return (dispatch) => {
         if (!window.checkLogin()) {
             dispatch({
@@ -34,6 +41,10 @@ export function checkLoginStatus() {
         else {
             window.getUserInfo(function(res) {
                 dispatch(_loginSuccess(res || {}));
+
+                if (callback && (typeof callback == 'function')) {
+                    callback();
+                }
             });
         }
     };

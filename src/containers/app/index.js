@@ -2,6 +2,7 @@
  * Author: zhiyou
  * Date: 2017/05/08
  * Description: APP容器，包含导航条和子页面。
+ * Modify: zhiyou@2017/10/12 添加底部菜单栏。
  */
 import './index.scss';
 import React, { Component } from 'react';
@@ -9,7 +10,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
-import Navigation from '../../components/navigation';
+import TopNav from '../../components/topNav';
+import BottomNav from '../../components/bottomNav';
 import * as AppActions from '../../actions/app';
 import Browser from '../../static/util/browser';
 
@@ -41,6 +43,7 @@ class App extends Component {
             userInfo, 
             isWant2Logout, 
             isShowMe,
+            activeMenu,
         } = this.props.appState;
         const { 
             handleLogin,
@@ -49,19 +52,24 @@ class App extends Component {
             cancelLogout, 
             handleLogout, 
             checkLoginStatus,
+            activateMenu,
         } = this.props.appActions;
 
-        if (Browser.SINANEWS) {
-            return ( 
+        if (Browser.SINANEWS || Browser.WX || Browser.WB) {
+            return (
                 <section className="layout__app" onClick={this._checkStyle.bind(this)}>
                     { this.props.children }
+                    <BottomNav
+                        activeMenu={activeMenu}
+                        activateMenu={activateMenu}
+                    />
                 </section>
             );
         }
         else {
             return (
                 <section className="layout__app" onClick={this._checkStyle.bind(this)}>
-                    <Navigation
+                    <TopNav
                         hasMoreTopic={hasMoreTopic}
                         userInfo={userInfo}
                         isShowMe={isShowMe}
@@ -74,6 +82,10 @@ class App extends Component {
                         handleLogout={handleLogout}
                     />
                     { this.props.children }
+                    <BottomNav
+                        activeMenu={activeMenu}
+                        activateMenu={activateMenu}
+                    />
                 </section>
             );
         }

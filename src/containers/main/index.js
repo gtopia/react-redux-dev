@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
-import Topic from '../../components/topic';
+import TopicList from '../../components/topicList';
 import Favorite from '../../components/favorite';
 import BackTop from '../../components/backTop';
 import * as MainActions from '../../actions/main';
@@ -20,9 +20,6 @@ import * as AppActions from '../../actions/app';
 class Main extends Component {
     constructor(props) {
         super(props);
-        // this.state = {
-        //     'loading': false,
-        // };
     }
 
     componentWillMount() {
@@ -43,10 +40,6 @@ class Main extends Component {
     componentDidMount() {
         $(window).scrollTop(0);
     }
-    
-    // _hideLoading() {
-    //     this.state.loading = false;
-    // }
 
     render() {
         const { 
@@ -62,7 +55,7 @@ class Main extends Component {
 
         return ( 
             <section className="layout__main" >
-                <Topic/>
+                <TopicList/>
                 <Favorite 
                     isShowFav={isShowFav} 
                     isShowFavGuide={isShowFavGuide} 
