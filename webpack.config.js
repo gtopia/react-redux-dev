@@ -22,10 +22,10 @@ var distPath = path.resolve(__dirname, 'dist');
 
 var mode = process.env.NODE_ENV.trim();
 var __DEV__ = mode!=='production';
-console.log(`> You're in ${__DEV__ ? "DEVELOPMENT" : "PRODUCTION"} mode.`);
+console.log(`> This is ${__DEV__ ? "DEVELOPMENT" : "PRODUCTION"} mode.`);
 
 // Raise tread pool size to prevent bundling stuck issue
-process.env.UV_THREADPOOL_SIZE = 100;
+// process.env.UV_THREADPOOL_SIZE = 128;
 
 var config = {
     devtool: __DEV__ ? 'eval' : 'source-map',
