@@ -2,10 +2,10 @@
  * Author: zhiyou
  * Date: 2017/05/18
  * Description: 评论组件。
- * Modify: jinping3 样式修改 
- *         zhiyou@2017/07/17 修改空评论时的logo与样式。
+ * Modify: zhiyou@2017/07/17 修改空评论时的logo与样式。
  *         zhiyou@2017/07/18 适配浏览器resize，添加标志位防止多次触发resize。
  *         zhiyou@2017/09/14 修改加载更多时loading显示逻辑。
+ *         zhiyou@2017/10/30 由于后端接口不在支持，关闭评论转发到微博功能。
  */
 import './index.scss';
 import React, { Component } from 'react';
@@ -13,7 +13,7 @@ import PropTypes from 'prop-types';
 import { fromJS, List } from 'immutable';
 import reqObj from '../../static/util/request.js';
 import classNames from 'classnames';
-import cookieUtil from '../../static/util/cookie.js';
+// import cookieUtil from '../../static/util/cookie.js';
 import throttle from '../../static/util/throttle.js';
 
 class Comment extends Component {
@@ -188,125 +188,128 @@ class Comment extends Component {
             'loading': true
         });
 
-        // 获取评论数据
-        var rqPara = {
-            'channel': _this.conf.channel,
-            'newsid': _this.conf.newsid,
-            'thread': _this.conf.thread,
-            'page_size': _this.conf.latestSize,
-            'h_size': _this.conf.hotSize,
-            't_size': _this.conf.replySize,
-            'ie': 'utf-8',
-            'oe': 'utf-8',
-            'page': opt.page,
-        };
-        var reqCb = reqObj.request({
-            url: opt.url,
-            data: rqPara,
-            type: 'GET',
-            timeout: 10000
-        });
+        var getCmnts = {
+            'option': {
+                url: opt.url,
+                data: {
+                    'channel': _this.conf.channel,
+                    'newsid': _this.conf.newsid,
+                    'thread': _this.conf.thread,
+                    'page_size': _this.conf.latestSize,
+                    'h_size': _this.conf.hotSize,
+                    't_size': _this.conf.replySize,
+                    'ie': 'utf-8',
+                    'oe': 'utf-8',
+                    'page': opt.page,
+                },
+                type: 'GET',
+                timeout: 10000
+            },
+            'successCb': function(res) {
+                if (res && res.result && res.result.status && !res.result.status.code) {
+                    // count.total包括隐藏的（被监控删掉的）、支持的和显示的
+                    let totalCmnts = res.result.count.total;
+                    if (totalCmnts > 0) {
+                        if (parseInt(totalCmnts) >= 100000000) {
+                            totalCmnts = parseFloat((parseInt(totalCmnts)/100000000).toFixed(1)) + '亿';
+                        }
 
-        reqCb.complete = function() {
-            setTimeout(function() {
-                _this.setState({
-                    'requesting': false,
-                    'loading': false
-                });
-            }, 60);
-        };
+                        if (parseInt(totalCmnts) >= 10000) {
+                            totalCmnts = parseFloat((parseInt(totalCmnts)/10000).toFixed(1)) + '万';   
+                        }
 
-        reqCb.success = function(res) {
-            if (res && res.result && res.result.status && !res.result.status.code) {
-                // count.total包括隐藏的（被监控删掉的）、支持的和显示的
-                let totalCmnts = res.result.count.total;
-                if (totalCmnts > 0) {
-                    if (parseInt(totalCmnts) >= 100000000) {
-                        totalCmnts = parseFloat((parseInt(totalCmnts)/100000000).toFixed(1)) + '亿';
-                    }
-
-                    if (parseInt(totalCmnts) >= 10000) {
-                        totalCmnts = parseFloat((parseInt(totalCmnts)/10000).toFixed(1)) + '万';   
+                        _this.setState({
+                            'totalCount': totalCmnts
+                        });
+                        _this.props.setTotalCmnts(totalCmnts);
                     }
 
                     _this.setState({
-                        'totalCount': totalCmnts
+                        'latestCmnts': _this.state['latestCmnts'].concat(_this._formatData(res.result.cmntlist, res.result.threaddict))
                     });
-                    _this.props.setTotalCmnts(totalCmnts);
+
+                    if (opt.page === 1) {
+                        _this.setState({
+                            'hotCmnts': _this._formatData(res.result.hot_list, res.result.threaddict)
+                        });
+                    }
+
+                    if (res.result.cmntlist.length < _this.PAGESIZE) {
+                        _this.setState({
+                            'isGetAll': true
+                        });
+                    }
+
+                    _this.setState((prevState) => {
+                        return {'nextPage': prevState.nextPage+1};
+                    });
                 }
-
-                _this.setState({
-                    'latestCmnts': _this.state['latestCmnts'].concat(_this._formatData(res.result.cmntlist, res.result.threaddict))
-                });
-
-                if (opt.page === 1) {
+            },
+            'completeCb': function() {
+                setTimeout(function() {
                     _this.setState({
-                        'hotCmnts': _this._formatData(res.result.hot_list, res.result.threaddict)
+                        'requesting': false,
+                        'loading': false
                     });
-                }
-
-                if (res.result.cmntlist.length < _this.PAGESIZE) {
-                    _this.setState({
-                        'isGetAll': true
-                    });
-                }
-
-                _this.setState((prevState) => {
-                    return {'nextPage': prevState.nextPage+1};
-                });
+                }, 60);
             }
         };
+
+        // 获取评论数据
+        reqObj.request(getCmnts.option, getCmnts.successCb, null, getCmnts.completeCb);
     }
 
-    _getReplyData(opt) {
+    _getRepliesData(opt) {
         var _this = this;
 
         if (!opt.mid || !_this.conf.channel || !_this.conf.newsid) {
             return;
         }
 
-        // 获取评论数据
-        var rqPara = {
-            'channel': _this.conf.channel,
-            'newsid': _this.conf.newsid,
-            'thread': _this.conf.thread,
-            'mid': opt.mid
-        };
-        var reqCb = reqObj.request({
-            url: opt.url,
-            data: rqPara,
-            type: 'GET',
-            timeout: 3000
-        });
+        var getReplies = {
+            'option': {
+                url: opt.url,
+                data: {
+                    'channel': _this.conf.channel,
+                    'newsid': _this.conf.newsid,
+                    'thread': _this.conf.thread,
+                    'mid': opt.mid
+                },
+                type: 'GET',
+                timeout: 3000
+            },
+            'successCb': function(res) {
+                if (res && res.result && res.result.threaddict) {
+                    var cmntOwnerInfo = res.result.cmntlist[0];
+                    var userName = _this._parseUserInfo(cmntOwnerInfo.config, 'wb_screen_name', false);
 
-        reqCb.success = function(res) {
-            if (res && res.result && res.result.threaddict) {
-                var cmntOwnerInfo = res.result.cmntlist[0];
-                var userName = _this._parseUserInfo(cmntOwnerInfo.config, 'wb_screen_name', false);
+                    var replyDict = res.result.threaddict[opt.mid];
+                    var replyList = [];
 
-                var replyDict = res.result.threaddict[opt.mid];
-                var replyList = [];
+                    if (replyDict && replyDict.list) {
+                        replyList = _this._formatReplyList(replyDict.list, userName || cmntOwnerInfo.nick);
+                    }
 
-                if (replyDict && replyDict.list) {
-                    replyList = _this._formatReplyList(replyDict.list, userName || cmntOwnerInfo.nick);
+                    var cmntType = _this.refs[opt.mid].dataset['type'];
+                    var cmntIndex = _this.refs[opt.mid].dataset['index'];
+                    var imList = List();
+                    var newImList = List();
+
+                    imList = fromJS(_this.state[cmntType]);
+                    newImList = imList.setIn([cmntIndex, 'isGetAllReplies'], opt.isShowAll)
+                                      .setIn([cmntIndex, 'replyList'], fromJS(replyList));
+
+                    _this.setState(() => {
+                        let newState = {};
+                        newState[cmntType] = newImList.toJS();
+                        return newState;
+                    });
                 }
-
-                var cmntType = _this.refs[opt.mid].dataset['type'];
-                var cmntIndex = _this.refs[opt.mid].dataset['index'];
-                var imList = List();
-                var newImList = List();
-
-                imList = fromJS(_this.state[cmntType]);
-                newImList = imList.setIn([cmntIndex, 'isGetAllReplies'], opt.isShowAll)
-                                  .setIn([cmntIndex, 'replyList'], fromJS(replyList));
-
-                _this.setState(() => {
-                    let newState = {};
-                    newState[cmntType] = newImList.toJS();
-                    return newState;
-                });
             }
         };
+
+        // 获取评论数据
+        reqObj.request(getReplies.option, getReplies.successCb);
     }
 
     _parseUserInfo(userinfo, key, isImgUrl) {
@@ -470,44 +473,46 @@ class Comment extends Component {
         var cmntType = $item.data('type');
         var cmntIndex = $item.data('index');
         var cmntRindex = $item.data('rindex');
-        var reqPara = {
-            'channel': _this.conf.channel,
-            'newsid': _this.conf.newsid,
-            'parent': mid,
-            'usertype': 'wap',
-        };
-        var reqCb = reqObj.request({
-            url: _this.conf.agreeApi,
-            data: reqPara,
-            type: 'POST',
-            dataType: 'json',
-            timeout: 3000
-        });
+        var getAgrees = {
+            'option': {
+                url: _this.conf.agreeApi,
+                data: {
+                    'channel': _this.conf.channel,
+                    'newsid': _this.conf.newsid,
+                    'parent': mid,
+                    'usertype': 'wap',
+                },
+                type: 'POST',
+                dataType: 'json',
+                timeout: 3000
+            },
+            'successCb': function() {
+                var imList = List();
+                var newImList = List();
 
-        // 点赞计数加一，切换到点赞后的样式，解除绑定的点击事件
-        reqCb.success = function() {
-            var imList = List();
-            var newImList = List();
+                imList = fromJS(_this.state[cmntType]);
 
-            imList = fromJS(_this.state[cmntType]);
+                // 点赞计数加一，切换到点赞后的样式，解除绑定的点击事件
+                if (cmntRindex != undefined) {
+                    newImList = imList.updateIn([cmntIndex, 'replyList', cmntRindex, 'agreeNum'], val => parseInt(val)+1)
+                                      .setIn([cmntIndex, 'replyList', cmntRindex, 'hadAgreed'], true);
+                }
+                else {
+                    newImList = imList.updateIn([cmntIndex, 'agreeNum'], val => parseInt(val)+1)
+                                      .setIn([cmntIndex, 'hadAgreed'], true);
+                }
 
-            if (cmntRindex != undefined) {
-                newImList = imList.updateIn([cmntIndex, 'replyList', cmntRindex, 'agreeNum'], val => parseInt(val)+1)
-                                  .setIn([cmntIndex, 'replyList', cmntRindex, 'hadAgreed'], true);
+                _this.setState(() => {
+                    let newState = {};
+                    newState[cmntType] = newImList.toJS();
+                    return newState;
+                });
+
+                $target.find('i').addClass('praise__icon--red').removeClass('praise__icon--gray');
             }
-            else {
-                newImList = imList.updateIn([cmntIndex, 'agreeNum'], val => parseInt(val)+1)
-                                  .setIn([cmntIndex, 'hadAgreed'], true);
-            }
-
-            _this.setState(() => {
-                let newState = {};
-                newState[cmntType] = newImList.toJS();
-                return newState;
-            });
-
-            $target.find('i').addClass('praise__icon--red').removeClass('praise__icon--gray');
         };
+
+        reqObj.request(getAgrees.option, getAgrees.successCb);
     }
 
     _loadMore() {
@@ -535,9 +540,9 @@ class Comment extends Component {
     _showCmntsPopup(placeholder) {
         const { showCmntsPopup } = this.props;
         
-        if (cookieUtil.getCookie('CMNT_CHECKBOX_WEIBO') === '1') {
-            this.refs['checkbox_weibo'].checked = true;
-        }
+        // if (cookieUtil.getCookie('CMNT_CHECKBOX_WEIBO') === '1') {
+        //     this.refs['checkbox_weibo'].checked = true;
+        // }
 
         // 获取上次未发布的评论
         if (window.localStorage && window.localStorage.getItem(this.conf.newsid)) {
@@ -655,7 +660,7 @@ class Comment extends Component {
         let $target = $(e.target);
         let mid = $target.parents("[data-role|='cmntItem']").data('mid');
 
-        this._getReplyData({
+        this._getRepliesData({
             url: this.conf.getRepliesApi,
             mid: mid,
             isShowAll: true
@@ -687,18 +692,18 @@ class Comment extends Component {
             };
 
             // 检查转发到微博的勾选状态
-            if (_this.refs['checkbox_weibo'].checked) {
-                Object.assign(rqPara, {
-                    'ispost': 1,
-                    'share_url': window.location.href.split('comments')[0]
-                });
+            // if (_this.refs['checkbox_weibo'].checked) {
+            //     Object.assign(rqPara, {
+            //         'ispost': 1,
+            //         'share_url': window.location.href.split('comments')[0]
+            //     });
 
-                // 保存转发到微博的勾选状态到cookie
-                cookieUtil.setCookie({
-                    key: 'CMNT_CHECKBOX_WEIBO',
-                    value: '1'
-                });
-            }
+            //     // 保存转发到微博的勾选状态到cookie
+            //     cookieUtil.setCookie({
+            //         key: 'CMNT_CHECKBOX_WEIBO',
+            //         value: '1'
+            //     });
+            // }
 
             if (_this.state.replyInfo.data.pmid) {
                 Object.assign(rqPara, {
@@ -706,91 +711,92 @@ class Comment extends Component {
                 });
             }
 
-            let reqCb = reqObj.request({
-                url: _this.conf.submitCmntApi,
-                data: rqPara,
-                type: 'POST',
-                dataType: 'json',
-                timeout: 3000
-            });
+            var sumitCmnt = {
+                'option': {
+                    url: _this.conf.submitCmntApi,
+                    data: rqPara,
+                    type: 'POST',
+                    dataType: 'json',
+                    timeout: 3000
+                },
+                'successCb': function() {
+                    _this._hideCmntsPopup();
 
-            reqCb.error = function() {
-                // 评论失败提示
-                _this.setState({'status': -1});
+                    // 评论成功提示
+                    _this.setState({'status': 1});
 
-                // 隐藏评论失败提示
-                setTimeout(function() {
-                    _this.setState({'status': -10});
-                }, 2000);
+                    // 显示临时评论信息到最新评论或热门评论的回复
+                    _this.state.replyInfo.data['content'] = content;
+                    let cmntType = _this.state.replyInfo.type;
+                    let cmntIndex = _this.state.replyInfo.index;
+                    let cmntRindex = _this.state.replyInfo.rindex;
+                    let cmntData = _this.state.replyInfo.data;
+                    let imList = List();
+                    let newImList = List();
 
-                if (!_this.props.isShow) {
-                    _this.props.showCmnts();
-                }
-            };
-
-            reqCb.success = function() {
-                _this._hideCmntsPopup();
-
-                // 评论成功提示
-                _this.setState({'status': 1});
-
-                // 显示临时评论信息到最新评论或热门评论的回复
-                _this.state.replyInfo.data['content'] = content;
-                let cmntType = _this.state.replyInfo.type;
-                let cmntIndex = _this.state.replyInfo.index;
-                let cmntRindex = _this.state.replyInfo.rindex;
-                let cmntData = _this.state.replyInfo.data;
-                let imList = List();
-                let newImList = List();
-
-                imList = fromJS(_this.state[cmntType]);
-                if (cmntRindex != null) {
-                    newImList = imList.updateIn([cmntIndex, 'replyList'], (rList) => {
-                        return rList.insert(cmntRindex, cmntData);
-                    });
-                }
-                else {
-                    newImList = imList.insert(cmntIndex, cmntData);
-                }
-                _this.setState(() => {
-                    let newState = {};
-                    newState[cmntType] = newImList.toJS();
-                    return newState;
-                });
-
-                // 更新评论总数
-                let totalCmnts = _this.state.totalCount;
-                if (typeof(totalCmnts) == 'number') {
-                    if (totalCmnts < 9999) {
-                        totalCmnts = totalCmnts + 1;
+                    imList = fromJS(_this.state[cmntType]);
+                    if (cmntRindex != null) {
+                        newImList = imList.updateIn([cmntIndex, 'replyList'], (rList) => {
+                            return rList.insert(cmntRindex, cmntData);
+                        });
                     }
-                    else if (totalCmnts == 9999){
-                        totalCmnts = '1.0万';
+                    else {
+                        newImList = imList.insert(cmntIndex, cmntData);
+                    }
+                    _this.setState(() => {
+                        let newState = {};
+                        newState[cmntType] = newImList.toJS();
+                        return newState;
+                    });
+
+                    // 更新评论总数
+                    let totalCmnts = _this.state.totalCount;
+                    if (typeof(totalCmnts) == 'number') {
+                        if (totalCmnts < 9999) {
+                            totalCmnts = totalCmnts + 1;
+                        }
+                        else if (totalCmnts == 9999){
+                            totalCmnts = '1.0万';
+                        }
+
+                        _this.setState({
+                            'totalCount': totalCmnts
+                        });
+                        _this.props.setTotalCmnts(totalCmnts);
                     }
 
-                    _this.setState({
-                        'totalCount': totalCmnts
-                    });
-                    _this.props.setTotalCmnts(totalCmnts);
+                    // 隐藏成功提示
+                    setTimeout(function() {
+                        _this.setState({'status': 10});
+                    }, 2000);
+
+                    if (!_this.props.isShow) {
+                        _this.props.showCmnts();
+                    }
+
+                    // 删除localStorage中缓存的评论内容
+                    if (window.localStorage && window.localStorage.getItem(_this.conf.newsid)) {
+                        window.localStorage.removeItem(_this.conf.newsid);
+                    }
+
+                    // 隐藏虚拟键盘
+                    _this.refs['cmnts_textarea'].blur();
+                },
+                'errorCb': function() {
+                    // 评论失败提示
+                    _this.setState({'status': -1});
+
+                    // 隐藏评论失败提示
+                    setTimeout(function() {
+                        _this.setState({'status': -10});
+                    }, 2000);
+
+                    if (!_this.props.isShow) {
+                        _this.props.showCmnts();
+                    }
                 }
-
-                // 隐藏成功提示
-                setTimeout(function() {
-                    _this.setState({'status': 10});
-                }, 2000);
-
-                if (!_this.props.isShow) {
-                    _this.props.showCmnts();
-                }
-
-                // 删除localStorage中缓存的评论内容
-                if (window.localStorage && window.localStorage.getItem(_this.conf.newsid)) {
-                    window.localStorage.removeItem(_this.conf.newsid);
-                }
-
-                // 隐藏虚拟键盘
-                _this.refs['cmnts_textarea'].blur();
             };
+            reqObj.request(sumitCmnt.option, sumitCmnt.successCb, sumitCmnt.errorCb);
         }
     }
 
@@ -1023,10 +1029,12 @@ class Comment extends Component {
                     <div className="cmnts__masklayer"></div>
                     <div className="cmnts__input-ctner">
                         <div className="cmnts__actions">
+                            {/*
                             <a className="cmnts__weibo">
                                 <input ref="checkbox_weibo" id="checkbox_weibo" type="checkbox" className="weibo__checkbox" />
                                 <label htmlFor="checkbox_weibo" className="weibo__label">同时转发到微博</label>
                             </a>
+                            */}
                             <a className="cmnts__cancel" onClick={this._cancelCmnts.bind(this)}>取消</a>
                             <a ref="cmnts_publish" className="cmnts__publish" onClick={this._publishCmnts.bind(this)}>发布</a>
                         </div>

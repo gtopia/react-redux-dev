@@ -1,33 +1,29 @@
 module.exports = {
-	request: function(opt) {
-		var _this = this;
-
+	request: function(opt, successCb, errorCb, completeCb) {
 		$.ajax({
 	        url: opt.url,
 	        data: opt.data || {},
-	        type: opt.type,
+	        type: opt.type || 'GET',
 	        dataType: opt.dataType || 'jsonp',
 			xhrFields: {
 			    withCredentials: true
 			},
             timeout: opt.timeout,
             success: function(res) {
-                _this.success(res);
+                if (successCb && typeof successCb === 'function') {
+                    successCb(res);
+                }
             },
 	        error: function() {
-	            _this.error();
+                if (errorCb && typeof errorCb === 'function') {
+                    errorCb();
+                }
 	        },
             complete: function() {
-                _this.complete();
+                if (completeCb && typeof completeCb === 'function') {
+                    completeCb();
+                }
             }
 	    });
-
-		return _this;
-	},
-	success: function() {
-	},
-	error: function() {
-	},
-	complete: function() {
 	}
 };
