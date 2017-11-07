@@ -20,6 +20,10 @@ class App extends Component {
         super(props);
     }
 
+    componentWillMount() {
+        this.props.appActions.checkLoginStatus();
+    }
+
     componentDidMount() {
         // 检查导航条状态
         $('.layout__app').on('touchstart', this._checkStyle.bind(this));
