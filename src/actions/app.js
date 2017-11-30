@@ -3,7 +3,7 @@
  * Date: 2017/06/08
  * Description: 导航页action。
  */
-import actionTypes from '../constants/actions';
+import actionTypes from '../constants/main';
 
 export function activateMenu(menuName) {
     return {
@@ -53,7 +53,7 @@ export function checkLoginStatus(callback) {
 export function handleLogin() {
     return (dispatch) => {
         if (!window.checkLogin()) {
-            window.location.href = 'http://passport.sina.cn/signin/signin?entry=wapsso&vt=4&backTitle=全民话题&r=' + encodeURIComponent(window.location.href) + '&revalid=1';
+            window.location.href = '//passport.sina.cn/signin/signin?entry=wapsso&vt=4&backTitle=全民话题&r=' + encodeURIComponent(window.location.href) + '&revalid=1';
         }
         else {
             window.getUserInfo(function(res) {
@@ -80,7 +80,7 @@ export function cancelLogout() {
 export function handleLogout() {
     return (dispatch) => {
         if (window.checkLogin()) {
-            window.location.href = 'http://passport.sina.cn/sso/logout?entry=wapsso&vt=4&backTitle=全民话题&r=' + encodeURIComponent(window.location.href) + '&revalid=2';
+            window.location.href = '//passport.sina.cn/sso/logout?entry=wapsso&vt=4&backTitle=全民话题&r=' + encodeURIComponent(window.location.href) + '&revalid=2';
             dispatch({
                 type: actionTypes.LOGOUT_SUCCESS,
             });

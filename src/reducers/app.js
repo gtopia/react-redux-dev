@@ -4,7 +4,7 @@
  * Description: 导航页reducer。
  */
 import { Map } from 'immutable';
-import actionTypes from '../constants/actions';
+import actionTypes from '../constants/main';
 
 const initialState = Map({
     userInfo: Map({
@@ -22,7 +22,7 @@ const initialState = Map({
     activeMenu: 'topic', // 'none', 'topic', 'message', 'me'
 });
 
-export default function mainReducer(state = initialState, action) {
+export default function appReducer(state = initialState, action) {
     switch (action.type) {
         case actionTypes.ACTIVATE_MENU: {
             return state.set('activeMenu', action.menuName);

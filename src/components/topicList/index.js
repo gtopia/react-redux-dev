@@ -13,14 +13,12 @@ import reqObj from '../../static/util/request.js';
 import lazyloadPic from '../../static/util/lazyloadPic.js';
 import throttle from '../../static/util/throttle.js';
 import classNames from 'classnames';
+import apis from '../../constants/apis.js';
 
 class TopicList extends Component {
     constructor(props) {
         super(props);
         this.PAGESIZE = 10;     // 每次上拉加载条数
-
-        this.apiurl = 'http://xiaoyang7.topic.sina.cn/api/news/topic_list';  // TODO: Fake API
-
         this.state =  {
             topicData: [],
             requesting: false,
@@ -30,20 +28,16 @@ class TopicList extends Component {
 
     componentWillMount() {
         this._getData({
-            url: this.apiurl,
+            url: apis.TOPIC_LIST,
         });
 
         $(window).on('scroll', throttle({
-            'fn': this._loadMore.bind(this, this.apiurl),
+            'fn': this._loadMore.bind(this, apis.TOPIC_LIST),
             'context': this,
             'delay': 300,
             'mustRunDelay': null
         }));
     }
-
-    // componentDidMount() {
-    //     this.props.hideLoading();
-    // }
 
     componentDidUpdate() {
         lazyloadPic.init($('.layout__topic'), '.topic__container');
@@ -87,7 +81,7 @@ class TopicList extends Component {
         reqObj.request(getTopics.option, getTopics.successCb, null, getTopics.completeCb);
     }
 
-    _loadMore(apiurl) {
+    _loadMore(url) {
         let $container = $('main');
         if (!$container.length || this.state.requesting || this.state.isGetAll) {
             return;
@@ -111,7 +105,7 @@ class TopicList extends Component {
             };
 
             _this._getData({
-                url: apiurl,
+                url: url,
                 data: reqPara
             });
         }
@@ -140,17 +134,24 @@ class TopicList extends Component {
             }
 
             // 压缩图片
-            let resizeImgUrl = 'http://s.img.mix.sina.com.cn/api/auto/resize?size=400_0&img=' + encodeURIComponent(item.url);
+            let resizeImgUrl = '//s.img.mix.sina.com.cn/api/auto/resize?size=400_0&img=' + encodeURIComponent(item.url);
+            let presenterClass = classNames({
+                'presenter': true,
+                'hide': !item.hoster
+            });
 
             return (
                 <div onClick={this._gotoPage.bind(this, 'ht'+`${item.id}`)} key={index} data-sudaclick="card_list_1">
                     <div className="topic__container" data-imgurl={resizeImgUrl}>
+                        <div className="topic__title">
+                            <div className="title">
+                                <h2 className="name"># {item.tname} #</h2>
+                                <p className={presenterClass}>{item.hoster}</p>
+                            </div>
+                        </div>
                         <div className="topic__people">
                             <p className="num">{item.attend}</p>
                             <p className="desc">人参与</p>
-                        </div>
-                        <div className="topic__title">
-                            <h2 className="text"># {item.tname} #</h2>
                         </div>
                     </div>
                 </div>
@@ -167,12 +168,7 @@ class TopicList extends Component {
 }
 
 TopicList.propTypes = {
-    // hideLoading: PropTypes.func,
     history: PropTypes.object,
-};
-
-TopicList.defaultProps = {
-    // hideLoading: () => {},
 };
 
 export default withRouter(TopicList);

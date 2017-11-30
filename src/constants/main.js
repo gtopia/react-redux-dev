@@ -6,10 +6,7 @@
 var keyMirror = require('keymirror');
 
 export default keyMirror({
-    // App page
     ACTIVATE_MENU: null,
-    
-    // Main page
     LOGIN_SUCCESS: null,
     TOGGLE_ME: null,
     HIDE_ME: null,
@@ -22,8 +19,4 @@ export default keyMirror({
     CLOSE_FAV: null,
     SHOW_FAV_GUIDE: null,
     CLOSE_FAV_GUIDE: null,
-
-    // Topic page
-    SHOW_CMNTS_POPUP: null,
-    HIDE_CMNTS_POPUP: null,
 });

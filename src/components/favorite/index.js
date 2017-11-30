@@ -50,7 +50,7 @@ class Favorite extends Component {
             addFav: function() {
                 // Android收藏到主屏幕，IOS添加到书签。
                 if (browserUtil.QQ && !browserUtil.WX) {
-                    this.setIframe("http://so.sina.cn/browser/js.d.api?from=qq&act=bookmark_add");
+                    this.setIframe("//so.sina.cn/browser/js.d.api?from=qq&act=bookmark_add");
                 }
 
                 if (browserUtil.UC && !browserUtil.WX) {

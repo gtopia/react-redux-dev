@@ -4,7 +4,7 @@
  * Description: 首页reducer。
  */
 import { Map } from 'immutable';
-import actionTypes from '../constants/actions';
+import actionTypes from '../constants/main';
 
 const initialState = Map({
     isShowFav: false,

@@ -4,7 +4,7 @@
  * Description: 评论组件reducer。
  */
 import { Map } from 'immutable';
-import actionTypes from '../constants/actions';
+import actionTypes from '../constants/topic';
 
 const initialState = Map({
     isShowPopup: false,

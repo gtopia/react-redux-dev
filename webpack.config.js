@@ -49,7 +49,7 @@ var config = {
     output: {
         path: __DEV__ ? buildPath : distPath,
         filename: __DEV__ ? 'js/[name].bundle.js' : 'js/[name].bundle-[chunkhash:8].js',
-        publicPath: __DEV__ ? '/tmpdir/' : "http://simg.sinajs.cn/products/news/items/2017/top_topics/"
+        publicPath: __DEV__ ? '/tmpdir/' : "//simg.sinajs.cn/products/news/items/2017/top_topics/"
     },
     module: {
         // noParse: /jquery|zepto|react\.min|react\-dom\.min|react\-redux\.min|redux\.min|immutable\.min/,

@@ -3,7 +3,7 @@
  * Date: 2017/05/08
  * Description: 首页action。
  */
-import actionTypes from '../constants/actions';
+import actionTypes from '../constants/main';
 
 export function showFav() {
     return {

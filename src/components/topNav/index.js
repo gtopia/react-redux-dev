@@ -91,7 +91,7 @@ class TopNav extends Component {
     render() {
         // const { hasMoreTopic, userInfo, isWant2Logout, isShowMe } = this.props;
         // let moreTopicHtml = hasMoreTopic ? <MoreTopic history={this.props.history}/> : null;
-        // let defaultface = 'http://i3.sinaimg.cn/dy/deco/2012/1018/sina_comment_defaultface.png';
+        // let defaultface = '//i3.sinaimg.cn/dy/deco/2012/1018/sina_comment_defaultface.png';
         // let loginClass = classNames({
         //     'nav__loginbtn': true,
         //     'hide': userInfo.islogin

@@ -13,9 +13,9 @@ import TopicList from '../../components/topicList';
 import Favorite from '../../components/favorite';
 import BackTop from '../../components/backTop';
 import * as MainActions from '../../actions/main';
-// import classNames from 'classnames';
 import wxShare from '../../static/util/wxShareCustom.js';
 import * as AppActions from '../../actions/app';
+import { LOGO_SHARE } from '../../constants/app.js';
 
 class Main extends Component {
     constructor(props) {
@@ -30,10 +30,10 @@ class Main extends Component {
 
         this.props.appActions.hideMoreTopics();
         wxShare.init({
-            url: 'http://topic.sina.cn/',  //分享链接
+            url: '//topic.sina.cn',  //分享链接
             title: '全民话题，用不同视角发现新闻', //分享标题
             content: 'http://topic.sina.cn', //分享描述（分享朋友时会显示）
-            pic: 'http://simg.sinajs.cn/products/news/items/2017/top_topics/img/logo-share.png' //分享图片路径
+            pic: LOGO_SHARE //分享图片路径
         });
     }
 

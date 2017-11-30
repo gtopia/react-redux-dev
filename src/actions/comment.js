@@ -3,7 +3,7 @@
  * Date: 2017/05/19
  * Description: 评论组件action。
  */
-import actionTypes from '../constants/actions';
+import actionTypes from '../constants/topic';
 
 export function showCmntsPopup() {
     return {

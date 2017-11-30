@@ -225,7 +225,6 @@
 	height: .3rem;
 	top: 5px;
 	left: .15rem;
-	// background-image: url(http://i3.sinaimg.cn/dy/deco/2012/1018/sina_comment_defaultface.png);
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
 	border-radius: .15rem;
@@ -240,11 +239,6 @@
 	right: 0;
 	margin: auto;
 	@include sprite2rem($logo-topic-sina);
-	// width: .82rem;
-	// height: .24rem;
-	// background-image: url(../../static/img/logo_topic_sina.png);
-	// background-repeat: no-repeat;
-	// background-size: 100% 100%;
 }
 
 .nav__moretopic {

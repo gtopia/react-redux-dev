@@ -5,7 +5,7 @@
  * Modify: zhiyou@2017/07/17 修改空评论时的logo与样式。
  *         zhiyou@2017/07/18 适配浏览器resize，添加标志位防止多次触发resize。
  *         zhiyou@2017/09/14 修改加载更多时loading显示逻辑。
- *         zhiyou@2017/10/30 由于后端接口不在支持，关闭评论转发到微博功能。
+ *         zhiyou@2017/10/30 由于后端接口不再支持，关闭评论转发到微博功能。
  */
 import './index.scss';
 import React, { Component } from 'react';
@@ -15,6 +15,7 @@ import reqObj from '../../static/util/request.js';
 import classNames from 'classnames';
 // import cookieUtil from '../../static/util/cookie.js';
 import throttle from '../../static/util/throttle.js';
+import { DEFAULT_FACE } from '../../constants/app.js';
 
 class Comment extends Component {
     constructor(props) {
@@ -25,11 +26,10 @@ class Comment extends Component {
         this.LIMIT_HOTSIZE = 10;    // 热门评论最多显示10条
 
         this.conf = {
-            'getCmntsApi': 'http://comment5.news.sina.com.cn/page/info',
-            'agreeApi': 'http://comment5.news.sina.com.cn/cmnt/vote',
-            'getRepliesApi': 'http://comment5.news.sina.com.cn/cmnt/info',
-            'submitCmntApi': 'http://comment5.news.sina.com.cn/cmnt/submit',
-            'defaultFace': 'http://i3.sinaimg.cn/dy/deco/2012/1018/sina_comment_defaultface.png',
+            'getCmntsApi': '//comment5.news.sina.com.cn/page/info',
+            'agreeApi': '//comment5.news.sina.com.cn/cmnt/vote',
+            'getRepliesApi': '//comment5.news.sina.com.cn/cmnt/info',
+            'submitCmntApi': '//comment5.news.sina.com.cn/cmnt/submit',
             'channel': 'wap',
             'newsid': '',   // 'topic-' + topicId
             // 'newsid': '00f082ab2e451000',    // gj
@@ -394,7 +394,7 @@ class Comment extends Component {
             //     iReply.agree = (parseInt(iReply.agree)/10000).toFixed(1) + '万';
             // }
 
-            obj['userPic'] = userPic ? userPic : _this.conf.defaultFace;
+            obj['userPic'] = userPic ? userPic : DEFAULT_FACE;
             obj['userName'] = userName ? userName : iReply.nick;
             obj['time'] = _this._formatTime(iReply.time);
             obj['agreeNum'] = iReply.agree;
@@ -435,7 +435,7 @@ class Comment extends Component {
                 //     iCmnt.agree = (parseInt(iCmnt.agree)/10000).toFixed(1) + '万';
                 // }
 
-                obj['userPic'] = userPic ? userPic : _this.conf.defaultFace;
+                obj['userPic'] = userPic ? userPic : DEFAULT_FACE;
                 obj['userName'] = userName ? userName : iCmnt.nick;
                 obj['time'] = _this._formatTime(iCmnt.time);
                 obj['agreeNum'] = iCmnt.agree;
@@ -574,14 +574,13 @@ class Comment extends Component {
             return;
         }
 
-        let _this = this;
         let $target = $(e.currentTarget);
         let $replyTo = $target.parents('[class|="item"]');
         let placeholder = '写看法';
 
         const { userInfo } = this.props;
         let userName = userInfo.nick || userInfo.uname || userInfo.uid;
-        let userPic = userInfo.userface || _this.conf.defaultFace;
+        let userPic = userInfo.userface || DEFAULT_FACE;
 
         let replyInfo = {
             'type': '',     // 评论类型（latestCmnts/hotCmnts）
@@ -886,7 +885,6 @@ class Comment extends Component {
         let statusLoadingClass = classNames({
             'cmnts__loading': true,
             'hide': !(isShow && !this.state.isGetAll) || !this.state.latestCmnts.length
-            // 'hide': !(isShow && this.state.loading)
         });
 
         // 渲染评论数据
@@ -903,16 +901,23 @@ class Comment extends Component {
                     });
                     let agreeNum = item.agreeNum === '0' ? '赞' : item.agreeNum;
                     let replyCmnts = (cmnt) => {
+                        if (!cmnt.replyList.length) {
+                            return [];
+                        }
+
                         // 如果不是显示全部回复，则显示前LIMIT_REPLYSIZE条
                         if (!cmnt.isGetAllReplies) {
                             cmnt.replyList = cmnt.replyList.slice(0, _this.LIMIT_REPLYSIZE);
                         }
 
-                        return cmnt.replyList.map((rItem, rIndex) => {
+                        let formattedList = [];
+
+                        cmnt.replyList.map((rItem, rIndex) => {
                             let rAgreeNum = rItem.agreeNum === '0' ? '赞' : rItem.agreeNum;
                             let showmoreClass = classNames({
                                 'replies__showmore': true,
-                                'hide': (cmnt.replyTotal <= _this.LIMIT_REPLYSIZE) || (_this.LIMIT_REPLYSIZE-1 !== rIndex) || cmnt.isGetAllReplies
+                                'hide': (cmnt.replyTotal <= _this.LIMIT_REPLYSIZE) || (_this.LIMIT_REPLYSIZE-1 !== rIndex) || cmnt.isGetAllReplies  //按时间倒序排列
+                                // 'hide': (cmnt.replyTotal <= _this.LIMIT_REPLYSIZE) || (0 !== rIndex) || cmnt.isGetAllReplies  //按时间正序排列
                             });
 
                             let rContent = <a className="content" onClick={ !rItem.mid ? null : _this._handleCmntsReply.bind(this) }>{rItem.content}</a>;
@@ -921,7 +926,8 @@ class Comment extends Component {
                                 rContent = <a className="content" onClick={ !rItem.mid ? null : _this._handleCmntsReply.bind(this) }>{'回复'}<span className="content__rname">{'@' + replyName}</span>{'：' + rItem.content}</a>;
                             }
 
-                            return (
+                            // 评论回复按时间倒序排列
+                            formattedList.push(
                                 <div key={rItem.mid ? rItem.mid : rIndex} data-role="replyItem" data-mid={rItem.mid} >
                                     <div className="item"
                                          ref={rItem.mid}
@@ -957,6 +963,8 @@ class Comment extends Component {
                                 </div>
                             );
                         });
+
+                        return formattedList;
                     };
 
                     return (

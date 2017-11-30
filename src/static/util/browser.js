@@ -84,6 +84,7 @@ var Browser = {
     'QQ': /QQBrowser/i.test(ua),
     'WB':/Weibo/i.test(ua),
     'SINANEWS':/sinanews/i.test(ua),    // 新浪新闻客户端
+    'XM':/miuibrowser/i.test(ua),       // 小米浏览器
 };
 
 Browser.SAFARI = !Browser.UC && !Browser.CHROME && (/([\w.]*) safari/).test(ua);

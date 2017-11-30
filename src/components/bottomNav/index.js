@@ -39,26 +39,35 @@ class BottomNav extends Component {
     }
 
     _gotoPage(name) {
+        let fullPath = '';
         const { activateMenu } = this.props;
         activateMenu(name);
 
         switch (name) {
             case 'topic': {
-                this.props.history.push(MAIN_URL + window.location.search);
+                fullPath = MAIN_URL + window.location.search;
+
                 break;
             }
             case 'message': {
-                this.props.history.push(MESSAGE_URL + window.location.search);
+                fullPath = MESSAGE_URL + window.location.search;
+
                 break;
             }
             case 'me': {
-                this.props.history.push(ME_URL + window.location.search);
+                fullPath = ME_URL + window.location.search;
+
                 break;
             }
             default: {
                 break;
             }
         }
+
+        // SUDA PV统计
+        window.SUDA.log(window.sudaLogExt1, window.sudaLogExt2, window.location.host + fullPath);
+
+        this.props.history.push(fullPath);
     }
 
     render() {
