@@ -2,8 +2,9 @@
  * Author: jinping3
  * Date: 2017/05/12
  * Description: attention actions and get topic
- * Modify: zhiyou@2017/07/12 未登录的情况下点击关注时，改为弹窗登录
-           zhiyou@2017/07/17 添加resetBodyArticleState，用于在刚开始进入页面时隐藏文章弹层动效
+ * Modify: zhiyou@2017/07/12 未登录的情况下点击关注时，改为弹窗登录。
+           zhiyou@2017/07/17 添加resetBodyArticleState，用于在刚开始进入页面时隐藏文章弹层动效。
+           zhiyou@2017/12/06 修复点赞时获取event target错误。
  */
 import topicTypes from '../constants/topic.js';
 import apis from '../constants/apis.js';
@@ -22,15 +23,12 @@ var doResultSurvey = {
      */
     init: function(data, oldSurveyInfor){
         oldSurveyInfor.map((item) => {
-            //console.log(item.qid);
             var answerAdd = data[item.qid];
 
             item.totalcount = item.totalcount + answerAdd.length;
             item.isShowSurveyResult = true;
             item.answer.map((answerItem) => {
-                //console.log('answerItem',answerItem);
                 answerAdd.map((a) => {
-                    //console.log('a',a);
                     if (answerItem.aid == a) {
                         answerItem.count += 1;
                         answerItem.select = 1;
@@ -45,9 +43,9 @@ var doResultSurvey = {
         oldVoteInfor.isShowVoteResult = true;
         oldVoteInfor.answer.map((item) => {
             if (item.aid == aid) {
-                item.count +=1;
-            }
-            
+                item.count += 1;
+                item.select = 1;
+            }            
         });
         return oldVoteInfor;
     }
@@ -93,29 +91,22 @@ export function attention(text, uid, tid, isAttention) {
     };
 }
 
-//点赞
-export function praise(cid, praiseNum, isPraise) {
-    return {
-        type: topicTypes.PRAISE,
-        cid,
-        praiseNum, 
-        isPraise
-    };
-}
 //投票
-export function vote(newVoteInfor) {
+export function vote(newVoteInfor, cid) {
     return {
         type: topicTypes.VOTE,
-        newVoteInfor
+        newVoteInfor,
+        cid
     };
 }
 
 //调查
-export function survey(newSurveyInfor, hideResultState1) {
+export function survey(newSurveyInfor, hideResultState1, cid) {
     return {
         type: topicTypes.SURVEY,
         newSurveyInfor,
-        hideResultState1
+        hideResultState1,
+        cid
     };
 }
 
@@ -245,63 +236,63 @@ export function attentionFunc(e){
     };
 }
 
+//点赞
+export function praise(cid, praiseNum, isPraise) {
+    return {
+        type: topicTypes.PRAISE,
+        cid,
+        praiseNum, 
+        isPraise
+    };
+}
+
 export function praiseFunc(e){
-    function _postData(obj){
-        $.ajax({
-            url: apis.CARD_PRAISE, 
-            data: {
-               uid: obj.uid,
-               cid: obj.cid,
-               type: obj.type,
-               praise: obj.praise,
-            },
-            type: "POST",
-        });
-    }
-    
     return (dispatch) => {
-        //console.log('点赞');
-        let $ele = $(e.target).parents('a'),
+        let $ele = $(e.currentTarget),
             cid = $ele.attr('data-articleid'),
             type = $ele.attr('data-cardtype'),
             praiseNum = $ele.attr('data-praisenum'),
             isPraise = $ele.attr('data-praise'),
-            uid = $ele.attr('data-uid'), ptxt = 0;
-        
+            uid = $ele.attr('data-uid');
+
         if (isPraise == 0) {
             praiseNum++;
-            ptxt = 1;
-            dispatch(praise(cid, praiseNum, ptxt));
-            _postData({
-                uid: uid,
-                cid: cid,
-                type: type,
-                praise: ptxt
+
+            $.ajax({
+                url: apis.CARD_PRAISE, 
+                data: {
+                    uid: uid,
+                    cid: cid,
+                    type: type,
+                    praise: 1
+                },
+                type: "POST"
             });
+
+            dispatch(praise(cid, praiseNum, 1));
         }
-        //console.log(uid, cid, type, ptxt);
     }; 
 }
 
 //PK function
-export function voteFunc(/*qid,*/ aid, uid, oldVoteInfor){
+export function voteFunc(cid, aid, uid, oldVoteInfor){
     return (dispatch) => {
 
-        let data = /*qid + '_' + */aid;
+        let data = aid;
 
         $.ajax({
             url: apis.CARD_VOTE, 
             data: {
                vote: data,
-               uid: uid
+               uid: uid,
+               cid: cid
             },
             type: "POST",
             success: function (req) {
-                //console.log('投票成功',req, data);
                 let msg, state = false;
                 if (req.result.status.code == 0) { //成功
                     let newVoteInfor = doResultSurvey.initOther(aid, oldVoteInfor);
-                    dispatch(vote(newVoteInfor));
+                    dispatch(vote(newVoteInfor, cid));
                     msg = req.result.status.msg;
                     state = false;
                 } else { //异常
@@ -334,21 +325,21 @@ export function voteFunc(/*qid,*/ aid, uid, oldVoteInfor){
  * @param  {object} changeDataItems 问题id及选中答案
  * @param  {array} oldSurveyInfor 初始渲染调查结果的数组
  */
-export function suverySubmitFunc(data, changeDataItems, oldSurveyInfor, uid) {
+export function suverySubmitFunc(data, changeDataItems, oldSurveyInfor, uid, cid) {
     return (dispatch) => {
         $.ajax({
             url: apis.CARD_VOTE, 
             data: {
                vote: data,
-               uid: uid
+               uid: uid,
+               cid: cid
             },
             type: "POST",
             success: function (req) {
-                //console.log('投票成功',req);
                 let msg, state = false;
                 if (req.result.status.code == 0) { //成功
                     let newSurveyInfor = doResultSurvey.init(changeDataItems, oldSurveyInfor);
-                    dispatch(survey(newSurveyInfor, true));
+                    dispatch(survey(newSurveyInfor, true, cid));
                     msg = req.result.status.msg;
                     state = false;
                 } else { //异常
@@ -362,7 +353,6 @@ export function suverySubmitFunc(data, changeDataItems, oldSurveyInfor, uid) {
                 }, 3000);
             },
             error: function (err) {
-                //console.log("失败！", err);
                 if (err) {
                     dispatch(tips('提交失败', true));
 
@@ -370,14 +360,10 @@ export function suverySubmitFunc(data, changeDataItems, oldSurveyInfor, uid) {
                         dispatch(tips('提交失败', false));
                     }, 3000);
                 }
-                
-                
             }
         });
-        
     };
 }
-
 
 export function showViewpoint() {
     return {

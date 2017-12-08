@@ -41,6 +41,15 @@ class Main extends Component {
         $(window).scrollTop(0);
     }
 
+    shouldComponentUpdate(nextProps) {
+        if (JSON.stringify(nextProps.mainState) === JSON.stringify(this.props.mainState)) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
     render() {
         const { 
             isShowFav,

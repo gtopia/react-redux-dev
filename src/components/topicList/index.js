@@ -39,6 +39,10 @@ class TopicList extends Component {
         }));
     }
 
+    shouldComponentUpdate(nextProps, nextState) {
+        return JSON.stringify(nextState) !== JSON.stringify(this.state);
+    }
+
     componentDidUpdate() {
         lazyloadPic.init($('.layout__topic'), '.topic__container');
     }
@@ -168,7 +172,7 @@ class TopicList extends Component {
 }
 
 TopicList.propTypes = {
-    history: PropTypes.object,
+    history: PropTypes.object
 };
 
 export default withRouter(TopicList);

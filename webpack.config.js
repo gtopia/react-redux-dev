@@ -283,6 +283,7 @@ var config = {
             'swiper': path.join(__dirname, 'node_modules', 'swiper', 'dist', 'js', 'swiper.min.js'),
             'swiper-css': path.join(__dirname, 'node_modules', 'swiper', 'dist', 'css', 'swiper.min.css'),
             'react': path.join(__dirname, 'node_modules', 'react', 'cjs', 'react.production.min.js'),
+            // 'react': path.join(__dirname, 'node_modules', 'react', 'cjs', 'react.development.js'),
             'react-dom': path.join(__dirname, 'node_modules', 'react-dom', 'cjs', 'react-dom.production.min.js'),
             'react-redux': path.join(__dirname, 'node_modules', 'react-redux', 'dist', 'react-redux.min.js'),
             'redux': path.join(__dirname, 'node_modules', 'redux', 'dist', 'redux.min.js'),

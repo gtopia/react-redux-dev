@@ -5,13 +5,6 @@
  */
 import actionTypes from '../constants/main';
 
-export function activateMenu(menuName) {
-    return {
-        type: actionTypes.ACTIVATE_MENU,
-        menuName
-    };
-}
-
 export function _loginSuccess(userInfo) {
     return {
         type: actionTypes.LOGIN_SUCCESS,

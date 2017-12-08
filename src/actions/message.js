@@ -20,15 +20,12 @@ var doResultSurvey = {
      */
     init: function(data, oldSurveyInfor){
         oldSurveyInfor.map((item) => {
-            //console.log(item.qid);
             var answerAdd = data[item.qid];
 
             item.totalcount = item.totalcount + answerAdd.length;
             item.isShowSurveyResult = true;
             item.answer.map((answerItem) => {
-                //console.log('answerItem',answerItem);
                 answerAdd.map((a) => {
-                    //console.log('a',a);
                     if (answerItem.aid == a) {
                         answerItem.count += 1;
                         answerItem.select = 1;
@@ -43,9 +40,9 @@ var doResultSurvey = {
         oldVoteInfor.isShowVoteResult = true;
         oldVoteInfor.answer.map((item) => {
             if (item.aid == aid) {
-                item.count +=1;
-            }
-            
+                item.count += 1;
+                item.select = 1;
+            }            
         });
         return oldVoteInfor;
     }
@@ -66,37 +63,29 @@ export function clearData(){
     };
 }
 
-//点赞
-export function praise(cid, praiseNum, isPraise) {
-    return {
-        type: msgTypes.PRAISE,
-        cid,
-        praiseNum, 
-        isPraise
-    };
-}
-
 //投票
-export function vote(newVoteInfor) {
+export function vote(newVoteInfor, cid) {
     return {
         type: msgTypes.VOTE,
-        newVoteInfor
+        newVoteInfor,
+        cid
     };
 }
 
 //调查
-export function survey(newSurveyInfor, hideResultState1) {
+export function survey(newSurveyInfor, hideResultState1, cid) {
     return {
         type: msgTypes.SURVEY,
         newSurveyInfor,
-        hideResultState1
+        hideResultState1,
+        cid
     };
 }
 
 //文章正文
-export function bodyArticle(bodyState, articleIndex, topicId, topicTitle, topicAttend) {
+export function showBodyArticle(bodyState, articleIndex, topicId, topicTitle, topicAttend) {
     return {
-        type: msgTypes.SHOWBODYARTICLE,
+        type: msgTypes.SHOW_BODY_ARTICLE,
         bodyState,
         articleIndex,
         topicId,
@@ -134,56 +123,59 @@ export function checkAllArticle(e){
             bodyState = false;
         }
 
-        dispatch(bodyArticle(bodyState, articleIndex, topicId, topicTitle, topicAttend));
+        dispatch(showBodyArticle(bodyState, articleIndex, topicId, topicTitle, topicAttend));
+    };
+}
+
+//点赞
+export function praise(cid, praiseNum, isPraise) {
+    return {
+        type: msgTypes.PRAISE,
+        cid,
+        praiseNum, 
+        isPraise
     };
 }
 
 export function praiseFunc(e){
-    function _postData(obj){
-        $.ajax({
-            url: apis.CARD_PRAISE,
-            data: {
-               uid: obj.uid,
-               cid: obj.cid,
-               type: obj.type,
-               praise: obj.praise,
-            },
-            type: "POST",
-        });
-    }
-
     return (dispatch) => {
-        let $ele = $(e.target).parents('a'),
+        let $ele = $(e.currentTarget),
             cid = $ele.attr('data-articleid'),
             type = $ele.attr('data-cardtype'),
             praiseNum = $ele.attr('data-praisenum'),
             isPraise = $ele.attr('data-praise'),
-            uid = $ele.attr('data-uid'), ptxt = 0;
+            uid = $ele.attr('data-uid');
 
         if (isPraise == 0) {
             praiseNum++;
-            ptxt = 1;
-            dispatch(praise(cid, praiseNum, ptxt));
-            _postData({
-                uid: uid,
-                cid: cid,
-                type: type,
-                praise: ptxt
+
+            $.ajax({
+                url: apis.CARD_PRAISE, 
+                data: {
+                    uid: uid,
+                    cid: cid,
+                    type: type,
+                    praise: 1
+                },
+                type: "POST"
             });
+
+            dispatch(praise(cid, praiseNum, 1));
         }
     }; 
 }
 
 //PK function
-export function voteFunc(/*qid,*/ aid, uid, oldVoteInfor){
+export function voteFunc(cid, aid, uid, oldVoteInfor){
     return (dispatch) => {
-        let data = /*qid + '_' + */aid;
+        let data = aid;
 
         $.ajax({
             url: apis.CARD_VOTE,
             data: {
                vote: data,
-               uid: uid
+               uid: uid,
+               cid: cid
             },
             type: "POST",
             success: function (req) {
@@ -191,7 +183,7 @@ export function voteFunc(/*qid,*/ aid, uid, oldVoteInfor){
 
                 if (req.result.status.code == 0) { //成功
                     let newVoteInfor = doResultSurvey.initOther(aid, oldVoteInfor);
-                    dispatch(vote(newVoteInfor));
+                    dispatch(vote(newVoteInfor, cid));
                     msg = req.result.status.msg;
                     state = false;
                 }
@@ -226,13 +218,14 @@ export function voteFunc(/*qid,*/ aid, uid, oldVoteInfor){
  * @param  {object} changeDataItems 问题id及选中答案
  * @param  {array} oldSurveyInfor 初始渲染调查结果的数组
  */
-export function suverySubmitFunc(data, changeDataItems, oldSurveyInfor, uid) {
+export function suverySubmitFunc(data, changeDataItems, oldSurveyInfor, uid, cid) {
     return (dispatch) => {
         $.ajax({
             url: apis.CARD_VOTE, 
             data: {
                vote: data,
-               uid: uid
+               uid: uid,
+               cid: cid
             },
             type: "POST",
             success: function (req) {
@@ -240,7 +233,7 @@ export function suverySubmitFunc(data, changeDataItems, oldSurveyInfor, uid) {
 
                 if (req.result.status.code == 0) { //成功
                     let newSurveyInfor = doResultSurvey.init(changeDataItems, oldSurveyInfor);
-                    dispatch(survey(newSurveyInfor, true));
+                    dispatch(survey(newSurveyInfor, true, cid));
                     msg = req.result.status.msg;
                     state = false;
                 }
@@ -273,5 +266,30 @@ export function suverySubmitFunc(data, changeDataItems, oldSurveyInfor, uid) {
 export function resetBodyArticleState() {
     return {
         type: msgTypes.RESET_BODY_ARTICLE_STATE
+    };
+}
+
+export function setQnaData(data) {
+    return {
+        type: msgTypes.SET_QNA_DATA,
+        data: data
+    };
+}
+
+export function showBodyQna() {
+    return {
+        type: msgTypes.SHOW_BODY_QNA
+    };
+}
+
+export function closeBodyQna() {
+    return {
+        type: msgTypes.CLOSE_BODY_QNA
+    };
+}
+
+export function resetBodyQnaState() {
+    return {
+        type: msgTypes.RESET_BODY_QNA_STATE
     };
 }

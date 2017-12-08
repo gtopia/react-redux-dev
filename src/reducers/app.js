@@ -18,15 +18,11 @@ const initialState = Map({
     }),
     hasMoreTopic: false,
     isShowMe: false,
-    isWant2Logout: false,
-    activeMenu: 'topic', // 'none', 'topic', 'message', 'me'
+    isWant2Logout: false
 });
 
 export default function appReducer(state = initialState, action) {
     switch (action.type) {
-        case actionTypes.ACTIVATE_MENU: {
-            return state.set('activeMenu', action.menuName);
-        }
         case actionTypes.LOGIN_SUCCESS: {
             return state.set('userInfo', Map(action.userInfo));
         }

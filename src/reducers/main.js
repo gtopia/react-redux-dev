@@ -8,7 +8,7 @@ import actionTypes from '../constants/main';
 
 const initialState = Map({
     isShowFav: false,
-    isShowFavGuide: false,
+    isShowFavGuide: false
 });
 
 export default function mainReducer(state = initialState, action) {

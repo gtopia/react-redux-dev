@@ -161,6 +161,21 @@ class Comment extends Component {
         }
     }
 
+    shouldComponentUpdate(nextProps, nextState) {
+        if (JSON.stringify(nextProps.userInfo) === JSON.stringify(this.props.userInfo) &&
+            JSON.stringify(nextState) === JSON.stringify(this.state) &&
+            nextProps.isShow === this.props.isShow &&
+            nextProps.isGetAllCards === this.props.isGetAllCards &&
+            nextProps.isShowPopup === this.props.isShowPopup &&
+            nextProps.isShowEmptyPrompt === this.props.isShowEmptyPrompt
+            ) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
     componentDidUpdate() {
         // 检查样式
         let showmoreList = $('[class^="replies__showmore"]');
@@ -1075,7 +1090,7 @@ Comment.propTypes = {
     showCmntsPopup: PropTypes.func,
     hideCmntsPopup: PropTypes.func,
     setTotalCmnts: PropTypes.func,
-    showCmnts: PropTypes.func,
+    showCmnts: PropTypes.func
 };
 
 Comment.defaultProps = {
@@ -1096,7 +1111,7 @@ Comment.defaultProps = {
     showCmntsPopup: () => {},
     hideCmntsPopup: () => {},
     setTotalCmnts: () => {},
-    showCmnts: () => {},
+    showCmnts: () => {}
 };
 
 export default Comment;

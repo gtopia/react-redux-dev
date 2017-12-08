@@ -18,15 +18,31 @@ import Browser from '../../static/util/browser';
 class App extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            'location': {}
+        };
     }
 
     componentWillMount() {
         this.props.appActions.checkLoginStatus();
+        this.setState({
+            'location': Object.assign({}, this.props.history.location)
+        });
     }
 
     componentDidMount() {
         // 检查导航条状态
         $('.layout__app').on('touchstart', this._checkStyle.bind(this));
+    }
+
+    shouldComponentUpdate(nextProps) {
+        if (JSON.stringify(nextProps.appState) === JSON.stringify(this.props.appState) &&
+            JSON.stringify(nextProps.history.location) === JSON.stringify(this.state.location)) {
+            return false;
+        }
+        else {
+            return true;
+        }
     }
 
     _checkStyle(e) {
@@ -46,8 +62,7 @@ class App extends Component {
             hasMoreTopic, 
             userInfo, 
             isWant2Logout, 
-            isShowMe,
-            activeMenu,
+            isShowMe
         } = this.props.appState;
         const { 
             handleLogin,
@@ -55,18 +70,14 @@ class App extends Component {
             toggleMe, 
             cancelLogout, 
             handleLogout, 
-            checkLoginStatus,
-            activateMenu,
+            checkLoginStatus
         } = this.props.appActions;
 
         if (Browser.SINANEWS || Browser.WX || Browser.WB) {
             return (
                 <section className="layout__app" onClick={this._checkStyle.bind(this)}>
                     { this.props.children }
-                    <BottomNav
-                        activeMenu={activeMenu}
-                        activateMenu={activateMenu}
-                    />
+                    <BottomNav />
                 </section>
             );
         }
@@ -86,10 +97,7 @@ class App extends Component {
                         handleLogout={handleLogout}
                     />
                     { this.props.children }
-                    <BottomNav
-                        activeMenu={activeMenu}
-                        activateMenu={activateMenu}
-                    />
+                    <BottomNav />
                 </section>
             );
         }
@@ -97,6 +105,7 @@ class App extends Component {
 }
 
 App.propTypes = {
+    history: PropTypes.object,
     appState: PropTypes.object.isRequired,
     appActions: PropTypes.object.isRequired
 };

@@ -2,6 +2,7 @@
  * Author: zhiyou
  * Date: 2017/05/31
  * Description: 返回顶部组件。
+ * Modify: zhiyou@2017/12/06 添加shouldComponentUpdate函数，优化组件性能。
  */
 import './index.scss';
 import React, { Component } from 'react';
@@ -29,6 +30,10 @@ class BackTop extends Component {
                 }
             }
         });
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        return nextState.isShow !== this.state.isShow;
     }
 
     componentWillUnmount() {

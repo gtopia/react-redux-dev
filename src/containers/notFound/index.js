@@ -24,6 +24,10 @@ class NotFound extends Component {
         });
     }
 
+    shouldComponentUpdate() {
+        return false;
+    }
+
     _gotoPrev() {
         if (!window.history.length || window.document.referrer == "") {
             this.props.history.push(MAIN_URL + window.location.search);
@@ -65,7 +69,7 @@ class NotFound extends Component {
 }
 
 NotFound.propTypes = {
-    history: PropTypes.object,
+    history: PropTypes.object
 };
 
 export default withRouter(NotFound);

@@ -7,7 +7,7 @@ var keyMirror = require('keymirror');
 
 export default keyMirror({
     SAVE_CARDS: null,
-    SHOWBODYARTICLE: null,
+    SHOW_BODY_ARTICLE: null,
     CARDCONTENTS: null,
     TIPS: null,
     CLEARDATA: null,
@@ -24,4 +24,9 @@ export default keyMirror({
     QQWX: null,
     UCWX: null,
     COMMONWXFUNC: null,
+
+    SET_QNA_DATA: null,
+    SHOW_BODY_QNA: null,
+    CLOSE_BODY_QNA: null,
+    RESET_BODY_QNA_STATE: null,
 });

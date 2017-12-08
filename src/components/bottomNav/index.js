@@ -2,6 +2,7 @@
  * Author: zhiyou
  * Date: 2017/10/12
  * Description: 底部导航组件。
+ * Modify: zhiyou@2017/12/06 添加componentWillReceiveProps与shouldComponentUpdate函数，优化组件性能。
  */
 import './index.scss';
 import React, { Component } from 'react';
@@ -13,35 +14,51 @@ import classNames from 'classnames';
 class BottomNav extends Component {
     constructor(props) {
         super(props);
+        
+        this.state = {
+            'activeMenu': 'topic'
+        };
     }
 
-    componentDidUpdate() {
-        const { history, activateMenu } = this.props;
-
-        switch (history.location.pathname) {
+    componentWillReceiveProps(nextProps) {
+        switch (nextProps.history.location.pathname) {
             case '/': {
-                activateMenu('topic');
+                this.setState({
+                    'activeMenu': 'topic'
+                });
                 break;
             }
             case '/me': {
-                activateMenu('me');
+                this.setState({
+                    'activeMenu': 'me'
+                });
                 break;
             }
             case '/message': {
-                activateMenu('message');
+                this.setState({
+                    'activeMenu': 'message'
+                });
                 break;
             }
             default: {
-                activateMenu('none');
+                this.setState({
+                    'activeMenu': 'none'
+                });
                 break;
             }
         }
     }
 
+    shouldComponentUpdate(nextProps, nextState) {
+        return nextState.activeMenu !== this.state.activeMenu;
+    }
+
     _gotoPage(name) {
         let fullPath = '';
-        const { activateMenu } = this.props;
-        activateMenu(name);
+
+        this.setState({
+            'activateMenu': name
+        });
 
         switch (name) {
             case 'topic': {
@@ -71,7 +88,7 @@ class BottomNav extends Component {
     }
 
     render() {
-        const { activeMenu } = this.props;
+        const { activeMenu } = this.state;
         let topicIconClass = classNames({
             'icon__topic': activeMenu !== 'topic',
             'icon__topic--active': activeMenu === 'topic',
@@ -120,13 +137,6 @@ class BottomNav extends Component {
 
 BottomNav.propTypes = {
     history: PropTypes.object,
-    activeMenu: PropTypes.string,
-    activateMenu: PropTypes.func,
-};
-
-BottomNav.defaultProps = {
-    activeMenu: 'topic',
-    activateMenu: () => {},
 };
 
 export default withRouter(BottomNav);

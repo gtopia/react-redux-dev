@@ -89,6 +89,16 @@ class Favorite extends Component {
         }
     }
 
+    shouldComponentUpdate(nextProps) {
+        if (nextProps.isShowFav === this.props.isShowFav &&
+            nextProps.isShowFavGuide === this.props.isShowFavGuide) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
     _closeFav() {
         const { closeFav } = this.props;
 
@@ -165,7 +175,7 @@ Favorite.propTypes = {
     showFav: PropTypes.func,
     closeFav: PropTypes.func,
     showFavGuide: PropTypes.func,
-    closeFavGuide: PropTypes.func,
+    closeFavGuide: PropTypes.func
 };
 
 Favorite.defaultProps = {
@@ -174,7 +184,7 @@ Favorite.defaultProps = {
     showFav: () => {},
     closeFav: () => {},
     showFavGuide: () => {},
-    closeFavGuide: () => {},
+    closeFavGuide: () => {}
 };
 
 export default Favorite;

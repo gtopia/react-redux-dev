@@ -54,6 +54,10 @@ class TopNav extends Component {
     //     }
     // }
 
+    shouldComponentUpdate() {
+        return false;
+    }
+
     // componentWillUnmount() {
     //     this.refs['header_nav'].dataset['sudaclick'] = "";
     // }
@@ -169,7 +173,7 @@ TopNav.propTypes = {
     toggleMe: PropTypes.func,
     want2Logout: PropTypes.func,
     cancelLogout: PropTypes.func,
-    handleLogout: PropTypes.func,
+    handleLogout: PropTypes.func
 };
 
 TopNav.defaultProps = {
@@ -190,7 +194,7 @@ TopNav.defaultProps = {
     toggleMe: () => {},
     want2Logout: () => {},
     cancelLogout: () => {},
-    handleLogout: () => {},
+    handleLogout: () => {}
 };
 
 export default withRouter(TopNav);

@@ -8,7 +8,7 @@ import actionTypes from '../constants/topic';
 
 const initialState = Map({
     isShowPopup: false,
-    isShowEmptyPrompt: false,
+    isShowEmptyPrompt: false
 });
 
 export default function commentReducer(state = initialState, action) {
