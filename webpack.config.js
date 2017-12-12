@@ -12,13 +12,13 @@ var BabiliPlugin = require("babili-webpack-plugin");
 var SpritesmithPlugin = require('webpack-spritesmith');
 
 var path = require('path');
-var nodeModulesPath = path.resolve(__dirname, 'node_modules');
-var eslintrcPath = path.resolve(__dirname, '.eslintrc.json');
-var zeptoPath = path.resolve(__dirname, 'src/static/lib/zepto.1.2.0.min.js');
-var mainPath = path.resolve(__dirname, 'src', 'index.js');
-var templatePath = path.resolve(__dirname, 'src', 'index.html');
-var buildPath = path.resolve(__dirname, 'build');
-var distPath = path.resolve(__dirname, 'dist');
+var nodeModulesPath = path.join(__dirname, 'node_modules');
+var eslintrcPath = path.join(__dirname, '.eslintrc.json');
+var zeptoPath = path.join(__dirname, 'src', 'static', 'lib', 'zepto.1.2.0.min.js');
+var mainPath = path.join(__dirname, 'src', 'index.js');
+var templatePath = path.join(__dirname, 'src', 'index.html');
+var buildPath = path.join(__dirname, 'build');
+var distPath = path.join(__dirname, 'dist');
 
 var mode = process.env.NODE_ENV.trim();
 var __DEV__ = mode!=='production';
@@ -208,12 +208,12 @@ var config = {
             }),
             new SpritesmithPlugin({
                 src: {
-                    cwd: path.resolve(__dirname, 'src/static/sprite/'),
+                    cwd: path.join(__dirname, 'src', 'static', 'sprite'),
                     glob: '*.*'
                 },
                 target: {
-                    image: path.resolve(__dirname, 'src/static/img/auto-sprite.png'),
-                    css: path.resolve(__dirname, 'src/static/style/auto-sprite.scss')
+                    image: path.join(__dirname, 'src', 'static', 'img', 'auto-sprite.png'),
+                    css: path.join(__dirname, 'src', 'static', 'style', 'auto-sprite.scss')
                 },
                 apiOptions: {
                     // Path by which generated image will be referenced in API.
@@ -275,16 +275,15 @@ var config = {
     resolve: {
         extensions: ['.js', '.jsx', '.scss', '.css'],
         modules: [
-            path.resolve(__dirname, 'src', 'static'),
-            path.resolve(__dirname, 'node_modules')
+            path.join(__dirname, 'src', 'static'),
+            path.join(__dirname, 'node_modules')
         ],
         alias: {
             'zepto': zeptoPath,
             'swiper': path.join(__dirname, 'node_modules', 'swiper', 'dist', 'js', 'swiper.min.js'),
             'swiper-css': path.join(__dirname, 'node_modules', 'swiper', 'dist', 'css', 'swiper.min.css'),
-            'react': path.join(__dirname, 'node_modules', 'react', 'cjs', 'react.production.min.js'),
-            // 'react': path.join(__dirname, 'node_modules', 'react', 'cjs', 'react.development.js'),
-            'react-dom': path.join(__dirname, 'node_modules', 'react-dom', 'cjs', 'react-dom.production.min.js'),
+            'react': path.join(__dirname, 'node_modules', 'react', 'index.js'),
+            'react-dom': path.join(__dirname, 'node_modules', 'react-dom', 'index.js'),
             'react-redux': path.join(__dirname, 'node_modules', 'react-redux', 'dist', 'react-redux.min.js'),
             'redux': path.join(__dirname, 'node_modules', 'redux', 'dist', 'redux.min.js'),
             'immutable': path.join(__dirname, 'node_modules', 'immutable', 'dist', 'immutable.min.js')
