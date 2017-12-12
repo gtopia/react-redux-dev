@@ -1,0 +1,292 @@
+@import "../../static/style/auto-sprite.scss";
+@import "../../static/style/px2rem-sprite.scss";
+
+.layout__me {
+    position: relative;
+    top: 0;
+    width: 100%;
+    overflow: visible;
+}
+
+.me__info {
+    position: relative;
+    width: 100%;
+    text-align: center;
+    background: #FFFFFF;
+    padding-top: .2rem;
+    margin-bottom: .5rem;
+}
+
+.me__logout {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    @include sprite2rem($btn-logout-gray);
+}
+
+.me__portrait {
+    position: relative;
+    margin: 0 auto 5px;
+    border: 1px solid #F3EEEE;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    width: .8rem;
+    height: .8rem;
+    border-radius: 50%;
+}
+
+.me__name {
+    line-height: .24rem;
+    font-family: PingFangSC-Regular;
+    font-size: .17rem;
+    color: #333333;
+    letter-spacing: 0;
+    margin-bottom: .2rem;
+}
+
+.me__detail {
+    position: relative;
+    width: 100%;
+    height: .5rem;
+    // display: flex;
+    // justify-content: space-around;
+    // align-items: center;
+    padding-bottom: .17rem;
+}
+
+.me__txt {
+    font-family: PingFangSC-Regular;
+    font-size: .13rem;
+    line-height: .18rem;
+    color: #999999;
+    letter-spacing: 0;
+}
+
+.me__num {
+    font-family: PingFangSC-Semibold;
+    font-weight: bold;
+    font-size: .22rem;
+    line-height: .30rem;
+    color: #333333;
+    letter-spacing: 0;
+}
+
+.me__topics {
+    position: absolute;
+    width: .8rem;
+    left: .4rem;
+}
+
+.me__divider {
+    position: absolute;
+    // margin: auto 0;
+    height: .2rem;
+    width: 1px;
+    background-color: #C8C8C8;
+    left: 50%;
+    top: .14rem;
+}
+
+.me__cmnts {
+    position: absolute;
+    width: .8rem;
+    right: .4rem;
+}
+
+.me__comingsoon {
+    position: absolute;
+    width: 1.7rem;
+    height: .51rem;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    margin: auto;
+    background: rgba(0,0,0,0.80);
+
+    padding-top: 9px;
+    font-family: PingFangSC-Regular;
+    line-height: .21rem;
+    font-size: .15rem;
+    color: #FFFFFF;
+    z-index: 100;
+}
+
+.me__bgimg {
+    position: relative;
+    display: inline-block;
+    left: .78rem;
+    @include sprite2rem($bg-pls-waitinhope);
+}
+
+.me__textctner {
+    position: relative;
+    top: 50%;
+    transform: translateY(-30%);
+    display: inline-block;
+    left: 1.08rem;
+
+    .text--bold {
+        font-family: PingFangSC-Semibold;
+        font-size: .17rem;
+        font-weight: bold;
+        line-height: .24rem;
+        color: #999999;
+        letter-spacing: 0;
+    }
+
+    .text {
+        font-family: PingFangSC-Regular;
+        font-size: .13rem;
+        line-height: .18rem;
+        color: #B4B4B4;
+        letter-spacing: 0;
+    }
+}
+
+.me__notlogin {
+    position: absolute;
+    width: 2rem;
+    height: .98rem;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    text-align: center;
+
+    .prompt {
+        line-height: .28rem;
+        font-family: PingFangSC-Semibold;
+        font-weight: bold;
+        font-size: .2rem;
+        color: #999999;
+        letter-spacing: 0;
+        margin-bottom: .2rem;
+    }
+
+    .login-btn {
+        width: 2rem;
+        height: .5rem;
+        background: #333333;
+        font-family: PingFangSC-Semibold;
+        font-weight: bold;
+        font-size: .15rem;
+        line-height: .5rem;
+        color: #FFFFFF;
+        letter-spacing: 0;
+        margin: auto;
+    }
+}
+
+.me__logout_mask {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.50);
+    z-index: 200;
+}
+
+.me__want2logout {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 2.14-.56rem;
+    padding-top: .56rem;
+    text-align: center;
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,0.16);
+    border-radius: 0 2px 0 0;
+    background-color: #fff;
+
+    .confirm__close {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        @include sprite2rem($btn-close-b-gray);
+    }
+
+    .confirm__question {
+        font-family: PingFangSC-Semibold;
+        font-size: .2rem;
+        font-weight: bold;
+        line-height: .28rem;
+        color: #333333;
+        letter-spacing: 0;
+    }
+
+    .confirm__alert {
+        margin-top: 3px;
+        font-family: PingFangSC-Regular;
+        font-size: .13rem;
+        line-height: .18rem;
+        color: #999999;
+        letter-spacing: 0;
+    }
+
+    .confirm__cancel {
+        position: relative;
+        display: inline-block;
+        margin-top: .15rem;
+        margin-right: .2rem;
+        width: .8rem;
+        height: .3rem;
+
+        .cancel__text {
+            display: inline-block;
+            line-height: .3rem;
+            font-family: PingFangSC-Regular;
+            font-size: .15rem;
+            color: #666666;
+            letter-spacing: 0;
+        }
+
+        &::after {
+            position: absolute;
+            display: inline-block;
+            content: "";
+            box-sizing: border-box;
+            border-radius: 4px;
+            left: 0;
+            top:0;
+            height: 200%;
+            width: 200%;
+            transform-origin: 0 0;
+            border: 1px solid #C8C8C8;
+            transform: scale(.5);
+        }
+    }
+
+    .confirm__exit {
+        position: relative;
+        display: inline-block;
+        margin-top: .15rem;
+        width: .8rem;
+        height: .3rem;
+
+        .exit__text {
+            display: inline-block;
+            line-height: .3rem;
+            font-family: PingFangSC-Regular;
+            font-size: .15rem;
+            color: #FF834B;
+            letter-spacing: 0;
+        }
+
+        &::after {
+            position: absolute;
+            display: inline-block;
+            content: "";
+            box-sizing: border-box;
+            border-radius: 4px;
+            left: 0;
+            top:0;
+            height: 200%;
+            width: 200%;
+            transform-origin: 0 0;
+            border: 1px solid #FF834B;
+            transform: scale(.5);
+        }
+    }
+}
