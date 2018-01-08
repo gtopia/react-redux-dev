@@ -3,7 +3,7 @@
  * Date: 2017/11/22
  * Description: 话题相关后端接口。
  */
-const API_PREFIX = "//xiaoyang7.topic.sina.cn/api/";
+const API_PREFIX = "//topic.sina.cn/api/";
 
 export default {
     "TOPIC_LIST": API_PREFIX + "news/topic_list",
