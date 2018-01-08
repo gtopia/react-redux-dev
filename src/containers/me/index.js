@@ -40,7 +40,7 @@ class Me extends Component {
         window.document.title = "我 - 全民话题";
 
         wxShare.init({
-            url: '//topic.sina.cn',  //分享链接
+            url: 'http://topic.sina.cn',  //分享链接
             title: '全民话题，用不同视角发现新闻', //分享标题
             content: 'http://topic.sina.cn', //分享描述（分享朋友时会显示）
             pic: LOGO_SHARE //分享图片路径
