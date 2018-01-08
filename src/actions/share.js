@@ -84,7 +84,7 @@ export function showShare(e) {
                 let customContent = $e.attr('data-customcontent');
                 topicTitle = $e.attr('data-sharetitle');
 
-                wxShareTitle = customTitle ? customTitle : (shareAttend + '人正在参与话题＃' + topicTitle + '＃');
+                wxShareTitle = customTitle ? customTitle : (shareAttend + '人参与话题＃' + topicTitle + '＃');
                 wxShareContent = customContent ? customContent : '全民话题，用不同视角发现新闻';
 
                 wbShareTitle = customTitle ? customTitle : ('我正在参与全民话题＃' + topicTitle + '＃');
@@ -100,7 +100,7 @@ export function showShare(e) {
                 topicTitle = $e.attr('data-sharetopic');
 
                 wxShareTitle = cardTitle;
-                wxShareContent = shareAttend + '人正在参与话题＃' + topicTitle + '＃';
+                wxShareContent = shareAttend + '人参与话题＃' + topicTitle + '＃';
 
                 wbShareTitle = cardTitle + '　我正在参与全民话题＃' + topicTitle + '＃';
                 wbShareUrl = [
@@ -117,9 +117,9 @@ export function showShare(e) {
                 topicTitle = $e.attr('data-sharetopic');
 
                 wxShareTitle = answerer.split(',')[0] + "回答了" + cardTitle;
-                wxShareContent = shareAttend + '人正在参与话题＃' + topicTitle + '＃';
+                wxShareContent = shareAttend + '人参与话题＃' + topicTitle + '＃';
 
-                wbShareTitle = cardTitle + '　我正在参与全民话题＃' + topicTitle + '＃';
+                wbShareTitle = '【' + wxShareTitle + '】' + '　我正在参与全民话题＃' + topicTitle + '＃';
                 wbShareUrl = [
                     '//service.weibo.com/share/mobile.php?url=' + encodeURIComponent(shareUrl+'?s=weibo&appkey=3720547781'),
                     '&title=' + encodeURIComponent(wbShareTitle),
