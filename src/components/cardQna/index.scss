@@ -1,0 +1,56 @@
+@import "../../static/style/auto-sprite.scss";
+@import "../../static/style/px2rem-sprite.scss";
+
+.layout__qna {
+    position: relative;
+    background: #fff;
+    margin-bottom: .1rem;
+    overflow: hidden;
+}
+
+.qna__source {
+    font-size: .12rem;
+    line-height: .17rem;
+    color: #999999;
+    margin: .15rem .15rem 0;
+}
+
+.qna__cnter {
+    position: relative;
+    margin: .1rem .13rem .1rem .15rem;
+
+    .icon {
+        position: relative;
+        display: inline-block;
+        @include sprite2rem($icon-qna);
+    }
+
+    .title {
+        line-height: .24rem;
+        font-size: .17rem;
+        font-weight: bold;
+        color: #000000;
+        letter-spacing: 0;
+        margin-bottom: 5px;
+    }
+
+    .content {
+        line-height: .17rem;
+        font-size: .12rem;
+        color: #999999;
+        letter-spacing: 0;
+    }
+
+    .num {
+        color: #FF834B;
+    }
+
+    .checkall {
+        line-height: .17rem;
+        font-size: .12rem;
+        color: #507DAF;
+        letter-spacing: 0;
+        text-decoration: underline;
+        margin-left: .1rem;
+    }
+}
