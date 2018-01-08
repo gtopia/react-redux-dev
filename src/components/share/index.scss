@@ -1,0 +1,156 @@
+@import "../../static/style/auto-sprite.scss";
+@import "../../static/style/px2rem-sprite.scss";
+
+.shareDataWarper{
+	display: none;
+}
+
+.share-warper, .share-warper--hide{
+	width: 100%;
+	height: 100%;
+	background: rgba(0,0,0,0.50);
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 999;
+
+	.shareWarper-click{
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+}
+
+.share-warper__box{
+	width: 100%;
+	height: 1.64rem;
+	background: #fff;
+	position: absolute;
+	bottom: -100%;
+	left: 0;
+	z-index: 1000;
+	overflow: hidden;
+
+	.share-warper__box-p{
+		font-style: normal;
+		margin-top: 0.23rem;
+		text-align: center;
+	}
+
+	.share-warper__box-closed{
+		display: block;
+		position: absolute;
+		top: 0.102rem;
+		right: 0.102rem;
+		@include sprite2rem($btn-close-s-gray);
+	}
+	
+	.share-warper__box-ul{
+	    position: relative;
+	    width: 100%;
+	    height: 1.02rem;
+
+		.share__item {
+			position: absolute;
+			display: inline-block;
+			bottom: 0;
+		    width: .44rem;
+			font-size: .13rem;
+			line-height: 0.3rem;
+			color: #333333;
+			text-align: center;
+
+			.icon-weibo{
+				display: block;
+				@include sprite2rem($icon-share-weibo);
+			}
+
+			.icon-wechat{
+				display: block;
+				@include sprite2rem($icon-share-wechat);
+			}
+
+			.icon-pengyouquan{
+				display: block;
+				@include sprite2rem($icon-share-pengyouquan);
+			}
+		}
+
+		.share__item:nth-child(1) {
+			left: .4rem;
+		}
+
+		.share__item:nth-child(2) {
+			left: 0;
+			right: 0;
+			margin: auto;
+		}
+
+		.share__item:nth-child(3) {
+			right: .4rem;
+		}
+	}
+}
+.share-warper__tips--hide, .share-warper--hide{
+	visibility:hidden;
+}
+.share-warper__tips,.share-warper__tips--hide{
+	position: fixed;
+  	width: 100%;
+  	height: 100%;
+  	left: 0;
+  	top: 0;
+  	z-index: 999;
+
+  	.sw__safariimg,
+  	.sw__wxpromit{
+  		width: 100%; 
+  		display: block; 
+  		position: absolute;
+  	}
+
+	.sw__safariimg{
+	  	bottom: 0; left: 0;
+	  	@include sprite2rem($arrow_share_down); 	
+	}
+
+	.sw__wxpromit{
+	  	top:0; left: 0;
+	  	@include sprite2rem($arrow_share_up);
+	}
+
+	.sw__mask{
+	  	position: absolute;
+	  	width: 100%;
+	  	height: 100%;
+	  	background: rgba(0,0,0,0.50);
+	}
+
+}
+
+.pullDown {
+	animation: pullDown .3s ease both;
+}
+
+@keyframes pullDown {
+	0% {top: 0;}
+	100% {top: 100%;}
+}
+
+.pullUp {
+	@extend .share-warper__box;
+	animation: pullUp .3s ease both;
+}
+
+@keyframes pullUp {
+	0% {bottom: -100%;}
+	100% {bottom: 0;}
+}
+
+@media screen and (min-width: 769px) {
+	.share-warper{
+		width: 750px;
+		left: 50%;
+		margin-left: -375px;
+	}
+}
