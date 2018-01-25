@@ -6,12 +6,16 @@
  */
 module.exports = {
     wxIsRq: false, //是否加载微信依赖文件
-    init: function(obj) {
+    init: function(opt) {
+        if (!opt) {
+            return;
+        }
+
         var _self = this;
-        this.title = obj.title || '';
-        this.url = _self.addProtocol(obj.url);
-        this.pic = _self.addProtocol(obj.pic);
-        this.content = obj.content || '';
+        this.title = opt.title || '';
+        this.url = _self.addProtocol(opt.url);
+        this.pic = _self.addProtocol(opt.pic);
+        this.content = opt.content || '';
 
         if (!this.wxIsRq) {
             this.wxIsRq = true;
@@ -23,8 +27,7 @@ module.exports = {
             script.type = 'text/javascript';
             script.src = '//res.wx.qq.com/open/js/jweixin-1.0.0.js';
             $('body').append(script);
-        }
-        else {
+        } else {
             _self.initWXConfig();
         }
     },
