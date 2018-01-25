@@ -9,13 +9,9 @@ module.exports = {
     init: function(obj) {
         var _self = this;
         this.title = obj.title || '';
-        this.url = obj.url || '';
-        this.pic = '';
+        this.url = _self.addProtocol(obj.url);
+        this.pic = _self.addProtocol(obj.pic);
         this.content = obj.content || '';
-
-        if (obj.pic && obj.pic.indexOf('http') == -1) {
-            this.pic = window.location.protocol + obj.pic;
-        }
 
         if (!this.wxIsRq) {
             this.wxIsRq = true;
@@ -31,6 +27,15 @@ module.exports = {
         else {
             _self.initWXConfig();
         }
+    },
+    addProtocol: function(url) {
+        var purl = url;
+
+        if (url && !/^http/i.test(url)) {
+            purl = window.location.protocol + url;
+        }
+
+        return purl;
     },
     initWxRrady: function() {
         var _self = this;
