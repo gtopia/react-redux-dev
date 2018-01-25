@@ -22,6 +22,7 @@ export default function configureStore(initialState) {
 	if (module.hot) {
         // Enable Webpack hot module replacement for reducers
         module.hot.accept('../reducers', () => {
+            // 因为 babel 6 的模块编译格式问题，这里需要加上 `.default`
             const nextRootReducer = require('../reducers').default;
             store.replaceReducer(nextRootReducer);
         });
