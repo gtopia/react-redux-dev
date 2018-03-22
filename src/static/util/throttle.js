@@ -1,8 +1,3 @@
-/**
- * Author: zhiyou
- * Date: 2017/07/03
- * Description: 函数节流。
- */
 module.exports = function(opt) {
     var timer = null;
     var t_start;

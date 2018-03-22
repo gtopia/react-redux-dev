@@ -1,10 +1,4 @@
-/**
- * Author: zhiyou
- * Date: 2017/05/08
- * Description: APP配置。
- */
 import './static/style/base.css';
-import 'zepto';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';

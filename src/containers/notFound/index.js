@@ -1,27 +1,12 @@
-/**
- * Author: zhiyou
- * Date: 2017/06/02
- * Description: 404页面。
- */
 import './index.scss';
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { MAIN_URL, LOGO_SHARE } from '../../constants/app';
-import wxShare from '../../static/util/wxShareCustom.js';
 import PropTypes from 'prop-types';
 
 class NotFound extends Component {
     constructor(props) {
         super(props);
-    }
-
-    componentWillMount() {
-        wxShare.init({
-            url: 'http://topic.sina.cn',  //分享链接
-            title: '全民话题，用不同视角发现新闻', //分享标题
-            content: 'http://topic.sina.cn', //分享描述（分享朋友时会显示）
-            pic: LOGO_SHARE //分享图片路径
-        });
     }
 
     shouldComponentUpdate() {
@@ -31,22 +16,14 @@ class NotFound extends Component {
     _gotoPrev() {
         if (!window.history.length || window.document.referrer == "") {
             this.props.history.push(MAIN_URL + window.location.search);
-
-            // SUDA PV统计
-            window.SUDA.log(window.sudaLogExt1, window.sudaLogExt2, window.location.host);
         }
         else {
-            // window.location.href = window.document.referrer;
-            // window.history.back();
             this.props.history.goBack();
         }
     }
 
     _gotoHome() {
         this.props.history.push(MAIN_URL + window.location.search);
-
-        // SUDA PV统计
-        window.SUDA.log(window.sudaLogExt1, window.sudaLogExt2, window.location.host);
     }
 
 	render() {

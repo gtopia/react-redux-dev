@@ -1,30 +1,31 @@
-/**
- * Author: zhiyou
- * Date: 2017/05/08
- * Description: 首页action。
- */
 import actionTypes from '../constants/main';
 
-export function showFav() {
+function increase() {
     return {
-        type: actionTypes.SHOW_FAV,
+        type: actionTypes.INCREASE,
     };
 }
 
-export function closeFav() {
+export function increaseLater() {
+    return (dispatch) => {
+        dispatch(setLoading(true));
+
+        setTimeout(() => {
+            dispatch(increase());
+            dispatch(setLoading(false));
+        }, 3000);
+    };
+};
+
+export function decrease() {
     return {
-        type: actionTypes.CLOSE_FAV,
+        type: actionTypes.DECREASE,
     };
 }
 
-export function showFavGuide() {
+export function setLoading(isShow) {
     return {
-        type: actionTypes.SHOW_FAV_GUIDE,
-    };
-}
-
-export function closeFavGuide() {
-    return {
-        type: actionTypes.CLOSE_FAV_GUIDE,
+        type: actionTypes.SET_LOADING,
+        isShow: isShow
     };
 }

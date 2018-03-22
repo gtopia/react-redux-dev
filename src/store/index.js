@@ -1,16 +1,7 @@
-/**
- * Author: zhiyou
- * Date: 2017/05/08
- * Description: Store配置。
- */
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from '../reducers';
-// import { routerMiddleware } from 'react-router-redux';
-// import createHistory from 'history/createBrowserHistory';
 
-// const history = createHistory();
-// const middleware = routerMiddleware(history);
 const middlewares = [thunk];
 const finalCreateStore = compose(
 	applyMiddleware(...middlewares),
