@@ -1,12 +1,12 @@
 {
-  "name": "react-redux-dev",
-  "version": "1.1.0",
-  "description": "React and redux development framework.",
+  "name": "react-webpack-boilerplate",
+  "version": "2.0.0",
+  "description": "A React and Redux development framework.",
   "main": "index.js",
   "scripts": {
     "clean": "rimraf dist",
     "clean-dev": "rimraf build",
-    "dev": "cross-env NODE_ENV=development babel-node server.js",
+    "dev": "cross-env NODE_ENV=development babel-node server.js 8080",
     "build-dev": "npm run clean-dev && cross-env NODE_ENV=development webpack -d --progress --profile --colors --config webpack.config.js",
     "build": "npm run clean && cross-env NODE_ENV=production webpack -p --progress --config webpack.config.js"
   },

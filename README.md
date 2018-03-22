@@ -48,6 +48,7 @@
 
 
 ## Change log  
+* v2.0.0 : Refactor project, only leave a simple demo.
 * v1.1.0 : Upgrade react, react-dom, immutable and prop-types to latest version for MIT license. Upgrade node-sass to v4.5.3 in order to compatible with Node 8.x.
 * v1.0.0 : Update webpack entry libs.
 * v0.5.0 : Upgrade react-router to v4. Upgrade react to v15.6.
