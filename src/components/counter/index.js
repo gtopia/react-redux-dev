@@ -9,8 +9,8 @@ class Counter extends Component {
         super(props);
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
-        return JSON.stringify(nextState) !== JSON.stringify(this.state);
+    shouldComponentUpdate(nextProps) {
+        return JSON.stringify(nextProps) !== JSON.stringify(this.props);
     }
 
     render() {
