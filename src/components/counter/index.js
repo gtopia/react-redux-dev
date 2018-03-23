@@ -30,7 +30,13 @@ class Counter extends Component {
                 <button className="counter__btn--l" onClick={decrease.bind(this)}>-</button>
                 <span className="counter__total">{totalCount}</span>
                 <button className="counter__btn--r" onClick={increaseLater.bind(this)}>+</button>
-                <div className={loadingClass}></div>
+                <div className={loadingClass}>
+                    <div className="logo">
+                        <div className="logo--white"></div>
+                        <div className="logo--orange"></div>
+                        <div className="logo--red"></div>
+                    </div>
+                </div>
             </div>
         );
     }
