@@ -7,17 +7,16 @@
     3. `cd react-webpack-boilerplate`
     4. `npm install`
 
-* Develop locally with HMR  
+* Run project locally with HMR  
     `npm run dev`  
-    _This command won't generate any folder under root directory._  
 
-* Check bundling with detail info under watch mode  
+* Bundle for development without minify  
     `npm run build-dev`  
-    _This command will generate 'build' folder under root directory._  
+    _This command will generate a folder named 'build'._  
 
-* Bundle for publish  
+* Bundle for production with minify  
     `npm run build`  
-    _This command will generate 'dist' folder under root directory._  
+    _This command will generate a folder named 'dist'._  
 
 
 ## Tech stack  
