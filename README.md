@@ -1,10 +1,10 @@
-# React Redux Dev
+# React webpack boilerplate
 
 ## Start  
 * Prerequisite  
     1. Install Node 8+ from [here](https://nodejs.org/en/)
-    2. `git clone https://github.com/gtopia/react-redux-dev.git`
-    3. `cd react-redux-dev`
+    2. `git clone https://github.com/gtopia/react-webpack-boilerplate.git`
+    3. `cd react-webpack-boilerplate`
     4. `npm install`
 
 * Develop locally with HMR  
