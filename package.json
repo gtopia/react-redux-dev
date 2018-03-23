@@ -8,14 +8,13 @@
     "clean-dev": "rimraf build",
     "dev": "cross-env NODE_ENV=development babel-node server.js 8877",
     "build-dev": "npm run clean-dev && cross-env NODE_ENV=development webpack -d --progress --profile --colors --config webpack.config.js",
-    "build": "npm run clean && cross-env NODE_ENV=production webpack -p --progress --config webpack.config.js",
-    "defaults": "webpack-defaults"
+    "build": "npm run clean && cross-env NODE_ENV=production webpack -p --progress --config webpack.config.js"
   },
   "author": "Alan Gao",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/gtopia/react-redux-dev.git"
+    "url": "https://github.com/gtopia/react-webpack-boilerplate.git"
   },
   "dependencies": {
     "babel-polyfill": "^6.3.14",
