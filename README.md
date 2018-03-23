@@ -21,33 +21,32 @@
 
 
 ## Tech stack  
-* Express
-* ImmutableJS
-* React
-* React-router
-* Redux
-* Webpack
+* Express v4
+* Immutable v3
+* React v16
+* React-router v4
+* Redux v3
+* Webpack v3
 
 
 ## Features  
 * Babel
-* CSS Autoprefixer
-* CSS Sprite
-* Commons Chunk
-* Display errors with Redbox
+* CSS autoprefixer
+* CSS sprite
+* Commons chunk
 * ES6
 * Eslint
 * Extract CSS
-* File Hash
+* File hash
 * HMR
-* Image Compress
+* Image compress
 * Modularized HTML
 * Sass
-* Swiper
-* Uglify code with Babili
+* Uglify code with babel-minify
 
 
 ## Change log  
+* v2.1.0 : Upgrade webpack to v3.11.0, replace deprecated packages, solve some packages' dependency problem.
 * v2.0.0 : Refactor project, only leave a simple demo.
 * v1.1.0 : Upgrade react, react-dom, immutable and prop-types to latest version for MIT license. Upgrade node-sass to v4.5.3 in order to compatible with Node 8.x.
 * v1.0.0 : Update webpack entry libs.
