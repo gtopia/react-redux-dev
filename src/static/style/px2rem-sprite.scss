@@ -1,5 +1,3 @@
-// 设计稿提供的是2倍图
-
 @mixin sprite-width2rem($sprite) {
   width: nth($sprite, 5) / 200px * 1rem;
 }
