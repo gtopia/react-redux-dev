@@ -1,7 +1,7 @@
 import './index.scss';
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { MAIN_URL, LOGO_SHARE } from '../../constants/app';
+import { MAIN_URL } from '../../constants/app';
 import PropTypes from 'prop-types';
 
 class NotFound extends Component {

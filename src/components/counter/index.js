@@ -16,7 +16,7 @@ class Counter extends Component {
     render() {
         let loadingClass = classNames({
             'counter__loading': true,
-            'hide': this.state.isGetAll
+            'hide': false
         });
 
         return (

@@ -30,7 +30,8 @@ class Main extends Component {
 }
 
 Main.propTypes = {
-    mainState: PropTypes.object.isRequired
+    mainState: PropTypes.object.isRequired,
+    mainActions: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {

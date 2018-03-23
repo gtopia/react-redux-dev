@@ -1,5 +1,12 @@
 import actionTypes from '../constants/main';
 
+export function setLoading(isShow) {
+    return {
+        type: actionTypes.SET_LOADING,
+        isShow: isShow
+    };
+}
+
 function increase() {
     return {
         type: actionTypes.INCREASE,
@@ -20,12 +27,5 @@ export function increaseLater() {
 export function decrease() {
     return {
         type: actionTypes.DECREASE,
-    };
-}
-
-export function setLoading(isShow) {
-    return {
-        type: actionTypes.SET_LOADING,
-        isShow: isShow
     };
 }
