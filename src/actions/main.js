@@ -1,6 +1,6 @@
 import actionTypes from '../constants/main';
 
-export function setLoading(isShow) {
+function setLoading(isShow) {
     return {
         type: actionTypes.SET_LOADING,
         isShow: isShow

@@ -19,7 +19,8 @@ class Main extends Component {
     render() {
         return ( 
             <section className="layout__main" >
-                <h1 className="main__title">Welcome!<br/>Let's build an awesome APP!</h1>
+                <h1 className="main__title">Welcome!</h1>
+                <h2 className="main__desc">Let's build an awesome React APP!</h2>
                 <Counter
                 {...this.props.mainState}
                 {...this.props.mainActions}

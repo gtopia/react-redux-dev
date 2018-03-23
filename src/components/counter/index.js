@@ -14,16 +14,22 @@ class Counter extends Component {
     }
 
     render() {
+        const {
+            isShowLoading,
+            totalCount,
+            decrease,
+            increaseLater
+        } = this.props;
         let loadingClass = classNames({
             'counter__loading': true,
-            'hide': false
+            'hide': !isShowLoading
         });
 
         return (
             <div className="layout__counter">
-                <button>-</button>
-                <span>{0}</span>
-                <button>+</button>
+                <button className="counter__btn--l" onClick={decrease.bind(this)}>-</button>
+                <span className="counter__total">{totalCount}</span>
+                <button className="counter__btn--r" onClick={increaseLater.bind(this)}>+</button>
                 <div className={loadingClass}></div>
             </div>
         );
@@ -32,7 +38,10 @@ class Counter extends Component {
 
 Counter.propTypes = {
     history: PropTypes.object,
-
+    isShowLoading: PropTypes.bool,
+    totalCount: PropTypes.number,
+    decrease: PropTypes.func,
+    increaseLater: PropTypes.func
 };
 
 export default withRouter(Counter);
