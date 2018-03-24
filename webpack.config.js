@@ -44,18 +44,18 @@ var config = {
         noParse: /jquery|zepto/,
         rules: [
             {
-                test: /\.js(x)?$/,
+                test: /\.js(x)?$/i,
                 enforce: "pre",
                 loader: 'eslint-loader',
                 exclude: [nodeModulesPath]
             },
             {
-                test: /\.js(x)?$/,
+                test: /\.js(x)?$/i,
                 loader: 'babel-loader',
                 exclude: nodeModulesPath
             },
             {
-                test: /\.(css|scss)$/,
+                test: /\.(css|scss)$/i,
                 use: ExtractTextPlugin.extract({
                     fallback: [{
                         loader: 'style-loader',
@@ -74,7 +74,7 @@ var config = {
                 })
             },
             {
-                test: /\.(png|jpeg|jpg|gif)$/,
+                test: /\.(png|jpeg|jpg|gif)$/i,
                 use: __DEV__ ? [
                     {
                         loader: 'url-loader',
@@ -113,7 +113,7 @@ var config = {
                 ]
             },
             {
-                test: /\.html$/,
+                test: /\.html$/i,
                 loader: 'html-loader',
                 options: {
                     minimize: false,
@@ -242,6 +242,9 @@ var config = {
             'redux': path.join(__dirname, 'node_modules', 'redux', 'dist', 'redux.min.js'),
             'immutable': path.join(__dirname, 'node_modules', 'immutable', 'dist', 'immutable.min.js')
         }
+    },
+    resolveLoader:{
+        modules: ['node_modules', path.join(__dirname, 'loaders')]
     }
 };
 
