@@ -3,7 +3,7 @@ var autoprefixer = require('autoprefixer');
 var precss = require('precss');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var MinifyPlugin = require("babel-minify-webpack-plugin");
+var UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 var SpritesmithPlugin = require('webpack-spritesmith');
 var path = require('path');
 var nodeModulesPath = path.join(__dirname, 'node_modules');
@@ -12,15 +12,12 @@ var mainPath = path.join(__dirname, 'src', 'index.js');
 var templatePath = path.join(__dirname, 'src', 'index.html');
 var buildPath = path.join(__dirname, 'build');
 var distPath = path.join(__dirname, 'dist');
-var mode = process.env.NODE_ENV.trim();
-var __DEV__ = mode!=='production';
+
+var __DEV__ = process.env.NODE_ENV.trim()!=='production';
 console.log(`> This is ${__DEV__ ? "DEVELOPMENT" : "PRODUCTION"} mode.`);
 
-// Raise tread pool size to prevent bundling stuck issue
-// process.env.UV_THREADPOOL_SIZE = 128;
-
 var config = {
-    devtool: __DEV__ ? 'eval' : 'source-map',
+    devtool: __DEV__ ? 'eval' : 'cheap-module-source-map',
     watch: false,
     entry: (() => {
         var entryObj = {
@@ -66,10 +63,6 @@ var config = {
                     use: [
                         {
                             loader: 'css-loader',
-                            // options: {
-                            //     modules: true,
-                            //     localIdentName: '[name]__[local]--[hash:base64:5]',
-                            // },
                         }, 
                         {
                             loader: 'postcss-loader',
@@ -201,8 +194,35 @@ var config = {
         else {
             pluginList = pluginList.concat([
                 new Webpack.optimize.ModuleConcatenationPlugin(),
-                new MinifyPlugin({}, {
-                    comments: false
+                new UglifyJsPlugin({
+                    include: /\/src/,
+                    exclude: /\/node_modules/,
+                    parallel: true,
+                    sourceMap: true,
+                    uglifyOptions: {
+                        ecma: 8,
+                        parse: {
+                            html5_comments: true
+                        },
+                        compress: {
+                            collapse_vars: true,
+                            drop_console: true,
+                            drop_debugger: true,
+                            inline: false,
+                            typeofs: false,
+                            warnings: false
+                        },
+                        mangle: {
+                            keep_classnames: false,
+                            keep_fnames: false,
+                            reserved: ['$', 'module', 'exports', 'require']
+                        },
+                        output: {
+                            comments: false
+                        },
+                        ie8: true,
+                        safari10: true
+                    }
                 })
             ]);
         }
