@@ -3,11 +3,11 @@ All notable changes to this project will be documented in this file.
 
 ## [2.1.1]
 
-* Replace babel-minify with uglify-es to solve source-map issue.
+* Replace `babel-minify` with `uglify-es` to solve source-map issue.
 
 ## [2.1.0]
 
-* Upgrade webpack to v3.11.0.
+* Upgrade `webpack` to v3.11.0.
 * Replace deprecated packages, solve some packages' dependency problem.
 
 ## [2.0.0]
@@ -17,7 +17,7 @@ All notable changes to this project will be documented in this file.
 ## [1.1.0]
 
 * Upgrade `react`, `react-dom`, `immutable` and `prop-types` for MIT license. 
-* Upgrade `node-sass` to v4.5.3 for compatible with Node 8.x.
+* Upgrade `node-sass` to v4.5.3 for compatible with `Node.js` v8.x.
 
 ## [1.0.0]
 
