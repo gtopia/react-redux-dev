@@ -41,28 +41,11 @@
 * Image compress
 * Modularized HTML
 * Sass
-* Uglify code with babel-minify
+* Uglify-es
 
 
-## Change log  
-* v2.1.0 : Upgrade webpack to v3.11.0, replace deprecated packages, solve some packages' dependency problem.
-* v2.0.0 : Refactor project, only leave a simple demo.
-* v1.1.0 : Upgrade react, react-dom, immutable and prop-types to latest version for MIT license. Upgrade node-sass to v4.5.3 in order to compatible with Node 8.x.
-* v1.0.0 : Update webpack entry libs.
-* v0.5.0 : Upgrade react-router to v4. Upgrade react to v15.6.
-* v0.4.6 : Upgrade webpack to v3.
-* v0.4.5 : Add babel-plugin-transform-remove-console.
-* v0.4.4 : Fixed React.PropTypes deprecated issue of React.
-* v0.4.3 : Upgrade react-router to v2.x. Update react-router config.
-* v0.4.2 : Remove art-template-loader.
-* v0.4.1 : Import classnames for conditionally joining classNames together.
-* v0.4.0 : Use webpack-spritesmith to make CSS sprite.
-* v0.3.0 : Add image-webpack-loader to compress images.
-* v0.2.0 : Add file hash when bundling for production.
-* v0.1.4 : Remove base tag from index HTML, update publicPath.
-* v0.1.3 : Replace tmodjs with art-template for performance issue.
-* v0.1.2 : Optimize bundling, add utils and external libs.
-* v0.1.1 : Use BabiliPlugin instead of UglifyJsPlugin to minify ES6 code.
-* v0.1.0 : Upgrade webpack to v2.
-* v0.0.2 : Update webpack config.
-* v0.0.1 : First commit.
+## License
+
+MIT (http://www.opensource.org/licenses/mit-license.php)
+
+
