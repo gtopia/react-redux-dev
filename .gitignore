@@ -13,6 +13,5 @@ node_modules
 
 # Dev IDE
 .idea
-/dist
 /build
 package-lock.json
