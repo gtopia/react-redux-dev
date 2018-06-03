@@ -14,7 +14,7 @@ const appRoutes = () => (
     <Router>
         <AppPage>
             <Switch>
-                <Route exact path="/" component={MainPage}/>
+                <Route exact path="/react-webpack-boilerplate/dist/" component={MainPage}/>
                 <Route path="/ht:topicId(\d+)/:pageName?" render={checkParams} />
                 <Route path="*" component={NotFoundPage} />
             </Switch>
