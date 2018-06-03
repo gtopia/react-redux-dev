@@ -12,6 +12,7 @@ var mainPath = path.join(__dirname, 'src', 'index.js');
 var templatePath = path.join(__dirname, 'src', 'index.html');
 var buildPath = path.join(__dirname, 'build');
 var distPath = path.join(__dirname, 'dist');
+var publicPath = "https://gtopia.github.io/react-webpack-boilerplate/dist/";
 
 var __DEV__ = process.env.NODE_ENV.trim()!=='production';
 console.log(`> This is ${__DEV__ ? "DEVELOPMENT" : "PRODUCTION"} mode.`);
@@ -38,7 +39,7 @@ var config = {
     output: {
         path: __DEV__ ? buildPath : distPath,
         filename: __DEV__ ? 'js/[name].bundle.js' : 'js/[name].bundle-[chunkhash:8].js',
-        publicPath: __DEV__ ? '/tmpdir/' : "//simg.sinajs.cn/products/news/items/2017/top_topics/"
+        publicPath: __DEV__ ? '/tmpdir/' : publicPath
     },
     module: {
         noParse: /jquery|zepto/,
