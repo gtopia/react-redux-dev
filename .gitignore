@@ -1,17 +1,12 @@
 # Logs
-logs
 *.log
 npm-debug.log*
 
 # Runtime data
-pids
-*.pid
-*.seed
+dist
 
 # Dependency directory
 node_modules
 
 # Dev IDE
-.idea
-/build
 package-lock.json
