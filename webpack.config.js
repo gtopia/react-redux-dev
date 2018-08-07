@@ -12,7 +12,7 @@ var mainPath = path.join(__dirname, 'src', 'index.js');
 var templatePath = path.join(__dirname, 'src', 'index.html');
 var buildPath = path.join(__dirname, 'build');
 var distPath = path.join(__dirname, 'dist');
-var publicPath = "https://gtopia.github.io/react-webpack-boilerplate/dist/";
+var publicPath = "https://gtopia.github.io/react-webpack-boilerplate/";
 
 var __DEV__ = process.env.NODE_ENV.trim()!=='production';
 console.log(`> This is ${__DEV__ ? "DEVELOPMENT" : "PRODUCTION"} mode.`);
