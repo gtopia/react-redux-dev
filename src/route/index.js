@@ -4,10 +4,9 @@ import AppPage from '../containers/app';
 import MainPage from '../containers/main';
 import NotFoundPage from '../containers/notFound';
 
-let rootPath = "/react-webpack-boilerplate/dist/";
 let checkParams = ({match}) => {
     if (match.params.name) {
-        return <Redirect to={rootPath + "404"} />;
+        return <Redirect to={"/404"} />;
     }
 };
 
@@ -15,9 +14,9 @@ const appRoutes = () => (
     <Router>
         <AppPage>
             <Switch>
-                <Route exact path={rootPath} component={MainPage}/>
-                <Route path={rootPath + "test:id(\d+)/:name?"} render={checkParams} />
-                <Route path={rootPath + "*"} component={NotFoundPage} />
+                <Route exact path={"/"} component={MainPage}/>
+                <Route path={"/test:id(\d+)/:name?"} render={checkParams} />
+                <Route path={"*"} component={NotFoundPage} />
             </Switch>
         </AppPage>
     </Router>
