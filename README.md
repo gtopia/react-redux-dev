@@ -1,11 +1,11 @@
 # React webpack boilerplate  
 
-## Start  
+## Get Start  
 * Prerequisite  
-    1. Install Node 8+ from [here](https://nodejs.org/en/)
-    2. `git clone https://github.com/gtopia/react-webpack-boilerplate.git`
-    3. `cd react-webpack-boilerplate`
-    4. `npm install`
+1. Install Node 8+ from [here](https://nodejs.org/en/)
+1. `git clone https://github.com/gtopia/react-webpack-boilerplate.git`
+1. `cd react-webpack-boilerplate`
+1. `npm install`
 
 * Run project locally with HMR  
     `npm run dev`  
@@ -18,15 +18,13 @@
     `npm run build`  
     _This command will generate a folder named 'dist'._  
 
-
 ## Tech stack  
-* Express v4
-* Immutable v3
-* React v16
-* React-router v4
-* Redux v3
-* Webpack v3
-
+* Express
+* ImmutableJS
+* React
+* React-router
+* Redux
+* Webpack
 
 ## Features  
 * Babel
@@ -42,10 +40,3 @@
 * Modularized HTML
 * Sass
 * Uglify-es
-
-
-## License
-
-MIT (http://www.opensource.org/licenses/mit-license.php)
-
-
